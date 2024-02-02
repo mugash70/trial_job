@@ -1,23 +1,192 @@
-import logo from './logo.svg';
+
 import './App.css';
+import React,{useEffect,useRef}from 'react';
+import { Layout,List, Menu, Row,Col,Flex,Button, Typography} from 'antd';
+import Lottie from 'lottie-web';
+import x1 from './assets/animations/1.json'
+import x from './assets/animations/1.json'
+import x2 from './assets/animations/2.json'
+import x3 from './assets/animations/3.json'
+import x4 from './assets/animations/4.json'
+import x5 from './assets/animations/5.json'
+import x6 from './assets/animations/6.json'
+import x7 from './assets/animations/7.json'
+import {CustomCarousel} from './CardCaro'
+import ProcessWay from './Process'
+
+const { Title,Paragraph  } = Typography;
+const { Header, Footer, Sider, Content } = Layout;
+
+const navs = [
+  { name: "Home", url: "" },
+  { name: "About us", url: "" },
+  { name: "Our processes", url: "" },
+  { name: "Why us", url: "" },
+  { name: "Contact us", url: "" },
+];
+
+const items = navs.map((nav, index) => ({
+  key: String(index + 1),
+  label: nav.name,
+}));
+
+
+
+
+const contentStyle = {
+  textAlign: 'center',
+  lineHeight: '120px',
+};
+const siderStyle = {
+  textAlign: 'center',
+  lineHeight: '120px',
+  color: '#fff',
+  backgroundColor: '#1677ff',
+};
+const footerStyle = {
+  textAlign: 'center',
+  color: '#fff',
+  backgroundColor: '#4096ff',
+};
+const layoutStyle = {
+  borderRadius: 8,
+  overflow: 'hidden',
+  width: 'calc(50% - 8px)',
+  maxWidth: 'calc(50% - 8px)',
+};
+const cardStyle = {
+  height: 200, // Adjust the width as needed
+  // margin: '0 8px', // Add some margin between 
+  width: '100%',
+};
+
+const carouselStyle = {
+  maxWidth: '200px', // Adjust the maximum width of the carousel
+  margin: '0 auto', // Center the carousel on the page
+};
+
+const loadLottieAnimation = (containerRef, animationData) => {
+  return Lottie.loadAnimation({
+    container: containerRef.current,
+    renderer: 'svg',
+    loop: true,
+    autoplay: true,
+    animationData: animationData,
+    rendererSettings: {
+      preserveAspectRatio: 'xMidYMid slice',
+    },
+  });
+};
+
 
 function App() {
+
+  const ContainerRef = useRef(null);
+  const ContainerRef1 = useRef(null);
+  const ContainerRef2 = useRef(null);
+  const ContainerRef3 = useRef(null);
+  const ContainerRef4 = useRef(null);
+  const ContainerRef5 = useRef(null);
+  const ContainerRef6 = useRef(null);
+  const ContainerRef7 = useRef(null);
+
+  useEffect(() => {
+    const animation = loadLottieAnimation(ContainerRef, x);
+    const animation1 = loadLottieAnimation(ContainerRef1, x1);
+    const animation2 = loadLottieAnimation(ContainerRef2, x2);
+    const animation3 = loadLottieAnimation(ContainerRef3, x3);
+    const animation4 = loadLottieAnimation(ContainerRef4, x4);
+    const animation5 = loadLottieAnimation(ContainerRef5, x5);
+    const animation6 = loadLottieAnimation(ContainerRef6, x6);
+    const animation7 = loadLottieAnimation(ContainerRef7, x7);
+    return () => {
+      animation.destroy();
+      animation1.destroy();
+      animation2.destroy();
+      animation3.destroy();
+      animation4.destroy();
+      animation5.destroy();
+      animation6.destroy();
+      animation7.destroy();
+    };
+  }, []);
+
+
+  const cards = ['Card content 1', 'Card content 2', 'Card content 3', 'Card content 4'];
+
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+       <Flex gap="middle" wrap="wrap">
+        <Layout>
+      <Header
+        style={{
+          position: 'sticky',
+          top: 0,
+          zIndex: 1,
+          width: '100%',
+          display: 'flex',
+          alignItems: 'center',
+        }}
+      >
+       <div className="demo-logo" ref={ContainerRef2} style={{ width: '60px', height: '60px' }}></div>
+
+        <Menu
+          theme="dark"
+          mode="horizontal"
+          defaultSelectedKeys={['2']}
+          items={items}
+          style={{
+            flex: 1,
+            minWidth: 0,
+            marginLeft: '25px',
+          }}
+        />
+      </Header>
+      <List>
+            <List.Item>
+              <Content>
+                <Row>
+                <Col xs={24} sm={12}>
+                    <div ref={ContainerRef4} style={{ ...contentStyle }}></div>
+                  </Col>
+
+
+                  <Col xs={24} sm={12} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                    <Title level={2} style={{ fontFamily: 'PT Serif', fontSize: '100px' }}>Greatint AI</Title>
+                    <Title level={3} style={{ fontFamily: 'Caveat', fontSize: '50px' }}>
+                      "<span style={{ color: '#FFfff' }}>Turning Data into Insights</span>{' '}
+                      <span style={{ color: '#5733FF' }}>Empowering Your Success</span>"
+                    </Title>
+                    <Title level={3}>
+                      DATA ANALYTICS AND SOFTWARE DEVELOPMENT
+                      {/* The main product is a data science model that utilizes trained on real world datasets to solve various classification/regression tasks. */}
+                       {/* Products to be guided by existence of real problems. The following will form the basis of our products */}
+                      </Title>
+                        <Button type="primary" size='large'>Ask For A Demo</Button>
+                  </Col>
+              
+                </Row>
+              </Content>
+            </List.Item>
+              <CustomCarousel cards={cards} />
+            <List.Item>
+                <div>
+                    <ProcessWay/>
+                </div>
+                 <div ref={ContainerRef3} style={{ ...contentStyle }}></div>
+                  
+            </List.Item>
+            <List.Item>
+              <Content style={contentStyle}>Content</Content>
+            </List.Item>
+          </List>
+          
+
+          <Footer style={footerStyle}>Footer</Footer>
+        </Layout>
+
+      </Flex>
     </div>
   );
 }

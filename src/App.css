@@ -11,6 +11,9 @@
   .App-logo {
     animation: App-logo-spin infinite 20s linear;
   }
+  .ant-card {
+    margin: 0 4px; /* Decrease margin on smaller screens */
+  }
 }
 
 .App-header {
@@ -22,6 +25,13 @@
   justify-content: center;
   font-size: calc(10px + 2vmin);
   color: white;
+}
+
+@media (max-width: 767px) {
+  /* Styles for screens up to 767px wide */
+  .ant-card {
+    margin: 0 4px; /* Decrease margin on smaller screens */
+  }
 }
 
 .App-link {
