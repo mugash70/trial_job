@@ -145,26 +145,27 @@ function App() {
       </Header>
       <List>
             <List.Item>
-              <Content>
+              <Content style={{ display: 'flex'}}>
                 <Row>
+                <Col xs={24} sm={12} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+         
+         <Title style={{ fontFamily: 'arial',marginTop:"15%",fontSize:'7em'}}>
+           "<span style={{ color: '#FFfff' }}>Turning Data into Insights</span>{' '}
+           <span style={{ color: '#5733FF' }}>Empowering Your Success</span>"
+         </Title>
+         <Title style={{marginTop:"5%",fontSize:'1.5em'}}>
+           {/* DATA ANALYTICS AND SOFTWARE DEVELOPMENT */}
+           The main product is a data science model that utilizes trained on real world datasets to solve various classification/regression tasks.
+            Products to be guided by existence of real problems.
+           </Title>
+             <Button type="primary" size='large' style={{marginTop:"10%"}}>Ask For A Demo</Button>
+       </Col>
                 <Col xs={24} sm={12}>
                     <div ref={ContainerRef4} style={{ ...contentStyle }}></div>
                   </Col>
 
 
-                  <Col xs={24} sm={12} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                    <Title level={2} style={{ fontFamily: 'PT Serif', fontSize: '100px' }}>Greatint AI</Title>
-                    <Title level={3} style={{ fontFamily: 'Caveat', fontSize: '50px' }}>
-                      "<span style={{ color: '#FFfff' }}>Turning Data into Insights</span>{' '}
-                      <span style={{ color: '#5733FF' }}>Empowering Your Success</span>"
-                    </Title>
-                    <Title level={3}>
-                      DATA ANALYTICS AND SOFTWARE DEVELOPMENT
-                      {/* The main product is a data science model that utilizes trained on real world datasets to solve various classification/regression tasks. */}
-                       {/* Products to be guided by existence of real problems. The following will form the basis of our products */}
-                      </Title>
-                        <Button type="primary" size='large'>Ask For A Demo</Button>
-                  </Col>
+                 
               
                 </Row>
               </Content>
