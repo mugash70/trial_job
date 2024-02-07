@@ -20,28 +20,28 @@ const ProcessCard = ({ icon, title, description }) => {
     // Initial state
     tl.set(description, { opacity: 0, y: 20 });
 
-    // Hover animation
-    const handleMouseEnter = () => {
-      tl.to(description, { opacity: 1, y: 0, duration: 0.3, ease: 'power1.inOut' });
-    };
+  //   // Hover animation
+  //   const handleMouseEnter = () => {
+  //     tl.to(description, { opacity: 1, y: 0, duration: 0.3, ease: 'power1.inOut' });
+  //   };
 
-    // Hover out animation
-    const handleMouseLeave = () => {
-      tl.to(description, { opacity: 0, y: 20, duration: 0.3, ease: 'power1.inOut' });
-    };
+  //   // Hover out animation
+  //   const handleMouseLeave = () => {
+  //     tl.to(description, { opacity: 0, y: 20, duration: 0.3, ease: 'power1.inOut' });
+  //   };
 
-    card.addEventListener('mouseenter', handleMouseEnter);
-    card.addEventListener('mouseleave', handleMouseLeave);
+  //   card.addEventListener('mouseenter', handleMouseEnter);
+  //   card.addEventListener('mouseleave', handleMouseLeave);
 
-    return () => {
-      card.removeEventListener('mouseenter', handleMouseEnter);
-      card.removeEventListener('mouseleave', handleMouseLeave);
-    };
+  //   return () => {
+  //     card.removeEventListener('mouseenter', handleMouseEnter);
+  //     card.removeEventListener('mouseleave', handleMouseLeave);
+  //   };
   }, []);
 
   const handleClick = () => {
     const card = cardRef.current;
-
+    const tl = gsap.timeline();
     gsap.to(card, {
       motionPath: {
         path: [
@@ -56,20 +56,24 @@ const ProcessCard = ({ icon, title, description }) => {
         curviness: 2,
       },
       duration: 2,
+      onComplete: () => {
+        console.log("doem");
+        gsap.set(descriptionRef.current, { opacity: 1, y: 0, duration: 0.3, ease: 'power1.inOut' });
+        // tl.to(description, { opacity: 1, y: 0, duration: 0.3, ease: 'power1.inOut' });
+      },
     });
   };
 
   return (
     <Card
       ref={cardRef}
-      style={{ borderRadius: '50%', padding: '25px', width: '150px', height: '150px', textAlign: 'center' }}
+      style={{ borderRadius: '50%', padding: '17px', width: '160px', height: '160px', textAlign: 'center' }}
       onClick={handleClick}
+      shadow
     >
       {icon}
-      <Paragraph className="card-paragraph" ref={descriptionRef} style={{ fontSize: '10px', opacity: 0, marginTop: '10px' }}>
+      <Paragraph className="card-paragraph" ref={descriptionRef} style={{ fontSize: '14px', opacity: 0, marginTop: '10px' }}>
         {title}
-        {/* <br />
-        {description} */}
       </Paragraph>
     </Card>
   );
@@ -123,12 +127,10 @@ const ProcessCard = ({ icon, title, description }) => {
 const Arrow = () => (
   
   <>
-   {/* <div className="line"></div> */}
-   {/* <Col xs={24} sm={12} md={8} lg={6} style={{ position: 'relative', textAlign: 'center' }}> */}
-    {/* <div className="arrow-container"> */}
-      <div className="arrow" color='black' style={{fontSize:"40px"}}></div>
-    {/* </div> */}
-  {/* </Col> */}
+    <svg height="100" width="100">
+      <path d="M10 50 Q50 10 90 50" fill="none" stroke="black" strokeWidth="5" />
+      {/* <polygon points="90,50 85,45 85,55" fill="black" /> */}
+    </svg>
   </>
 
 );
@@ -157,7 +159,7 @@ export const ProcessWay = () => {
   
     {
         icon: <CodeOutlined style={{ fontSize: '24px', color: 'purple' }} />,
-        title: 'Development/ Training',
+        title: 'Development',
         description: 'Build machine learning or statistical models based on the processed data.',
       },
 

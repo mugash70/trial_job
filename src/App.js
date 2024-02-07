@@ -2,6 +2,7 @@
 import './App.css';
 import React,{useEffect,useRef}from 'react';
 import { Layout,List, Menu, Row,Col,Flex,Button, Typography} from 'antd';
+// import {Link} from 'react-router-dom'
 import Lottie from 'lottie-web';
 import x1 from './assets/animations/1.json'
 import x from './assets/animations/1.json'
@@ -13,6 +14,7 @@ import x6 from './assets/animations/6.json'
 import x7 from './assets/animations/7.json'
 import {CustomCarousel} from './CardCaro'
 import ProcessWay from './Process'
+import {Whatwedo} from './whatwedo'
 
 const { Title,Paragraph  } = Typography;
 const { Header, Footer, Sider, Content } = Layout;
@@ -173,10 +175,55 @@ function App() {
                 </Content>
           </List.Item>
             <List.Item>
-              <Content>
-                  <Title  style={{ fontFamily: 'Arial',fontSize: '2rem',alignContent:'center'}}>Development Process</Title>
+            
+              <Content  style={{marginBottom:'7rem'}}>
+                    <Title  style={{ fontFamily: 'Arial',fontSize: '2rem',alignContent:'center'}}>Development Process</Title>
                     <ProcessWay/>
               </Content>
+            </List.Item>
+            <List.Item>
+            <Content>
+              <Row gutter={[16, 16]} align="top">
+                <Col xs={24} sm={12} style={{ flexDirection: 'column', alignItems: 'flex-start' }}>
+                  <Title style={{ marginTop: "20%", fontFamily: 'arial', fontSize: '2rem' }}>
+                    <span style={{ color: '#FFfff' }}>Leading Companies </span>{' '}
+                    <span style={{ color: '#5733FF' }}>Develop with Us!</span>
+                  </Title>
+                  <Paragraph style={{ marginTop: "8%", fontSize: '1.2rem', color: "black" }}>
+                    <span style={{ color: '#5733FF' }}>With our very able team,</span>
+                    <span style={{ color: 'black' }}>we are dedicated in delivering your project to your standards.</span>
+                    <span style={{ color: 'black' }}> Our value isn't limited to building teams but is equally distributed across the project lifecycle.</span>
+                    <span style={{ color: '#5733FF' }}> We are basically a custom tech development company.</span>
+                  </Paragraph>
+            
+                </Col>
+                <Col xs={24} sm={12} style={{ flexDirection: 'column' }}>
+                  <div ref={ContainerRef5} style={{ ...contentStyle }}></div>
+                </Col>
+              </Row>
+            </Content>
+            </List.Item>
+            <List.Item>
+            <Content>
+          <Row gutter={[16, 16]} align="top">
+              <Col xs={24} sm={12} style={{ flexDirection: 'column' }}>
+              <div ref={ContainerRef3} style={{ ...contentStyle }}></div>
+            </Col>
+            <Col xs={24} sm={12} style={{ flexDirection: 'column', alignItems: 'flex-start' }}>
+              <Title style={{ marginTop: "20%", fontFamily: 'arial', fontSize: '2rem' }}>
+                <span style={{ color: '#FFfff' }}>What to expect from  </span>{' '}
+                <span style={{ color: '#5733FF' }}> Us!</span>
+              </Title>
+                 <Whatwedo cards={cards} />
+            </Col>
+            
+          </Row>
+            </Content>
+            </List.Item>
+            <List.Item>
+              {/* <Content style={contentStyle}>Content</Content>
+               */}
+               <Whatwedo cards={cards} />
             </List.Item>
             <List.Item>
               <Content style={contentStyle}>Content</Content>
