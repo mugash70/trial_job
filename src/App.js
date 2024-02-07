@@ -145,38 +145,38 @@ function App() {
       </Header>
       <List>
             <List.Item>
-              <Content style={{ display: 'flex'}}>
-                <Row>
-                <Col xs={24} sm={12} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-         
-         <Title style={{ fontFamily: 'arial',marginTop:"15%",fontSize:'7em'}}>
-           "<span style={{ color: '#FFfff' }}>Turning Data into Insights</span>{' '}
-           <span style={{ color: '#5733FF' }}>Empowering Your Success</span>"
-         </Title>
-         <Title style={{marginTop:"5%",fontSize:'1.5em'}}>
-           {/* DATA ANALYTICS AND SOFTWARE DEVELOPMENT */}
-           The main product is a data science model that utilizes trained on real world datasets to solve various classification/regression tasks.
-            Products to be guided by existence of real problems.
-           </Title>
-             <Button type="primary" size='large' style={{marginTop:"10%"}}>Ask For A Demo</Button>
-       </Col>
-                <Col xs={24} sm={12}>
+              <Content>
+                <Row style={{ display: 'flex'}}>
+                <Col xs={24} sm={12} style={{alignItems: 'center',flexDirection: 'column' }}>
+
+                <Title style={{ marginTop: "20%", fontFamily: 'arial',fontSize: '4rem', textAlign: 'center' }}>
+                  "<span style={{ color: '#FFfff' }}>Turning Data into Insights</span>{' '}
+                  <span style={{ color: '#5733FF' }}>Empowering Your Success</span>"
+                </Title>
+                <Title style={{ marginTop: "8%", textAlign: 'center',fontSize: '1.5rem',color:"grey" }}>
+                  {/* DATA ANALYTICS AND SOFTWARE DEVELOPMENT */}
+                  The main product is a data science model that utilizes trained on real-world datasets to solve various classification/regression tasks.
+                  Products to be guided by the existence of real problems.
+                </Title>
+                <Button type="primary"  style={{ marginTop: "8%",height: '4rem',fontSize: '1rem', padding: '15px 30px' }} className="hover">
+                  Ask for a Demo</Button></Col>
+                <Col xs={24} sm={12} style ={{flexDirection: 'column'}} >
                     <div ref={ContainerRef4} style={{ ...contentStyle }}></div>
                   </Col>
-
-
-                 
-              
                 </Row>
+                <Title level={2} style={{ fontFamily: 'Arial',fontSize: '3rem'}}>What We Do!</Title>
               </Content>
             </List.Item>
-              <CustomCarousel cards={cards} />
             <List.Item>
-                <div>
+                <Content>
+                      <CustomCarousel cards={cards} />
+                </Content>
+          </List.Item>
+            <List.Item>
+              <Content>
+                  <Title  style={{ fontFamily: 'Arial',fontSize: '2rem',alignContent:'center'}}>Development Process</Title>
                     <ProcessWay/>
-                </div>
-                 <div ref={ContainerRef3} style={{ ...contentStyle }}></div>
-                  
+              </Content>
             </List.Item>
             <List.Item>
               <Content style={contentStyle}>Content</Content>

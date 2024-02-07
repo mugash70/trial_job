@@ -44,10 +44,8 @@ export const CustomCarousel= () => {
         // { name: 'Custon Stuff', content: '', icon: <QuestionOutlined  style={{ fontSize: '40px', color: 'blue', marginRight: '10px' }}/> },
       ];
     return (
-      <List.Item>
-        <Content>
-          <Title level={2} style={{ fontFamily: 'PT Serif'}}>What We Do!</Title>
-          <Carousel
+      <>
+     <Carousel
             autoplay={true}
             beforeChange={handleBeforeChange}
             afterChange={handleAfterChange}
@@ -58,7 +56,7 @@ export const CustomCarousel= () => {
             dots={true}
           >
             {cardData.map((card, index) => (
-            <div key={index} style={{ display: 'flex', justifyContent: 'center' }}>
+            <div key={index} style={{ display: 'flex', justifyContent: 'center',fontSize: '4rem' }}>
               <Card
                 bordered={true}
                 style={{
@@ -72,8 +70,7 @@ export const CustomCarousel= () => {
             </div>
             ))}
           </Carousel>
-        </Content>
-      </List.Item>
+     </> 
     );
   };
   
