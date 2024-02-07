@@ -1,7 +1,7 @@
 
 import './App.css';
 import React,{useEffect,useRef}from 'react';
-import { Layout,List, Menu, Row,Col,Flex,Button, Typography} from 'antd';
+import { Layout,List, Menu, Row,Col,Flex,Button, Typography,Card} from 'antd';
 // import {Link} from 'react-router-dom'
 import Lottie from 'lottie-web';
 import x1 from './assets/animations/1.json'
@@ -183,6 +183,7 @@ function App() {
             </List.Item>
             <List.Item>
             <Content>
+            <Card bordered={true}>
               <Row gutter={[16, 16]} align="top">
                 <Col xs={24} sm={12} style={{ flexDirection: 'column', alignItems: 'flex-start' }}>
                   <Title style={{ marginTop: "20%", fontFamily: 'arial', fontSize: '2rem' }}>
@@ -201,13 +202,14 @@ function App() {
                   <div ref={ContainerRef5} style={{ ...contentStyle }}></div>
                 </Col>
               </Row>
+              </Card>
             </Content>
             </List.Item>
             <List.Item>
             <Content>
           <Row gutter={[16, 16]} align="top">
               <Col xs={24} sm={12} style={{ flexDirection: 'column' }}>
-              <div ref={ContainerRef3} style={{ ...contentStyle }}></div>
+              <div ref={ContainerRef7} style={{ ...contentStyle }}></div>
             </Col>
             <Col xs={24} sm={12} style={{ flexDirection: 'column', alignItems: 'flex-start' }}>
               <Title style={{ marginTop: "20%", fontFamily: 'arial', fontSize: '2rem' }}>
@@ -221,9 +223,23 @@ function App() {
             </Content>
             </List.Item>
             <List.Item>
-              {/* <Content style={contentStyle}>Content</Content>
-               */}
-               <Whatwedo cards={cards} />
+             <Card bordered={true}>
+           
+          <Row gutter={[16, 16]} align="top">
+             
+            <Col xs={24} sm={12} style={{ flexDirection: 'column', alignItems: 'flex-start' }}>
+              <Title style={{ marginTop: "20%", fontFamily: 'arial', fontSize: '2rem' }}>
+                <span style={{ color: '#FFfff' }}>Common </span>{' '}
+                <span style={{ color: '#5733FF' }}> Questions (?) </span>
+              </Title>
+                 <Whatwedo cards={cards} />
+            </Col>
+            <Col xs={24} sm={12} style={{ flexDirection: 'column' }}>
+              <div ref={ContainerRef3} style={{ ...contentStyle }}></div>
+            </Col>
+            
+          </Row>
+             </Card>
             </List.Item>
             <List.Item>
               <Content style={contentStyle}>Content</Content>
