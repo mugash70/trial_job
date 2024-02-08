@@ -36,17 +36,12 @@ const items = navs.map((nav, index) => ({
 
 
 const contentStyle = {
-  textAlign: 'center',
-  lineHeight: '120px',
+  // textAlign: 'center',
+  // lineHeight: '120px',
 };
-const siderStyle = {
-  textAlign: 'center',
-  lineHeight: '120px',
-  color: '#fff',
-  backgroundColor: '#1677ff',
-};
+
 const footerStyle = {
-  textAlign: 'center',
+  // textAlign: 'center',
   color: '#fff',
   backgroundColor: '#4096ff',
 };
@@ -56,15 +51,15 @@ const layoutStyle = {
   width: 'calc(50% - 8px)',
   maxWidth: 'calc(50% - 8px)',
 };
-const cardStyle = {
-  height: 200, // Adjust the width as needed
-  // margin: '0 8px', // Add some margin between 
-  width: '100%',
-};
+
 
 const carouselStyle = {
   maxWidth: '200px', // Adjust the maximum width of the carousel
   margin: '0 auto', // Center the carousel on the page
+};
+const animStyle = {
+  width: '100%', // Adjust the width as needed
+  height: '100%', // Adjust the height as needed
 };
 
 const loadLottieAnimation = (containerRef, animationData) => {
@@ -147,32 +142,50 @@ function App() {
       </Header>
       <List>
             <List.Item>
-              <Content>
-                <Row style={{ display: 'flex'}}>
-                <Col xs={24} sm={12} style={{alignItems: 'center',flexDirection: 'column' }}>
+              <Content  style={{ display: 'flex'}}>
+                <Row style={{ height: "100vh"}}>
+                <Col xs={24} sm={12}>
+                  
+                  <div style={{textAlign: 'left',paddingLeft:'10%', marginTop: "20%", }}>
+                  <Title style={{  fontFamily: 'arial', fontSize: '3rem', letterSpacing: '4px' }}>
+                    <span style={{ color: '#FFfff' }}>Turning Data into Insights</span>{' '}
+                    <span style={{ color: '#5733FF' }}>Empowering Your Success</span>
+                  </Title>
 
-                <Title style={{ marginTop: "20%", fontFamily: 'arial',fontSize: '4rem', textAlign: 'center' }}>
-                  "<span style={{ color: '#FFfff' }}>Turning Data into Insights</span>{' '}
-                  <span style={{ color: '#5733FF' }}>Empowering Your Success</span>"
-                </Title>
-                <Title style={{ marginTop: "8%", textAlign: 'center',fontSize: '1.5rem',color:"grey" }}>
-                  {/* DATA ANALYTICS AND SOFTWARE DEVELOPMENT */}
-                  The main product is a data science model that utilizes trained on real-world datasets to solve various classification/regression tasks.
-                  Products to be guided by the existence of real problems.
-                </Title>
-                <Button type="primary"  style={{ marginTop: "8%",height: '4rem',fontSize: '1rem', padding: '15px 30px' }} className="hover">
-                  Ask for a Demo</Button></Col>
-                <Col xs={24} sm={12} style ={{flexDirection: 'column'}} >
-                    <div ref={ContainerRef4} style={{ ...contentStyle }}></div>
-                  </Col>
+                    <Title style={{ marginTop: "7%",fontSize: '1.5rem',textAlign: 'left' }}>
+                      The main product is a data science model that utilizes trained on real-world datasets to solve various classification/regression tasks.
+                      Products to be guided by the existence of real problems.
+                    </Title>
+                </div>
+
+                <div  style={{ alignItems: 'center',}}>
+                      <Button  style={{marginTop: "4%",height: '4rem',fontSize: '1.2rem',color: '#FFFFFF', padding: '15px 30px',  backgroundColor: '#5733FF',borderRadius: '2rem'}} className="hover">
+                        Ask for a Demo</Button>
+                </div>
+
+                </Col>
+                {/* <Col xs={24} sm={12} style ={{flexDirection: 'column',height: "100vh"}} >
+                    <div  ref={ContainerRef4} style={{ ...contentStyle }}></div>
+                </Col> */}
+                <Col xs={24} sm={12} >
+                  <div ref={ContainerRef4} style={{ ...animStyle }}></div>
+                </Col>
+
                 </Row>
-                <Title level={2} style={{ fontFamily: 'Arial',fontSize: '3rem'}}>What We Do!</Title>
+             
               </Content>
             </List.Item>
             <List.Item>
-                <Content>
+              
+                {/* <Content style={{ margin: '0 16px',height: "100vh"}}  >
+                <Title style={{ fontFamily: 'Arial',fontSize: '3rem'}}>What We Do!</Title>
                       <CustomCarousel cards={cards} />
-                </Content>
+                </Content> */}
+                <Content style={{ margin: '0 16px', width: '50%' }}>
+  <Title style={{ fontFamily: 'Arial', fontSize: '3rem' }}>What We Do!</Title>
+  <CustomCarousel cards={cards} />
+</Content>
+
           </List.Item>
             <List.Item>
             
