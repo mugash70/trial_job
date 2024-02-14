@@ -141,18 +141,18 @@ function App() {
         />
       </Header>
       <List>
-            <List.Item>
-              <Content  style={{ display: 'flex'}}>
-                <Row style={{ height: "100vh"}}>
+            <List.Item style={{ display: 'flex', minHeight: "100vh"}}>
+              <Content>
+                <Row >
                 <Col xs={24} sm={12}>
                   
                   <div style={{textAlign: 'left',paddingLeft:'10%', marginTop: "20%", }}>
-                  <Title style={{  fontFamily: 'arial', fontSize: '3rem', letterSpacing: '4px' }}>
+                  <Title style={{  fontFamily: 'arial', fontSize: '3rem', letterSpacing: '6px' }}>
                     <span style={{ color: '#FFfff' }}>Turning Data into Insights</span>{' '}
                     <span style={{ color: '#5733FF' }}>Empowering Your Success</span>
                   </Title>
 
-                    <Title style={{ marginTop: "7%",fontSize: '1.5rem',textAlign: 'left' }}>
+                    <Title style={{ marginTop: "7%",fontSize: '1.5rem',textAlign: 'left', letterSpacing: '4px' }}>
                       The main product is a data science model that utilizes trained on real-world datasets to solve various classification/regression tasks.
                       Products to be guided by the existence of real problems.
                     </Title>
@@ -176,16 +176,10 @@ function App() {
               </Content>
             </List.Item>
             <List.Item>
-              
-                {/* <Content style={{ margin: '0 16px',height: "100vh"}}  >
-                <Title style={{ fontFamily: 'Arial',fontSize: '3rem'}}>What We Do!</Title>
-                      <CustomCarousel cards={cards} />
-                </Content> */}
-                <Content style={{ margin: '0 16px', width: '50%' }}>
-  <Title style={{ fontFamily: 'Arial', fontSize: '3rem' }}>What We Do!</Title>
-  <CustomCarousel cards={cards} />
-</Content>
-
+             <Content xs={24} sm={12} style={{ margin: '0 16px', width: '50%',minHeight:'100vh'}}>
+                <Title style={{ fontFamily: 'Arial', fontSize: '3rem' }}>What We Do!</Title>
+                <CustomCarousel cards={cards} />
+              </Content>
           </List.Item>
             <List.Item>
             

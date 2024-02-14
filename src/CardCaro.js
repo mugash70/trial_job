@@ -1,31 +1,35 @@
 import React, { useState, useEffect } from 'react';
-import { List, Layout, Card, Carousel, Typography, Row, Col } from 'antd';
+import { List, Layout, Card, Carousel, Typography, Row, Col,Grid  } from 'antd';
 import { SmileOutlined, BarChartOutlined, RobotOutlined, CodeOutlined, QuestionOutlined,FundViewOutlined  } from '@ant-design/icons';
 
 const { Content } = Layout;
-const { Title } = Typography;
+const { Title,Text , Paragraph } = Typography;
 
 const cardStyle = {
-    width: '96%', // Adjust the width as needed
-    margin: '0 8px', // Add some margin between cards
-    border: 'none', // Remove border from cards
-    height:'300px'
+    width: '100%', 
+    height:'20rem'
   };
   
   const carouselStyle = {
     maxWidth: '100%',
+    display: 'flex',
     margin: '0 auto', 
-    padding: '16px', }
+    padding: '16px', 
+  }
 
     export const CustomCarousel = () => {
       const [hoveredIndex, setHoveredIndex] = useState(null);
-    
+      const { md } = Grid.useBreakpoint(); 
+
       const handleCardHover = (index) => {
         setHoveredIndex(index);
       };
     
       const handleCardLeave = () => {
         setHoveredIndex(null);
+      };
+      const handleCarouselChange = (current) => {
+        setHoveredIndex(current);
       };
     
       const renderCardContent = (name, content, icon, index) => (
@@ -34,8 +38,9 @@ const cardStyle = {
           <Title level={4} style={{ fontFamily: 'Arial, Helvetica, sans-serif' }}>
             {name}
           </Title>
-          {/* style={{ opacity: hoveredIndex === index ? 1 : 0, transition: 'opacity 0.3s ease-in-out' }} */}
-          <p>{content}</p>
+          {md ? (
+          <Paragraph>{content}</Paragraph>
+          ):( <Paragraph  style={{ fontSize: '1.3rem', color: "black" }}>{content}</Paragraph>)}
         </>
       );
     
@@ -48,33 +53,55 @@ const cardStyle = {
     
       return (
         <>
+        {md ? (
           <Carousel
             autoplay
-            autoplaySpeed={500}
             style={carouselStyle}
             initialSlide={0}
             slidesToShow={4}
             slidesToScroll={1}
-          > 
+            beforeChange={handleCarouselChange}
+          >
             {cardData.map((card, index) => (
-              <div
-                key={index}
-                style={{ display: 'flex', justifyContent: 'center', fontSize: '4rem' }}
-                onMouseEnter={() => handleCardHover(index)}
-                onMouseLeave={handleCardLeave}
-              >
+              <div key={index}>
+                <Row justify="center">
+                  <Col xs={24} sm={22} md={20} lg={20} xl={22}>
+                    <Card
+                      bordered={true}
+                      style={{
+                        ...cardStyle,
+                        boxShadow: hoveredIndex === index ? '0 0 20px rgba(0, 0, 0, 0.4)' : 'none',
+                      }}
+                      onMouseEnter={() => handleCardHover(index)}
+                      onMouseLeave={handleCardLeave}
+                    >
+                      {renderCardContent(card.name, card.content, card.icon, index)}
+                    </Card>
+                  </Col>
+                </Row>
+              </div>
+            ))}
+          </Carousel>
+        ) : (
+          // Render individual Cards for small screens
+          <Row gutter={[16, 16]} justify="center">
+            {cardData.map((card, index) => (
+              <Col key={index} xs={24} sm={12} md={8} lg={6}>
                 <Card
                   bordered={true}
                   style={{
                     ...cardStyle,
                     boxShadow: hoveredIndex === index ? '0 0 20px rgba(0, 0, 0, 0.4)' : 'none',
                   }}
+                  onMouseEnter={() => handleCardHover(index)}
+                  onMouseLeave={handleCardLeave}
                 >
                   {renderCardContent(card.name, card.content, card.icon, index)}
                 </Card>
-              </div>
+              </Col>
             ))}
-          </Carousel>
-        </>
+          </Row>
+        )}
+      </>
       );
     };
