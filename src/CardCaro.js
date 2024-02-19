@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect,useRef } from 'react';
 import { List, Layout, Card, Carousel, Typography, Row, Col,Grid  } from 'antd';
 import { SmileOutlined, BarChartOutlined, RobotOutlined, CodeOutlined, QuestionOutlined,FundViewOutlined  } from '@ant-design/icons';
-
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 const { Content } = Layout;
 const { Title,Text , Paragraph } = Typography;
-
+gsap.registerPlugin(ScrollTrigger);
 const cardStyle = {
     width: '100%', 
     height:'20rem'
@@ -20,6 +21,9 @@ const cardStyle = {
     export const CustomCarousel = () => {
       const [hoveredIndex, setHoveredIndex] = useState(null);
       const { md } = Grid.useBreakpoint(); 
+      const cardRefs = useRef([]);
+      const carouselRef = useRef(null);
+    
 
       const handleCardHover = (index) => {
         setHoveredIndex(index);
@@ -31,11 +35,33 @@ const cardStyle = {
       const handleCarouselChange = (current) => {
         setHoveredIndex(current);
       };
+      const animateInCards = () => {
+        gsap.from(cardRefs.current, {
+          x: '100%',
+          opacity: 0,
+          stagger: 0.2,
+          duration: 1,
+          scrollTrigger: {
+            trigger: carouselRef.current,
+            start: 'center centre',
+            end: 'bottom top',
+            markers:true,
+            scrub: true,
+          },
+          onComplete: () => {
+          
+          },
+        });
+      };
+    
+      useEffect(() => {
+        animateInCards();
+      }, []);
     
       const renderCardContent = (name, content, icon, index) => (
         <>
           <div style={{ fontSize: '19px', display: 'flex' }}>{icon}</div>
-          <Title level={4} style={{ fontFamily: 'Arial, Helvetica, sans-serif' }}>
+          <Title   level={4} style={{ fontFamily: 'Arial, Helvetica, sans-serif' }}>
             {name}
           </Title>
           {md ? (

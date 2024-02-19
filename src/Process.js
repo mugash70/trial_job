@@ -3,6 +3,8 @@ import { Card, Typography, Row, Col } from 'antd';
 import { BarChartOutlined, LineChartOutlined, CodeOutlined } from '@ant-design/icons';
 import gsap from 'gsap';
 import { MotionPathPlugin } from 'gsap/MotionPathPlugin';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+gsap.registerPlugin(ScrollTrigger);
 
 gsap.registerPlugin(MotionPathPlugin);
 
@@ -57,13 +59,28 @@ const ProcessCard = ({ icon, title, description }) => {
       },
       duration: 2,
       onComplete: () => {
-        console.log("doem");
         gsap.set(descriptionRef.current, { opacity: 1, y: 0, duration: 0.3, ease: 'power1.inOut' });
         // tl.to(description, { opacity: 1, y: 0, duration: 0.3, ease: 'power1.inOut' });
       },
     });
   };
 
+  useEffect(() => {
+    gsap.to(cardRef.current, {
+      rotation: 360, 
+      scrollTrigger: {
+        trigger: cardRef.current,
+        start: 'top center',
+        end: 'bottom center',
+        scrub: true, 
+        onUpdate: (self) => {
+          if (self.progress === 1) {
+            gsap.set(descriptionRef.current, { opacity: 1, y: 0, duration: 0.3, ease: 'power1.inOut' });
+          }
+        },
+      },
+    });
+  }, []);
   return (
     <Card
       ref={cardRef}

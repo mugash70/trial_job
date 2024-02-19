@@ -15,16 +15,20 @@ import x7 from './assets/animations/7.json'
 import {CustomCarousel} from './CardCaro'
 import ProcessWay from './Process'
 import {Whatwedo} from './whatwedo'
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+// import ScrollTrigger from 'gsap'
 
+gsap.registerPlugin(ScrollTrigger);
 const { Title,Paragraph  } = Typography;
 const { Header, Footer, Sider, Content } = Layout;
 
 const navs = [
-  { name: "Home", url: "" },
-  { name: "About us", url: "" },
-  { name: "Our processes", url: "" },
-  { name: "Why us", url: "" },
-  { name: "Contact us", url: "" },
+  { name: "Home", url: "home" },
+  { name: "About us", url: "About-us" },
+  { name: "Our processes", url: "Our-processes" },
+  { name: "Why us", url: "why-us" },
+  { name: "Contact us", url: "Q-a" },
 ];
 
 const items = navs.map((nav, index) => ({
@@ -52,16 +56,10 @@ const layoutStyle = {
   maxWidth: 'calc(50% - 8px)',
 };
 
-
-const carouselStyle = {
-  maxWidth: '200px', // Adjust the maximum width of the carousel
-  margin: '0 auto', // Center the carousel on the page
-};
 const animStyle = {
-  width: '100%', // Adjust the width as needed
-  height: '100%', // Adjust the height as needed
-};
-
+  width: '100%',
+  height: '100vh',
+}
 const loadLottieAnimation = (containerRef, animationData) => {
   return Lottie.loadAnimation({
     container: containerRef.current,
@@ -69,14 +67,17 @@ const loadLottieAnimation = (containerRef, animationData) => {
     loop: true,
     autoplay: true,
     animationData: animationData,
-    rendererSettings: {
-      preserveAspectRatio: 'xMidYMid slice',
-    },
+    // rendererSettings: {
+    //   preserveAspectRatio: 'xMidYMid slice',
+    // },
   });
 };
 
 
+
 function App() {
+
+
 
   const ContainerRef = useRef(null);
   const ContainerRef1 = useRef(null);
@@ -109,6 +110,19 @@ function App() {
   }, []);
 
 
+  const scrollToSection = (sectionId) => {
+    const targetElement = document.getElementById(sectionId);
+  
+    if (targetElement) {
+      gsap.to(window, {
+        scrollTo: { y: targetElement, offsetY: 70 },
+        duration: 1,
+      });
+    }
+  };
+  
+  
+  
   const cards = ['Card content 1', 'Card content 2', 'Card content 3', 'Card content 4'];
 
 
@@ -131,22 +145,23 @@ function App() {
         <Menu
           theme="dark"
           mode="horizontal"
-          defaultSelectedKeys={['2']}
+          defaultSelectedKeys={['1']}
           items={items}
           style={{
             flex: 1,
             minWidth: 0,
             marginLeft: '25px',
           }}
+          onClick={(e) => console.log(e.item.label)}
         />
       </Header>
-      <List>
-            <List.Item style={{ display: 'flex', minHeight: "100vh"}}>
-              <Content>
+      <List style={{ display: 'flex' }}>
+            <List.Item>
+              <Content id="home">
                 <Row >
                 <Col xs={24} sm={12}>
                   
-                  <div style={{textAlign: 'left',paddingLeft:'10%', marginTop: "20%", }}>
+                  <div style={{textAlign: 'left',paddingLeft:'10%', marginTop: "8%", }}>
                   <Title style={{  fontFamily: 'arial', fontSize: '3rem', letterSpacing: '6px' }}>
                     <span style={{ color: '#FFfff' }}>Turning Data into Insights</span>{' '}
                     <span style={{ color: '#5733FF' }}>Empowering Your Success</span>
@@ -164,9 +179,6 @@ function App() {
                 </div>
 
                 </Col>
-                {/* <Col xs={24} sm={12} style ={{flexDirection: 'column',height: "100vh"}} >
-                    <div  ref={ContainerRef4} style={{ ...contentStyle }}></div>
-                </Col> */}
                 <Col xs={24} sm={12} >
                   <div ref={ContainerRef4} style={{ ...animStyle }}></div>
                 </Col>
@@ -176,20 +188,19 @@ function App() {
               </Content>
             </List.Item>
             <List.Item>
-             <Content xs={24} sm={12} style={{ margin: '0 16px', width: '50%',minHeight:'100vh'}}>
+             <Content  xs={24} sm={12} style={{ margin: '0 16px', width: '50%'}}>
                 <Title style={{ fontFamily: 'Arial', fontSize: '3rem' }}>What We Do!</Title>
                 <CustomCarousel cards={cards} />
               </Content>
           </List.Item>
             <List.Item>
-            
               <Content  style={{marginBottom:'7rem'}}>
                     <Title  style={{ fontFamily: 'Arial',fontSize: '2rem',alignContent:'center'}}>Development Process</Title>
                     <ProcessWay/>
               </Content>
             </List.Item>
             <List.Item>
-            <Content>
+            <Content id='our-processes' >
             <Card bordered={true}>
               <Row gutter={[16, 16]} align="top">
                 <Col xs={24} sm={12} style={{ flexDirection: 'column', alignItems: 'flex-start' }}>
@@ -213,7 +224,7 @@ function App() {
             </Content>
             </List.Item>
             <List.Item>
-            <Content>
+            <Content id='why-us' >
           <Row gutter={[16, 16]} align="top">
               <Col xs={24} sm={12} style={{ flexDirection: 'column' }}>
               <div ref={ContainerRef7} style={{ ...contentStyle }}></div>
@@ -230,6 +241,8 @@ function App() {
             </Content>
             </List.Item>
             <List.Item>
+              <Content id='q-a'>
+
              <Card bordered={true}>
            
           <Row gutter={[16, 16]} align="top">
@@ -244,9 +257,9 @@ function App() {
             <Col xs={24} sm={12} style={{ flexDirection: 'column' }}>
               <div ref={ContainerRef3} style={{ ...contentStyle }}></div>
             </Col>
-            
-          </Row>
+             </Row>
              </Card>
+             </Content>
             </List.Item>
             <List.Item>
               <Content style={contentStyle}>Content</Content>
