@@ -96,6 +96,7 @@ const cardStyle = {
                       bordered={true}
                       style={{
                         ...cardStyle,
+                        opacity: 1,
                         boxShadow: hoveredIndex === index ? '0 0 20px rgba(0, 0, 0, 0.4)' : 'none',
                       }}
                       onMouseEnter={() => handleCardHover(index)}

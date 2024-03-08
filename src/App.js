@@ -159,22 +159,32 @@ function App() {
             <List.Item>
               <Content id="home">
                 <Row >
-                <Col xs={24} sm={12}>
+                {/* <Col xs={24} sm={12}> */}
+                <Col xs={24} sm={12} style={{ backgroundColor: '#f5f5f5', padding: '2rem', marginTop: '-4%' }}>
                   
                   <div style={{textAlign: 'left',paddingLeft:'10%', marginTop: "8%", }}>
-                  <Title style={{  fontFamily: 'arial', fontSize: '3rem', letterSpacing: '6px' }}>
-                    <span style={{ color: '#FFfff' }}>Turning Data into Insights</span>{' '}
-                    <span style={{ color: '#5733FF' }}>Empowering Your Success</span>
+                  <Title style={{  fontFamily: 'Serif ', fontSize: '3.5rem' }}>
+                    <span style={{ color: '#FFfff', letterSpacing: '2px' }}>
+                      <span style={{ textDecoration: 'underline' }}>Unleash</span>,{' '}
+                    the Power of Data-Driven Decisions</span>{' '}
+                    {/* <span style={{ color: '#5733FF'}}>Your One-Stop Shop for AI, Analytics, and Software Development.</span> */}
+                    <span style={{ color: '#5733FF' }}>
+                      Your One-Stop Shop for{' '}
+                      <span style={{ textDecoration: 'underline' }}>AI</span>,{' '}
+                      <span style={{ textDecoration: 'underline' }}>Analytics</span>, and{' '}
+                      <span style={{ textDecoration: 'underline' }}>Software Development</span>.
+                    </span>
                   </Title>
 
-                    <Title style={{ marginTop: "7%",fontSize: '1.5rem',textAlign: 'left', letterSpacing: '4px' }}>
-                      The main product is a data science model that utilizes trained on real-world datasets to solve various classification/regression tasks.
-                      Products to be guided by the existence of real problems.
+                    <Title style={{ marginTop: "7%",fontSize: '1.7rem',textAlign: 'left', fontFamily: 'Helvetica',
+                    //  letterSpacing: '2px'
+                      }}>
+                    At GreatInt, we bridge the gap between raw data and actionable insights, empowering businesses with a comprehensive suite of services.
                     </Title>
                 </div>
 
                 <div  style={{ alignItems: 'center',}}>
-                      <Button  style={{marginTop: "4%",height: '4rem',fontSize: '1.2rem',color: '#FFFFFF', padding: '15px 30px',  backgroundColor: '#5733FF',borderRadius: '2rem'}} className="hover">
+                      <Button  style={{marginTop: "5%",height: '4rem',fontSize: '1.2rem',color: '#FFFFFF', padding: '15px 30px',  backgroundColor: '#5733FF',borderRadius: '2rem'}} className="hover">
                         Ask for a Demo</Button>
                 </div>
 
@@ -189,13 +199,26 @@ function App() {
             </List.Item>
             <List.Item>
              <Content  xs={24} sm={12} style={{ margin: '0 16px', width: '50%'}}>
-                <Title style={{ fontFamily: 'Arial', fontSize: '3rem' }}>What We Do!</Title>
-                <CustomCarousel cards={cards} />
+             <div style={{ display: 'flex', flexDirection: 'row' }}>
+              <div style={{ flex: 1 }}>
+                <Title style={{ fontFamily: 'Serif', fontSize: '3rem', textAlign: 'left',paddingLeft:'30%',color: '#5733FF',marginTop: "-2%" }}>What We Do!</Title>
+              </div>
+              <div style={{ flex: 1, textAlign: 'right',paddingRight:'10%',textAlign: 'left', fontSize: '1rem' }}>
+                <span>
+                  In today's data-driven world, making informed decisions can be the difference between success and stagnation. With a comprehensive suite of services: Artificial Intelligence (AI), Data Analytics, Business Intelligence (BI), and Software Development.
+                </span>
+              </div>
+            </div>
+
+            <div style={{ marginTop: '20px' }}>
+              <CustomCarousel cards={cards} />
+            </div>
+               
               </Content>
           </List.Item>
             <List.Item>
               <Content  style={{marginBottom:'7rem'}}>
-                    <Title  style={{ fontFamily: 'Arial',fontSize: '2rem',alignContent:'center'}}>Development Process</Title>
+                    <Title  style={{ fontFamily: 'Serif ',fontSize: '2rem',alignContent:'center'}}>Development Process</Title>
                     <ProcessWay/>
               </Content>
             </List.Item>
@@ -204,7 +227,7 @@ function App() {
             <Card bordered={true}>
               <Row gutter={[16, 16]} align="top">
                 <Col xs={24} sm={12} style={{ flexDirection: 'column', alignItems: 'flex-start' }}>
-                  <Title style={{ marginTop: "20%", fontFamily: 'arial', fontSize: '2rem' }}>
+                  <Title style={{ marginTop: "20%", fontFamily: 'Serif ', fontSize: '2rem' }}>
                     <span style={{ color: '#FFfff' }}>Leading Companies </span>{' '}
                     <span style={{ color: '#5733FF' }}>Develop with Us!</span>
                   </Title>
@@ -230,7 +253,7 @@ function App() {
               <div ref={ContainerRef7} style={{ ...contentStyle }}></div>
             </Col>
             <Col xs={24} sm={12} style={{ flexDirection: 'column', alignItems: 'flex-start' }}>
-              <Title style={{ marginTop: "20%", fontFamily: 'arial', fontSize: '2rem' }}>
+              <Title style={{ marginTop: "20%", fontFamily: 'Serif ', fontSize: '2rem' }}>
                 <span style={{ color: '#FFfff' }}>What to expect from  </span>{' '}
                 <span style={{ color: '#5733FF' }}> Us!</span>
               </Title>
@@ -248,7 +271,7 @@ function App() {
           <Row gutter={[16, 16]} align="top">
              
             <Col xs={24} sm={12} style={{ flexDirection: 'column', alignItems: 'flex-start' }}>
-              <Title style={{ marginTop: "20%", fontFamily: 'arial', fontSize: '2rem' }}>
+              <Title style={{ marginTop: "20%", fontFamily: 'Serif ', fontSize: '2rem' }}>
                 <span style={{ color: '#FFfff' }}>Common </span>{' '}
                 <span style={{ color: '#5733FF' }}> Questions (?) </span>
               </Title>
