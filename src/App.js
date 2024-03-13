@@ -160,8 +160,8 @@ function App() {
               <Content id="home">
                 <Row >
                 {/* <Col xs={24} sm={12}> */}
-                <Col xs={24} sm={12} style={{ backgroundColor: '#f5f5f5', padding: '2rem', marginTop: '-4%' }}>
-                  
+                {/* <Col xs={24} sm={12} style={{ backgroundColor: '#f5f5f5', padding: '2rem', marginTop: '-4%',height:'100vh' }}> */}
+                <Col xs={24} sm={12} style={{ backgroundColor: '#f5f5f5', padding: '2rem', marginTop: '-4%', minHeight: '100vh' }}>
                   <div style={{textAlign: 'left',paddingLeft:'10%', marginTop: "8%", }}>
                   <Title style={{  fontFamily: 'Serif ', fontSize: '3.5rem' }}>
                     <span style={{ color: '#FFfff', letterSpacing: '2px' }}>
@@ -170,10 +170,12 @@ function App() {
                     {/* <span style={{ color: '#5733FF'}}>Your One-Stop Shop for AI, Analytics, and Software Development.</span> */}
                     <span style={{ color: '#5733FF' }}>
                       Your One-Stop Shop for{' '}
-                      <span style={{ textDecoration: 'underline' }}>AI</span>,{' '}
-                      <span style={{ textDecoration: 'underline' }}>Analytics</span>, and{' '}
-                      <span style={{ textDecoration: 'underline' }}>Software Development</span>.
+                      <span  style={{ textDecoration: 'underline' }}>AI</span>{' '}&{' '}
+                      <span  style={{ textDecoration: 'underline' }}>Machine Learning</span>{' '} 
+                     
                     </span>
+                    <span>solutions</span>.
+                    {/* style={{ textDecoration: 'underline' }} */}
                   </Title>
 
                     <Title style={{ marginTop: "7%",fontSize: '1.7rem',textAlign: 'left', fontFamily: 'Helvetica',
