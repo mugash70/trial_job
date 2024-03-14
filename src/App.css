@@ -1,0 +1,72 @@
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+  .ant-card {
+    margin: 0 4px; /* Decrease margin on smaller screens */
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+@media (max-width: 767px) {
+  /* Styles for screens up to 767px wide */
+  .ant-card {
+    margin: 0 4px; /* Decrease margin on smaller screens */
+  }
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.arrow-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.arrow {
+  width: 0;
+  height: 0;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-bottom: 20px solid #3498db;
+  z-index: -1;
+}
+.line {
+  transition: all 200ms ease;
+  height: 2px;
+  flex-grow: 1;
+  max-width: 120px;
+  background: var(--color-timeline-default);
+}
+
