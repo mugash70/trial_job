@@ -3,6 +3,7 @@ import './App.css';
 import React,{useEffect,useRef}from 'react';
 import { Layout,List, Menu, Row,Col,Flex,Button, Typography,Card} from 'antd';
 // import {Link} from 'react-router-dom'
+import crips from './assets/crips.webp'
 import Lottie from 'lottie-web';
 import x1 from './assets/animations/1.json'
 import x from './assets/animations/1.json'
@@ -178,30 +179,30 @@ function App() {
               <Content id="home">
                 <Row >
                 <Col xs={24} sm={12} style={{ backgroundColor: '#f5f5f5', padding: '2rem', marginTop: '-4%', minHeight: '100vh' }}>
-  <div style={{textAlign: 'left', paddingLeft:'10%', marginTop: "8%", }}>
-    <Title style={{  fontFamily: 'Serif ', fontSize: '2.7rem'}}>
-      <span style={{  letterSpacing: '2px' }}>
-        <span style={{ textDecoration: 'underline' }}>Unleash</span>,{' '}
-      the Power of Data-Driven Decisions</span>{' '}
-      <span style={{ color: '#5733FF' }}>
-        Your One-Stop Shop for{' '}
-        <span  style={{ textDecoration: 'underline' }}>AI</span>{' '}&{' '}
-        <span  style={{ textDecoration: 'underline' }}>Machine Learning</span>{' '} 
-      </span>
-      <span>solutions</span>.
-    </Title>
+                  <div style={{textAlign: 'left', paddingLeft:'10%', marginTop: "8%", }}>
+                    <Title style={{  fontFamily: 'Serif ', fontSize: '2.7rem'}}>
+                      <span style={{  letterSpacing: '2px' }}>
+                        <span style={{ textDecoration: 'underline' }}>Unleash</span>,{' '}
+                      the Power of Data-Driven Decisions</span>{' '}
+                      <span style={{ color: '#5733FF' }}>
+                        Your One-Stop Shop for{' '}
+                        <span  style={{ textDecoration: 'underline' }}>AI</span>{' '}&{' '}
+                        <span  style={{ textDecoration: 'underline' }}>Machine Learning</span>{' '} 
+                      </span>
+                      <span>solutions</span>.
+                    </Title>
 
-    <Title style={{ marginTop: "7%", fontSize: '1.7rem', textAlign: 'left', fontFamily: 'Helvetica'}}>
-      At GreatInt, we bridge the gap between raw data and actionable insights, empowering businesses with a comprehensive suite of services.
-    </Title>
-  </div>
+                    <Title style={{ marginTop: "7%", fontSize: '1.7rem', textAlign: 'left', fontFamily: 'Helvetica'}}>
+                      At GreatInt, we bridge the gap between raw data and actionable insights, empowering businesses with a comprehensive suite of services.
+                    </Title>
+                  </div>
 
-  <div  style={{ display: 'flex', justifyContent: 'center' }}>
-    <Button  style={{marginTop: "5%", height: '4rem', fontSize: '1.2rem', color: '#FFFFFF', padding: '15px 30px',  backgroundColor: '#5733FF', borderRadius: '2rem'}} className="hover">
-      Ask for a Demo
-    </Button>
-  </div>
-</Col>
+                  <div  style={{ display: 'flex', justifyContent: 'center' }}>
+                    <Button  style={{marginTop: "5%", height: '4rem', fontSize: '1.2rem', color: '#FFFFFF', padding: '15px 30px',  backgroundColor: '#5733FF', borderRadius: '2rem'}} className="hover">
+                      Ask for a Demo
+                    </Button>
+                  </div>
+                </Col>
                 <Col xs={24} sm={12} >
                   <div ref={ContainerRef4} style={{ ...animStyle }}></div>
                 </Col>
@@ -232,7 +233,15 @@ function App() {
             <List.Item>
               <Content  style={{marginBottom:'7rem'}}>
                     <Title  style={{ fontFamily: 'Serif ',fontSize: '2rem',alignContent:'center'}}>Development Process</Title>
-                    <ProcessWay/>
+                    <Row gutter={[16, 16]} align="top">
+                        <Col xs={24} sm={12} style={{ flexDirection: 'column' }}>
+                        <div  style={{ ...contentStyle }}><img src={crips}></img></div>
+                      </Col>
+                      <Col xs={24} sm={12} style={{ flexDirection: 'column', alignItems: 'flex-start' }}>
+                          <ProcessWay cards={cards} />
+                      </Col>
+                      
+                    </Row>
               </Content>
             </List.Item>
             <List.Item>
