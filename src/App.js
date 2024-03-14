@@ -8,7 +8,7 @@ import x1 from './assets/animations/1.json'
 import x from './assets/animations/1.json'
 import x2 from './assets/animations/2.json'
 import x3 from './assets/animations/3.json'
-import x4 from './assets/animations/4.json'
+import x4 from './assets/animations/page1.json'
 import x5 from './assets/animations/5.json'
 import x6 from './assets/animations/6.json'
 import x7 from './assets/animations/7.json'
@@ -58,13 +58,25 @@ const layoutStyle = {
 
 const animStyle = {
   width: '100%',
-  height: '100vh',
+  height: '85vh',
 }
 const loadLottieAnimation = (containerRef, animationData) => {
   return Lottie.loadAnimation({
     container: containerRef.current,
     renderer: 'svg',
     loop: true,
+    autoplay: true,
+    animationData: animationData,
+    // rendererSettings: {
+    //   preserveAspectRatio: 'xMidYMid slice',
+    // },
+  });
+};
+const loadLottieAnimationx = (containerRef, animationData) => {
+  return Lottie.loadAnimation({
+    container: containerRef.current,
+    renderer: 'svg',
+    loop: false,
     autoplay: true,
     animationData: animationData,
     // rendererSettings: {
@@ -130,20 +142,26 @@ function App() {
     <div className="App">
        <Flex gap="middle" wrap="wrap">
         <Layout>
-      <Header
-        style={{
-          position: 'sticky',
-          top: 0,
-          zIndex: 1,
-          width: '100%',
-          display: 'flex',
-          alignItems: 'center',
-        }}
-      >
-       <div className="demo-logo" ref={ContainerRef2} style={{ width: '60px', height: '60px' }}></div>
+        <Header 
+  style={{
+    position: 'sticky',
+    top: 0,
+    zIndex: 1,
+    width: '100%',
+    display: 'flex',
+    alignItems: 'center',
+    background: '#fff', // Setting a light background color for the Header
+    boxShadow: '0 2px 8px rgba(0, 0, 0, 0.05)', // Adding a light shadow
+  }}
+>
+      {/* <Title>GreatInt</Title> <div className="demo-logo" ref={ContainerRef2} style={{ width: '60px', height: '60px' }}></div> */}
+      <div style={{ display: 'flex', alignItems: 'center' }}>
+  <Title style={{ marginRight: '10px' }}>GreatInt</Title>
+  <div className="demo-logo" ref={ContainerRef2} style={{ width: '60px', height: '60px' }}></div>
+</div>
 
         <Menu
-          theme="dark"
+          // theme="light"
           mode="horizontal"
           defaultSelectedKeys={['1']}
           items={items}
@@ -159,38 +177,31 @@ function App() {
             <List.Item>
               <Content id="home">
                 <Row >
-                {/* <Col xs={24} sm={12}> */}
-                {/* <Col xs={24} sm={12} style={{ backgroundColor: '#f5f5f5', padding: '2rem', marginTop: '-4%',height:'100vh' }}> */}
                 <Col xs={24} sm={12} style={{ backgroundColor: '#f5f5f5', padding: '2rem', marginTop: '-4%', minHeight: '100vh' }}>
-                  <div style={{textAlign: 'left',paddingLeft:'10%', marginTop: "8%", }}>
-                  <Title style={{  fontFamily: 'Serif ', fontSize: '3.5rem' }}>
-                    <span style={{ color: '#FFfff', letterSpacing: '2px' }}>
-                      <span style={{ textDecoration: 'underline' }}>Unleash</span>,{' '}
-                    the Power of Data-Driven Decisions</span>{' '}
-                    {/* <span style={{ color: '#5733FF'}}>Your One-Stop Shop for AI, Analytics, and Software Development.</span> */}
-                    <span style={{ color: '#5733FF' }}>
-                      Your One-Stop Shop for{' '}
-                      <span  style={{ textDecoration: 'underline' }}>AI</span>{' '}&{' '}
-                      <span  style={{ textDecoration: 'underline' }}>Machine Learning</span>{' '} 
-                     
-                    </span>
-                    <span>solutions</span>.
-                    {/* style={{ textDecoration: 'underline' }} */}
-                  </Title>
+  <div style={{textAlign: 'left', paddingLeft:'10%', marginTop: "8%", }}>
+    <Title style={{  fontFamily: 'Serif ', fontSize: '2.7rem'}}>
+      <span style={{  letterSpacing: '2px' }}>
+        <span style={{ textDecoration: 'underline' }}>Unleash</span>,{' '}
+      the Power of Data-Driven Decisions</span>{' '}
+      <span style={{ color: '#5733FF' }}>
+        Your One-Stop Shop for{' '}
+        <span  style={{ textDecoration: 'underline' }}>AI</span>{' '}&{' '}
+        <span  style={{ textDecoration: 'underline' }}>Machine Learning</span>{' '} 
+      </span>
+      <span>solutions</span>.
+    </Title>
 
-                    <Title style={{ marginTop: "7%",fontSize: '1.7rem',textAlign: 'left', fontFamily: 'Helvetica',
-                    //  letterSpacing: '2px'
-                      }}>
-                    At GreatInt, we bridge the gap between raw data and actionable insights, empowering businesses with a comprehensive suite of services.
-                    </Title>
-                </div>
+    <Title style={{ marginTop: "7%", fontSize: '1.7rem', textAlign: 'left', fontFamily: 'Helvetica'}}>
+      At GreatInt, we bridge the gap between raw data and actionable insights, empowering businesses with a comprehensive suite of services.
+    </Title>
+  </div>
 
-                <div  style={{ alignItems: 'center',}}>
-                      <Button  style={{marginTop: "5%",height: '4rem',fontSize: '1.2rem',color: '#FFFFFF', padding: '15px 30px',  backgroundColor: '#5733FF',borderRadius: '2rem'}} className="hover">
-                        Ask for a Demo</Button>
-                </div>
-
-                </Col>
+  <div  style={{ display: 'flex', justifyContent: 'center' }}>
+    <Button  style={{marginTop: "5%", height: '4rem', fontSize: '1.2rem', color: '#FFFFFF', padding: '15px 30px',  backgroundColor: '#5733FF', borderRadius: '2rem'}} className="hover">
+      Ask for a Demo
+    </Button>
+  </div>
+</Col>
                 <Col xs={24} sm={12} >
                   <div ref={ContainerRef4} style={{ ...animStyle }}></div>
                 </Col>
