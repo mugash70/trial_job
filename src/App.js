@@ -1,7 +1,7 @@
 
 import './App.css';
-import React,{useEffect,useRef}from 'react';
-import { Layout,List, Menu, Row,Col,Flex,Button, Typography,Card} from 'antd';
+import React,{useEffect,useRef,useState}from 'react';
+import { Layout,List, Menu, Row,Col,Flex,Button, Typography,Card,Avatar, Space,Divider, Skeleton } from 'antd';
 // import {Link} from 'react-router-dom'
 import crips from './assets/crips.webp'
 import Lottie from 'lottie-web';
@@ -13,15 +13,20 @@ import x4 from './assets/animations/page1.json'
 import x5 from './assets/animations/5.json'
 import x6 from './assets/animations/6.json'
 import x7 from './assets/animations/7.json'
+import x8 from './assets/animations/last1.json'
 import {CustomCarousel} from './CardCaro'
 import ProcessWay from './Process'
 import {Whatwedo} from './whatwedo'
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { TextPlugin } from 'gsap/TextPlugin'
+import { UserOutlined,GoogleOutlined,LinkedinOutlined,GithubOutlined,PhoneOutlined} from '@ant-design/icons';
+import p4 from './assets/prof/4.jpg'
+import InfiniteScroll from 'react-infinite-scroll-component';
+
 gsap.registerPlugin(ScrollTrigger);
 gsap.registerPlugin(TextPlugin);
-const { Title,Paragraph  } = Typography;
+const { Title,Paragraph,Text} = Typography;
 const { Header, Footer, Sider, Content } = Layout;
 
 const handleClick = (id) => {
@@ -36,7 +41,35 @@ const navs = [
   { name: "About us", url: "2" },
   { name: "Our processes", url: "3" },
   { name: "Why us", url: "4" },
-  { name: "Contact us", url: "5" },
+  { name: "Our team", url: "5" },
+  { name: "Q & A", url: "6" },
+  { name: "Contact us", url: "7" },
+];
+const Teams_x = [
+  { 
+    name: "Rodgers", 
+    icons: "1",
+    desc: "Rodgers is our visionary leader, with a wealth of experience in driving business strategies and fostering innovation. As the Chief Executive Officer, he provides direction and guidance to our team, ensuring that we remain agile and adaptive in a rapidly changing industry.",
+    title: "Chief Executive Officer" ,image:''
+  },
+  { 
+    name: "Bram", 
+    icons: "2",
+    desc: "Bram is our operational expert, overseeing the day-to-day functions of our company with precision and efficiency. As the Chief Operations Officer, he streamlines our processes and ensures that our operations run smoothly, enabling us to deliver exceptional results to our clients.",
+    title: "Chief Operations Officer",image:'' 
+  },
+  { 
+    name: "Erick", 
+    icons: "3",
+    desc: "Erick is our analytical powerhouse, with a keen eye for data and insights. As a Senior Analyst, he leverages his expertise to extract valuable insights from complex datasets, empowering our team to make informed decisions and drive business growth.",
+    title: "Senior Analyst" ,image:''
+  },
+  { 
+    name: "Cyril", 
+    icons: "4",
+    desc: "Cyril is our masterful developer, with a passion for turning ideas into reality through code. As a Senior Developer, he thrives on challenges and is dedicated to creating innovative solutions that push the boundaries of technology. With Cyril on our team, we're always one step ahead.",
+    title: "Senior Developer" ,image:p4
+  },
 ];
 
 const items = navs.map((nav, index) => ({
@@ -53,9 +86,8 @@ const contentStyle = {
 };
 
 const footerStyle = {
-  // textAlign: 'center',
   color: '#fff',
-  backgroundColor: '#4096ff',
+  backgroundColor: '#5733FF',
 };
 const layoutStyle = {
   borderRadius: 8,
@@ -80,23 +112,73 @@ const loadLottieAnimation = (containerRef, animationData) => {
     // },
   });
 };
-const loadLottieAnimationx = (containerRef, animationData) => {
-  return Lottie.loadAnimation({
-    container: containerRef.current,
-    renderer: 'svg',
-    loop: false,
-    autoplay: true,
-    animationData: animationData,
-    // rendererSettings: {
-    //   preserveAspectRatio: 'xMidYMid slice',
-    // },
-  });
-};
 
+const x_QA = [
+  { 
+    quiz: "What is data analytics, and why is it important for businesses?", 
+    answer: "Data analytics involves analyzing raw data to extract insights and make informed decisions. It's important for businesses because it helps them understand trends, make predictions, and improve decision-making processes." 
+  },
+  { 
+    quiz: "How can AI and ML benefit our business operations?", 
+    answer: "AI and ML can benefit business operations by automating repetitive tasks, improving decision-making through data analysis, enhancing customer experiences, and optimizing processes for greater efficiency." 
+  },
+  { 
+    quiz: "How does artificial intelligence differ from traditional programming?", 
+    answer: "Artificial intelligence (AI) enables machines to learn from data and perform tasks that typically require human intelligence, whereas traditional programming involves writing instructions for a computer to follow without the ability to learn or adapt on its own." 
+  },
+  { 
+    quiz: "What are some real-world applications of AI and ML in business?", 
+    answer: "Real-world applications of AI and ML in business include personalized recommendations, fraud detection, predictive maintenance, natural language processing, and image recognition, among others." 
+  },
+  { 
+    quiz: "What are the key differences between supervised and unsupervised learning, and how do they apply to our business needs?", 
+    answer: "Supervised learning requires labeled data for training, while unsupervised learning works with unlabeled data. Supervised learning is suitable for tasks like classification and regression, while unsupervised learning is used for clustering and anomaly detection." 
+  },
+  { 
+    quiz: "What strategies do you recommend for leveraging AI and ML to gain a competitive advantage in our industry?", 
+    answer: "Strategies for leveraging AI and ML to gain a competitive advantage may include investing in data quality and infrastructure, fostering a culture of data-driven decision-making, staying informed about industry trends, and collaborating with experts in AI and ML." 
+  },
+  { 
+    quiz: "What steps do you take to ensure that AI and ML models are aligned with our business goals and objectives?", 
+    answer: "Steps to ensure alignment of AI and ML models with business goals may include defining clear objectives, selecting appropriate metrics for evaluation, involving stakeholders throughout the development process, and continuously monitoring performance against business KPIs." 
+  },
+  { 
+    quiz: "What ethical considerations are important in data analytics and AI?", 
+    answer: "Important ethical considerations in data analytics and AI include privacy protection, fairness and bias mitigation, transparency in decision-making processes, accountability for outcomes, and ensuring that AI technologies benefit society as a whole." 
+  },
+  { 
+    quiz: "Can you explain the difference between supervised and unsupervised machine learning?", 
+    answer: "Supervised machine learning requires labeled data for training, where the algorithm learns from input-output pairs. Unsupervised machine learning works with unlabeled data and aims to find patterns or groupings within the data without explicit guidance." 
+  },
+  { 
+    quiz: "What are the key components of a data analytics pipeline?", 
+    answer: "The key components of a data analytics pipeline include data collection, data preprocessing, exploratory data analysis, feature engineering, model training, model evaluation, and deployment into production." 
+  },
+  { 
+    quiz: "How do you ensure data security and privacy when implementing AI and ML solutions in a business environment?", 
+    answer: "Measures to ensure data security and privacy may include implementing access controls, encrypting sensitive data, anonymizing or pseudonymizing personally identifiable information (PII), conducting regular security audits, and complying with relevant regulations such as GDPR or CCPA." 
+  },
+  { 
+    quiz: "How do you stay updated with the latest advancements in data analytics and AI?", 
+    answer: "Staying updated with the latest advancements may involve attending conferences and workshops, participating in online courses or webinars, reading research papers and industry publications, joining professional networks or forums, and experimenting with new tools and technologies through personal projects or collaborations." 
+  }
+];
 
 
 function App() {
 
+  const [data, setData] = useState(x_QA.slice(0, 4)); 
+  const [hasMore, setHasMore] = useState(true); 
+
+  const loadMoreData = () => {
+    setTimeout(() => {
+      const newData = x_QA.slice(data.length, data.length + 4); 
+      setData([...data, ...newData]); 
+      if (data.length + 4 >= x_QA.length) {
+        setHasMore(false); 
+      }
+    }, 1000);
+  };
   const ContainerRef = useRef(null);
   const ContainerRef1 = useRef(null);
   const ContainerRef2 = useRef(null);
@@ -105,6 +187,7 @@ function App() {
   const ContainerRef5 = useRef(null);
   const ContainerRef6 = useRef(null);
   const ContainerRef7 = useRef(null);
+  const ContainerRef8 = useRef(null);
 
   useEffect(() => {
     const animation = loadLottieAnimation(ContainerRef, x);
@@ -115,6 +198,7 @@ function App() {
     const animation5 = loadLottieAnimation(ContainerRef5, x5);
     const animation6 = loadLottieAnimation(ContainerRef6, x6);
     const animation7 = loadLottieAnimation(ContainerRef7, x7);
+    const animation8 = loadLottieAnimation(ContainerRef8, x8);
     return () => {
       animation.destroy();
       animation1.destroy();
@@ -124,20 +208,21 @@ function App() {
       animation5.destroy();
       animation6.destroy();
       animation7.destroy();
+      animation8.destroy();
     };
   }, []);
 
 
-  const scrollToSection = (sectionId) => {
-    const targetElement = document.getElementById(sectionId);
+  // const scrollToSection = (sectionId) => {
+  //   const targetElement = document.getElementById(sectionId);
   
-    if (targetElement) {
-      gsap.to(window, {
-        scrollTo: { y: targetElement, offsetY: 70 },
-        duration: 1,
-      });
-    }
-  };
+  //   if (targetElement) {
+  //     gsap.to(window, {
+  //       scrollTo: { y: targetElement, offsetY: 70 },
+  //       duration: 1,
+  //     });
+  //   }
+  // };
   
   useEffect(() => {
     gsap.defaults({ ease: "none" });
@@ -251,14 +336,14 @@ function App() {
                   </div>
                   <div style={{ flex: 1, textAlign: 'right',paddingRight:'10%',textAlign: 'left', fontSize: '1rem' }}>
                     <span>
-                      In today's data-driven world, making informed decisions can be the difference between success and stagnation. With a comprehensive suite of services: Artificial Intelligence (AI), Data Analytics, Business Intelligence (BI), and Software Development.
+                    We understand that embarking on a data-driven journey can seem daunting. That's why we employ the CRISP-DM methodology, a structured approach that guides us through each stage of the project lifecycle:
                     </span>
                   </div>
                 </div>
                     <Row gutter={[16, 16]} align="top">
                         <Col xs={24} sm={12} style={{ flexDirection: 'column' }}>
                         <div style={{ width: 'auto', height: 'auto' }}>
-                          <img src={crips} alt="Description of the image" style={{ maxWidth: '70%', maxHeight: '70%' }} />
+                          <img src={crips} alt="Description of the image" style={{ maxWidth: '85%', maxHeight: '85%' }} />
                         </div>
                       </Col>
                       <Col xs={24} sm={12} style={{ flexDirection: 'column', alignItems: 'flex-start' }}>
@@ -294,50 +379,106 @@ function App() {
             </Content>
             </List.Item>
             <List.Item>
-            <Content  id="5">
-          <Row gutter={[16, 16]} align="top">
-              <Col xs={24} sm={12} style={{ flexDirection: 'column' }}>
-              <div ref={ContainerRef7} style={{ ...contentStyle }}></div>
-            </Col>
-            <Col xs={24} sm={12} style={{ flexDirection: 'column', alignItems: 'flex-start' }}>
-              <Title style={{ marginTop: "20%", fontFamily: 'Serif ', fontSize: '2rem' }}>
-                <span style={{ color: '#FFfff' }}>What to expect from  </span>{' '}
-                <span style={{ color: '#5733FF' }}> Us!</span>
-              </Title>
-                 <Whatwedo cards={cards} />
-            </Col>
-            
-          </Row>
+                <Content  id="5" style={{minHeight: '100vh' }}>
+                  <div>
+                  <Title style={{fontFamily: 'Serif ', fontSize: '2rem',color: '#5733FF' }}>Our Team</Title>
+                    <Row gutter={[16, 16]} align="top">
+                        {Teams_x.map((team, index) => (
+                          <Col key={index} xs={24} sm={12} style={{ flexDirection: 'column' }}>
+                              {team.image ? (
+                                <Avatar size={120} src={team.image} />
+                              ) : (
+                                <Avatar size={120} icon={<UserOutlined />} />
+                              )}
+                            <p style={{color: '#5733FF'}}>{team.name}</p>
+                            <p>{team.title}</p>
+                          </Col>
+                        ))}
+                      </Row>
+                  </div>
+                
             </Content>
             </List.Item>
+       
             <List.Item>
-              <Content id="6">
-
-             <Card bordered={true}>
-           
-          <Row gutter={[16, 16]} align="top">
-             
-            <Col xs={24} sm={12} style={{ flexDirection: 'column', alignItems: 'flex-start' }}>
-              <Title style={{ marginTop: "20%", fontFamily: 'Serif ', fontSize: '2rem' }}>
-                <span style={{ color: '#FFfff' }}>Common </span>{' '}
-                <span style={{ color: '#5733FF' }}> Questions (?) </span>
-              </Title>
-                 <Whatwedo cards={cards} />
-            </Col>
-            <Col xs={24} sm={12} style={{ flexDirection: 'column' }}>
-              <div ref={ContainerRef3} style={{ ...contentStyle }}></div>
-            </Col>
-             </Row>
-             </Card>
+              <Content id="6" style={{minHeight: '100vh' }}>
+              <Title style={{fontFamily: 'Serif ', fontSize: '2rem' ,color: '#5733FF' }}>Common Questions</Title>
+             <div id="scrollableDiv"style={{height:'90vh',overflow: 'auto',padding: '0 16px' }}>
+                  <InfiniteScroll dataLength={data.length}next={loadMoreData}hasMore={data.length < x_QA.length} loader={<Skeleton paragraph={{ rows: 1 }} active/>} endMessage={<Divider plain><Text>Contact us for more Questions</Text></Divider>} scrollableTarget="scrollableDiv">
+                    <List
+                      itemLayout="horizontal"
+                      dataSource={data}
+                      renderItem={(item, index) => (
+                        <List.Item key={index}>
+                      <Card style={{ width: "100%" }}>
+                          <div style={{ display: 'flex', flexDirection: 'column' }}>
+                            <Row align="middle">
+                              <Col>
+                                <Title level={4} style={{ color: '#5733FF' }}>{item.quiz}</Title>
+                              </Col>
+                            </Row>
+                            <Row>
+                              <Col span={24}>
+                                <Paragraph style={{ textAlign: 'left' }}>{item.answer}</Paragraph>
+                              </Col>
+                            </Row>
+                          </div>
+                        </Card>
+                        </List.Item>
+                      )}
+                    />
+                  </InfiniteScroll>
+                </div>
              </Content>
             </List.Item>
             <List.Item>
-              <Content style={contentStyle}>Content</Content>
-            </List.Item>
+                <Content id="7" style={{ minHeight: '100vh' }}>
+                  <Title style={{ fontFamily: 'Serif', fontSize: '2rem', color: '#5733FF' }}>Contact Us</Title>
+                  <Row gutter={[16, 16]} style={{ display: 'flex' }}>
+                    <Col xs={24} sm={12}>
+                      <Card style={{ height: '85%' }}>
+                        <div ref={ContainerRef8} style={{ ...animStyle }}></div>
+                      </Card>
+                    </Col>
+                    <Col xs={24} sm={12}>
+                      <Card style={{ height: '85%' }}>
+                 
+                    <div>
+                    <Row justify="center" align="middle">
+                      <Title style={{ marginRight: '8px' }}><GoogleOutlined /></Title>
+                      <a href="mailto:greatint@gmail.com"><Title level={4} style={{ marginBottom: '0' }}>Greatint@gmail.com</Title></a>
+                    </Row>
+                    <Row justify="center" align="middle">
+                      <Title style={{ marginRight: '8px' }}><PhoneOutlined /></Title>
+                      <a href="tel:+254796889020"><Title level={4} style={{ marginBottom: '0' }}>+254796889020</Title></a>
+                    </Row>
+
+                    <Row justify="center" align="middle">
+                        <Title style={{ marginRight: '8px' }}><LinkedinOutlined /></Title>
+                        <a href="https://www.linkedin.com/company/greatint" target="_blank" rel="noopener noreferrer"><Title level={4} style={{ marginBottom: '0' }}>@Greatint</Title></a>
+                      </Row>
+                      <Row justify="center" align="middle">
+                        <Title style={{ marginRight: '8px' }}><GithubOutlined /></Title>
+                        <a href="https://github.com/Greatint" target="_blank" rel="noopener noreferrer"><Title level={4} style={{ marginBottom: '0' }}>Greatint</Title></a>
+                      </Row>
+
+                
+                  </div>
+
+                      </Card>
+                    </Col>
+                  </Row>
+                </Content>
+              </List.Item>
+
           </List>
           
+          <Footer style={{ ...footerStyle, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+  <div className="demo-logo" ref={ContainerRef2} style={{ width: '60px', height: '60px', marginRight: '10px' }}></div>
+  <span>©{new Date().getFullYear()} Created by Cyril</span>
+</Footer>
 
-          <Footer style={footerStyle}>Footer</Footer>
+          {/* <Footer style={footerStyle}>  <div className="demo-logo" ref={ContainerRef2} style={{ width: '60px', height: '60px' }}></div>©{new Date().getFullYear()} Created by Cyril </Footer> */}
         </Layout>
 
       </Flex>
