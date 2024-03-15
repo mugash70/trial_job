@@ -18,25 +18,32 @@ import ProcessWay from './Process'
 import {Whatwedo} from './whatwedo'
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-// import ScrollTrigger from 'gsap'
-
+import { TextPlugin } from 'gsap/TextPlugin'
 gsap.registerPlugin(ScrollTrigger);
+gsap.registerPlugin(TextPlugin);
 const { Title,Paragraph  } = Typography;
 const { Header, Footer, Sider, Content } = Layout;
 
+const handleClick = (id) => {
+  const element = document.getElementById(id);
+  if (element) {
+    window.scrollTo({ top: element.offsetTop, behavior: 'smooth' });
+  }
+};
+
 const navs = [
-  { name: "Home", url: "home" },
-  { name: "About us", url: "About-us" },
-  { name: "Our processes", url: "Our-processes" },
-  { name: "Why us", url: "why-us" },
-  { name: "Contact us", url: "Q-a" },
+  { name: "Home", url: "1" },
+  { name: "About us", url: "2" },
+  { name: "Our processes", url: "3" },
+  { name: "Why us", url: "4" },
+  { name: "Contact us", url: "5" },
 ];
 
 const items = navs.map((nav, index) => ({
   key: String(index + 1),
   label: nav.name,
+  onClick: () => handleClick(nav.url)
 }));
-
 
 
 
@@ -90,8 +97,6 @@ const loadLottieAnimationx = (containerRef, animationData) => {
 
 function App() {
 
-
-
   const ContainerRef = useRef(null);
   const ContainerRef1 = useRef(null);
   const ContainerRef2 = useRef(null);
@@ -134,7 +139,17 @@ function App() {
     }
   };
   
-  
+  useEffect(() => {
+    gsap.defaults({ ease: "none" });
+    const tl = gsap.timeline({ repeat: 1, repeatDelay: 2, yoyo:false });
+            tl.to(".T2", { 
+              // x: -100 
+              duration: 5,
+              text:()=>(`At GreatInt, we bridge the gap between raw data and actionable insights, empowering businesses with a comprehensive suite of services.`)
+            })
+            .to(".Tbox", { x: -100  });
+            // .to(buttonRef.current, { duration: 2, text: "Request a Demo", delay: 2 })
+        }, []); 
   
   const cards = ['Card content 1', 'Card content 2', 'Card content 3', 'Card content 4'];
 
@@ -144,22 +159,22 @@ function App() {
        <Flex gap="middle" wrap="wrap">
         <Layout>
         <Header 
-  style={{
-    position: 'sticky',
-    top: 0,
-    zIndex: 1,
-    width: '100%',
-    display: 'flex',
-    alignItems: 'center',
-    background: '#fff', // Setting a light background color for the Header
-    boxShadow: '0 2px 8px rgba(0, 0, 0, 0.05)', // Adding a light shadow
-  }}
+            style={{
+              position: 'sticky',
+              top: 0,
+              zIndex: 1,
+              width: '100%',
+              display: 'flex',
+              alignItems: 'center',
+              background: '#fff', // Setting a light background color for the Header
+              boxShadow: '0 2px 8px rgba(0, 0, 0, 0.05)', // Adding a light shadow
+            }}
 >
       {/* <Title>GreatInt</Title> <div className="demo-logo" ref={ContainerRef2} style={{ width: '60px', height: '60px' }}></div> */}
       <div style={{ display: 'flex', alignItems: 'center' }}>
-  <Title style={{ marginRight: '10px' }}>GreatInt</Title>
-  <div className="demo-logo" ref={ContainerRef2} style={{ width: '60px', height: '60px' }}></div>
-</div>
+      <Title style={{ marginRight: '10px' }}>GreatInt</Title>
+      <div className="demo-logo" ref={ContainerRef2} style={{ width: '60px', height: '60px' }}></div>
+      </div>
 
         <Menu
           // theme="light"
@@ -171,16 +186,15 @@ function App() {
             minWidth: 0,
             marginLeft: '25px',
           }}
-          onClick={(e) => console.log(e.item.label)}
         />
       </Header>
       <List style={{ display: 'flex' }}>
             <List.Item>
-              <Content id="home">
+              <Content id="1">
                 <Row >
                 <Col xs={24} sm={12} style={{ backgroundColor: '#f5f5f5', padding: '2rem', marginTop: '-4%', minHeight: '100vh' }}>
                   <div style={{textAlign: 'left', paddingLeft:'10%', marginTop: "8%", }}>
-                    <Title style={{  fontFamily: 'Serif ', fontSize: '2.7rem'}}>
+                    <Title className="T1" style={{  fontFamily: 'Serif ', fontSize: '2.7rem'}}>
                       <span style={{  letterSpacing: '2px' }}>
                         <span style={{ textDecoration: 'underline' }}>Unleash</span>,{' '}
                       the Power of Data-Driven Decisions</span>{' '}
@@ -192,13 +206,13 @@ function App() {
                       <span>solutions</span>.
                     </Title>
 
-                    <Title style={{ marginTop: "7%", fontSize: '1.7rem', textAlign: 'left', fontFamily: 'Helvetica'}}>
-                      At GreatInt, we bridge the gap between raw data and actionable insights, empowering businesses with a comprehensive suite of services.
+                    <Title className="T2"  style={{ marginTop: "7%", fontSize: '1.7rem', textAlign: 'left', fontFamily: 'Helvetica'}}>
+                      {/* At GreatInt, we bridge the gap between raw data and actionable insights, empowering businesses with a comprehensive suite of services. */}
                     </Title>
                   </div>
 
                   <div  style={{ display: 'flex', justifyContent: 'center' }}>
-                    <Button  style={{marginTop: "5%", height: '4rem', fontSize: '1.2rem', color: '#FFFFFF', padding: '15px 30px',  backgroundColor: '#5733FF', borderRadius: '2rem'}} className="hover">
+                    <Button  className="Tbox" style={{marginTop: "5%", height: '4rem', fontSize: '1.2rem', color: '#FFFFFF', padding: '15px 30px',  backgroundColor: '#5733FF', borderRadius: '2rem'}} className="hover">
                       Ask for a Demo
                     </Button>
                   </div>
@@ -212,7 +226,7 @@ function App() {
               </Content>
             </List.Item>
             <List.Item>
-             <Content  xs={24} sm={12} style={{ margin: '0 16px', width: '50%'}}>
+             <Content  xs={24} sm={12} style={{ margin: '0 16px', width: '50%'}} id="2">
              <div style={{ display: 'flex', flexDirection: 'row' }}>
               <div style={{ flex: 1 }}>
                 <Title style={{ fontFamily: 'Serif', fontSize: '3rem', textAlign: 'left',paddingLeft:'30%',color: '#5733FF',marginTop: "-2%" }}>What We Do!</Title>
@@ -231,7 +245,7 @@ function App() {
               </Content>
           </List.Item>
             <List.Item>
-              <Content  style={{marginBottom:'7rem'}}>
+              <Content  style={{marginBottom:'7rem'}} id="3">
                     <Title  style={{ fontFamily: 'Serif ',fontSize: '2rem',alignContent:'center'}}>Development Process</Title>
                     <Row gutter={[16, 16]} align="top">
                         <Col xs={24} sm={12} style={{ flexDirection: 'column' }}>
@@ -245,7 +259,7 @@ function App() {
               </Content>
             </List.Item>
             <List.Item>
-            <Content id='our-processes' >
+            <Content id="4">
             <Card bordered={true}>
               <Row gutter={[16, 16]} align="top">
                 <Col xs={24} sm={12} style={{ flexDirection: 'column', alignItems: 'flex-start' }}>
@@ -269,7 +283,7 @@ function App() {
             </Content>
             </List.Item>
             <List.Item>
-            <Content id='why-us' >
+            <Content  id="5">
           <Row gutter={[16, 16]} align="top">
               <Col xs={24} sm={12} style={{ flexDirection: 'column' }}>
               <div ref={ContainerRef7} style={{ ...contentStyle }}></div>
@@ -286,7 +300,7 @@ function App() {
             </Content>
             </List.Item>
             <List.Item>
-              <Content id='q-a'>
+              <Content id="6">
 
              <Card bordered={true}>
            
