@@ -226,36 +226,47 @@ function App() {
               </Content>
             </List.Item>
             <List.Item>
-             <Content  xs={24} sm={12} style={{ margin: '0 16px', width: '50%'}} id="2">
-             <div style={{ display: 'flex', flexDirection: 'row' }}>
-              <div style={{ flex: 1 }}>
-                <Title style={{ fontFamily: 'Serif', fontSize: '3rem', textAlign: 'left',paddingLeft:'30%',color: '#5733FF',marginTop: "-2%" }}>What We Do!</Title>
-              </div>
-              <div style={{ flex: 1, textAlign: 'right',paddingRight:'10%',textAlign: 'left', fontSize: '1rem' }}>
-                <span>
-                  In today's data-driven world, making informed decisions can be the difference between success and stagnation. With a comprehensive suite of services: Artificial Intelligence (AI), Data Analytics, Business Intelligence (BI), and Software Development.
-                </span>
-              </div>
+             <Content  xs={24} sm={12} style={{ margin: '0 16px', width: '50%',minHeight:'100vh'}} id="2">
+            <div style={{marginTop: '5%' }}>
+                <div style={{ display: 'flex', flexDirection: 'row'  }}>
+                  <div style={{ flex: 1 }}>
+                    <Title style={{ fontFamily: 'Serif', fontSize: '2.5rem', textAlign: 'left',paddingLeft:'30%',color: '#5733FF',marginTop: "-2%" }}>What We Do!</Title>
+                  </div>
+                  <div style={{ flex: 1, textAlign: 'right',paddingRight:'10%',textAlign: 'left', fontSize: '1rem' }}>
+                    <span>
+                      In today's data-driven world, making informed decisions can be the difference between success and stagnation. With a comprehensive suite of services: Artificial Intelligence (AI), Data Analytics, Business Intelligence (BI), and Software Development.
+                    </span>
+                  </div>
+                </div>
+                  <CustomCarousel cards={cards} />
             </div>
-
-            <div style={{ marginTop: '20px' }}>
-              <CustomCarousel cards={cards} />
-            </div>
-               
               </Content>
           </List.Item>
             <List.Item>
-              <Content  style={{marginBottom:'7rem'}} id="3">
-                    <Title  style={{ fontFamily: 'Serif ',fontSize: '2rem',alignContent:'center'}}>Development Process</Title>
+              <Content  style={{minHeight:'100vh'}} id="3">
+                   <div style={{marginTop: '5%' }}>
+                    <div style={{ display: 'flex', flexDirection: 'row'  }}>
+                  <div style={{ flex: 1 }}>
+                    <Title style={{ fontFamily: 'Serif', fontSize: '2.5rem', textAlign: 'left',paddingLeft:'30%',color: '#5733FF',marginTop: "-2%" }}>Development Process</Title>
+                  </div>
+                  <div style={{ flex: 1, textAlign: 'right',paddingRight:'10%',textAlign: 'left', fontSize: '1rem' }}>
+                    <span>
+                      In today's data-driven world, making informed decisions can be the difference between success and stagnation. With a comprehensive suite of services: Artificial Intelligence (AI), Data Analytics, Business Intelligence (BI), and Software Development.
+                    </span>
+                  </div>
+                </div>
                     <Row gutter={[16, 16]} align="top">
                         <Col xs={24} sm={12} style={{ flexDirection: 'column' }}>
-                        <div  style={{ ...contentStyle }}><img src={crips}></img></div>
+                        <div style={{ width: 'auto', height: 'auto' }}>
+                          <img src={crips} alt="Description of the image" style={{ maxWidth: '70%', maxHeight: '70%' }} />
+                        </div>
                       </Col>
                       <Col xs={24} sm={12} style={{ flexDirection: 'column', alignItems: 'flex-start' }}>
                           <ProcessWay cards={cards} />
                       </Col>
                       
                     </Row>
+                    </div>
               </Content>
             </List.Item>
             <List.Item>
