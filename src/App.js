@@ -25,6 +25,7 @@ import { TextPlugin } from 'gsap/TextPlugin'
 import { UserOutlined} from '@ant-design/icons';
 import p4 from './assets/prof/4.jpg'
 import InfiniteScroll from 'react-infinite-scroll-component';
+import  AnimatedHeader from './AnimatedHeader';
 // import { SplitText } from 'gsap/SplitText';
 // import SplitText from "gsap/SplitText";
 
@@ -285,6 +286,7 @@ function App() {
 
   return (
     <div className="App">
+      <AnimatedHeader />
        <Flex gap="middle" wrap="wrap">
         <Layout>
         <Header 
