@@ -14,15 +14,19 @@ import x5 from './assets/animations/5.json'
 import x6 from './assets/animations/6.json'
 import x7 from './assets/animations/7.json'
 import x8 from './assets/animations/last1.json'
+import x9 from './assets/animations/qa.json'
 import {CustomCarousel} from './CardCaro'
 import ProcessWay from './Process'
+import Contact from  './contact'
 import {Whatwedo} from './whatwedo'
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { TextPlugin } from 'gsap/TextPlugin'
-import { UserOutlined,GoogleOutlined,LinkedinOutlined,GithubOutlined,PhoneOutlined} from '@ant-design/icons';
+import { UserOutlined} from '@ant-design/icons';
 import p4 from './assets/prof/4.jpg'
 import InfiniteScroll from 'react-infinite-scroll-component';
+// import { SplitText } from 'gsap/SplitText';
+// import SplitText from "gsap/SplitText";
 
 gsap.registerPlugin(ScrollTrigger);
 gsap.registerPlugin(TextPlugin);
@@ -169,7 +173,12 @@ function App() {
 
   const [data, setData] = useState(x_QA.slice(0, 4)); 
   const [hasMore, setHasMore] = useState(true); 
-
+  const ref = useRef([]);
+  const addtoRefs = (el) => {
+    if (el && !ref.current.includes(el)) {
+        ref.current.push(el);
+    }
+};
   const loadMoreData = () => {
     setTimeout(() => {
       const newData = x_QA.slice(data.length, data.length + 4); 
@@ -188,6 +197,7 @@ function App() {
   const ContainerRef6 = useRef(null);
   const ContainerRef7 = useRef(null);
   const ContainerRef8 = useRef(null);
+  const ContainerRef9 = useRef(null);
 
   useEffect(() => {
     const animation = loadLottieAnimation(ContainerRef, x);
@@ -199,6 +209,7 @@ function App() {
     const animation6 = loadLottieAnimation(ContainerRef6, x6);
     const animation7 = loadLottieAnimation(ContainerRef7, x7);
     const animation8 = loadLottieAnimation(ContainerRef8, x8);
+    const animation9 = loadLottieAnimation(ContainerRef9, x9);
     return () => {
       animation.destroy();
       animation1.destroy();
@@ -209,6 +220,7 @@ function App() {
       animation6.destroy();
       animation7.destroy();
       animation8.destroy();
+      animation9.destroy();
     };
   }, []);
 
@@ -223,8 +235,27 @@ function App() {
   //     });
   //   }
   // };
-  
   useEffect(() => {
+    let ctx = gsap.context(() => {
+
+      // let split = SplitText.create("h1", {type:"word chars"});
+      
+    // gsap.from(split.chars, {
+    //   duration: 0.8,
+    //   opacity: 0,
+    //   y: 10,
+    //   ease: "circ.out",
+    //   stagger: 0.02,
+    //   scrollTrigger: {
+    //     trigger: ".titleBurrowing",
+    //     start: "top 75%",
+    //     end: "bottom center",
+    //     scrub: 1
+    //   }
+    // });
+    // return () => split.revert();
+  })
+ 
     gsap.defaults({ ease: "none" });
     const tl = gsap.timeline({ repeat: 1, repeatDelay: 2, yoyo:false });
             tl.to(".T2", { 
@@ -234,8 +265,21 @@ function App() {
             })
             .to(".Tbox", { x: -100  });
             // .to(buttonRef.current, { duration: 2, text: "Request a Demo", delay: 2 })
-        }, []); 
-  
+       
+      ref.current.forEach((el) => {
+          gsap.fromTo(el, { autoAlpha: 0 }, {
+              autoAlpha: 1,
+              left: 0,
+              duration: 0.8,
+              scrollTrigger: {
+                  trigger: el,
+                  start: "top bottom-=100",
+                  toggleActions: "play none none reverse"
+              }
+          });
+      });
+      return () => ctx.revert();
+  }, []);
   const cards = ['Card content 1', 'Card content 2', 'Card content 3', 'Card content 4'];
 
 
@@ -255,10 +299,9 @@ function App() {
               boxShadow: '0 2px 8px rgba(0, 0, 0, 0.05)', // Adding a light shadow
             }}
 >
-      {/* <Title>GreatInt</Title> <div className="demo-logo" ref={ContainerRef2} style={{ width: '60px', height: '60px' }}></div> */}
       <div style={{ display: 'flex', alignItems: 'center' }}>
       <Title style={{ marginRight: '10px' }}>GreatInt</Title>
-      <div className="demo-logo" ref={ContainerRef2} style={{ width: '60px', height: '60px' }}></div>
+      <div className="demo-logo" ref={ContainerRef2} style={{ width: '60px', height: '60px',color: '#5733FF'}}></div>
       </div>
 
         <Menu
@@ -275,7 +318,7 @@ function App() {
       </Header>
       <List style={{ display: 'flex' }}>
             <List.Item>
-              <Content id="1">
+              <Content  id="1">
                 <Row >
                 <Col xs={24} sm={12} style={{ backgroundColor: '#f5f5f5', padding: '2rem', marginTop: '-4%', minHeight: '100vh' }}>
                   <div style={{textAlign: 'left', paddingLeft:'10%', marginTop: "8%", }}>
@@ -311,7 +354,7 @@ function App() {
               </Content>
             </List.Item>
             <List.Item>
-             <Content  xs={24} sm={12} style={{ margin: '0 16px', width: '50%',minHeight:'100vh'}} id="2">
+             <Content ref={addtoRefs}  xs={24} sm={12} style={{ margin: '0 16px', width: '50%',minHeight:'100vh'}} id="2">
             <div style={{marginTop: '5%' }}>
                 <div style={{ display: 'flex', flexDirection: 'row'  }}>
                   <div style={{ flex: 1 }}>
@@ -328,7 +371,7 @@ function App() {
               </Content>
           </List.Item>
             <List.Item>
-              <Content  style={{minHeight:'100vh'}} id="3">
+              <Content ref={addtoRefs}  style={{minHeight:'100vh'}} id="3">
                    <div style={{marginTop: '5%' }}>
                     <div style={{ display: 'flex', flexDirection: 'row'  }}>
                   <div style={{ flex: 1 }}>
@@ -355,7 +398,7 @@ function App() {
               </Content>
             </List.Item>
             <List.Item>
-            <Content id="4">
+            <Content ref={addtoRefs} id="4">
             <Card bordered={true}>
               <Row gutter={[16, 16]} align="top">
                 <Col xs={24} sm={12} style={{ flexDirection: 'column', alignItems: 'flex-start' }}>
@@ -379,7 +422,7 @@ function App() {
             </Content>
             </List.Item>
             <List.Item>
-                <Content  id="5" style={{minHeight: '100vh' }}>
+                <Content ref={addtoRefs}  id="5" style={{minHeight: '100vh' }}>
                   <div>
                   <Title style={{fontFamily: 'Serif ', fontSize: '2rem',color: '#5733FF' }}>Our Team</Title>
                     <Row gutter={[16, 16]} align="top">
@@ -401,9 +444,14 @@ function App() {
             </List.Item>
        
             <List.Item>
-              <Content id="6" style={{minHeight: '100vh' }}>
+              <Content ref={addtoRefs} id="6" style={{minHeight: '100vh' }}>
               <Title style={{fontFamily: 'Serif ', fontSize: '2rem' ,color: '#5733FF' }}>Common Questions</Title>
-             <div id="scrollableDiv"style={{height:'90vh',overflow: 'auto',padding: '0 16px' }}>
+             
+              {/* <Card bordered={true} style={{height:'85vh'}}> */}
+              <Row gutter={[16, 16]} align="top">
+              <Col xs={24} sm={12} style={{ flexDirection: 'column', alignItems: 'flex-start' }}>
+                            
+                <div id="scrollableDiv"style={{height:'70vh',overflow: 'auto',padding: '0 16px' }}>
                   <InfiniteScroll dataLength={data.length}next={loadMoreData}hasMore={data.length < x_QA.length} loader={<Skeleton paragraph={{ rows: 1 }} active/>} endMessage={<Divider plain><Text>Contact us for more Questions</Text></Divider>} scrollableTarget="scrollableDiv">
                     <List
                       itemLayout="horizontal"
@@ -429,43 +477,25 @@ function App() {
                     />
                   </InfiniteScroll>
                 </div>
+                </Col>
+                <Col xs={24} sm={12} style={{ flexDirection: 'column' }}>
+                <div ref={ContainerRef9} style={{ ...contentStyle ,height:'70vh' }}></div>
+                </Col>
+              </Row> 
+              {/* </Card> */}
              </Content>
             </List.Item>
             <List.Item>
-                <Content id="7" style={{ minHeight: '100vh' }}>
+                <Content ref={addtoRefs} id="7" style={{ minHeight: '100vh' }}>
                   <Title style={{ fontFamily: 'Serif', fontSize: '2rem', color: '#5733FF' }}>Contact Us</Title>
                   <Row gutter={[16, 16]} style={{ display: 'flex' }}>
                     <Col xs={24} sm={12}>
-                      <Card style={{ height: '85%' }}>
+                      <Card style={{ height: '80%' }}>
                         <div ref={ContainerRef8} style={{ ...animStyle }}></div>
                       </Card>
                     </Col>
                     <Col xs={24} sm={12}>
-                      <Card style={{ height: '85%' }}>
-                 
-                    <div>
-                    <Row justify="center" align="middle">
-                      <Title style={{ marginRight: '8px' }}><GoogleOutlined /></Title>
-                      <a href="mailto:greatint@gmail.com"><Title level={4} style={{ marginBottom: '0' }}>Greatint@gmail.com</Title></a>
-                    </Row>
-                    <Row justify="center" align="middle">
-                      <Title style={{ marginRight: '8px' }}><PhoneOutlined /></Title>
-                      <a href="tel:+254796889020"><Title level={4} style={{ marginBottom: '0' }}>+254796889020</Title></a>
-                    </Row>
-
-                    <Row justify="center" align="middle">
-                        <Title style={{ marginRight: '8px' }}><LinkedinOutlined /></Title>
-                        <a href="https://www.linkedin.com/company/greatint" target="_blank" rel="noopener noreferrer"><Title level={4} style={{ marginBottom: '0' }}>@Greatint</Title></a>
-                      </Row>
-                      <Row justify="center" align="middle">
-                        <Title style={{ marginRight: '8px' }}><GithubOutlined /></Title>
-                        <a href="https://github.com/Greatint" target="_blank" rel="noopener noreferrer"><Title level={4} style={{ marginBottom: '0' }}>Greatint</Title></a>
-                      </Row>
-
-                
-                  </div>
-
-                      </Card>
+                   <Contact/>
                     </Col>
                   </Row>
                 </Content>
