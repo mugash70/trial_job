@@ -1,140 +1,259 @@
-import React, { useRef, useEffect, useState } from 'react';
-import { TweenLite, Circ } from 'gsap';
 
-function Circle(pos, rad, color) {
-    this.pos = pos || null;
-    this.radius = rad || null;
-    this.color = color || null;
-    this.active = 0;
+// import React, { useEffect, useRef } from 'react';
+// import { TweenLite, Circ } from 'gsap';
 
-    this.draw = function () {
-        if (!this.active) return;
-        const ctx = this.ctx;
-        ctx.beginPath();
-        ctx.arc(this.pos.x, this.pos.y, this.radius, 0, 2 * Math.PI, false);
-        ctx.fillStyle = `rgba(156,217,249,${this.active})`;
-        ctx.fill();
-    };
-}
+// function Circle(pos, rad, color) {
+//     this.pos = pos || null;
+//     this.radius = rad || null;
+//     this.color = color || null;
+//     this.active = 0;
 
-function AnimatedHeader() {
-    const canvasRef = useRef(null);
-    const [points, setPoints] = useState([]);
-    const [width, setWidth] = useState(window.innerWidth);
-    const [height, setHeight] = useState(window.innerHeight);
-    const [target, setTarget] = useState({ x: width / 2, y: height / 2 });
-    const [animateHeader, setAnimateHeader] = useState(true);
+//     this.draw = function () {
+//         if (!this.active) return;
+//         const ctx = this.ctx;
+//         ctx.beginPath();
+//         ctx.arc(this.pos.x, this.pos.y, this.radius, 0, 2 * Math.PI, false);
+//         ctx.fillStyle = `rgba(75,21,126,${this.active})`;
+//         ctx.fill();
+//     };
+// }
 
-    useEffect(() => {
-        const canvas = canvasRef.current;
-        const ctx = canvas.getContext('2d');
+// function AnimatedHeader() {
+//     const canvasRef = useRef(null);
+//     let width, height, largeHeader, canvas, ctx, points, target, animateHeader = true;
 
-        canvas.width = width;
-        canvas.height = height;
+//     useEffect(() => {
+//         function initHeader() {
+//             width = window.innerWidth;
+//             height = window.innerHeight;
+//             target = { x: width / 2, y: height / 2 };
 
-        const pointsArray = [];
-        for (let x = 0; x < width; x += width / 20) {
-            for (let y = 0; y < height; y += height / 20) {
-                const px = x + Math.random() * (width / 20);
-                const py = y + Math.random() * (height / 20);
-                const p = { x: px, originX: px, y: py, originY: py };
-                pointsArray.push(p);
-            }
-        }
+//             largeHeader = document.getElementById('large-header');
+//             largeHeader.style.height = height + 'px';
 
-        pointsArray.forEach((p) => {
-            const c = new Circle(p, 2 + Math.random() * 2, 'rgba(255,255,255,0.3)');
-            c.ctx = ctx;
-            p.circle = c;
-        });
+//             canvas = canvasRef.current;
+//             canvas.width = width;
+//             canvas.height = height;
+//             ctx = canvas.getContext('2d');
 
-        setPoints(pointsArray);
+//             // create points
+//             points = [];
+//             for (let x = 0; x < width; x = x + width / 20) {
+//                 for (let y = 0; y < height; y = y + height / 20) {
+//                     const px = x + Math.random() * width / 20;
+//                     const py = y + Math.random() * height / 20;
+//                     const p = { x: px, originX: px, y: py, originY: py };
+//                     points.push(p);
+//                 }
+//             }
 
-        function handleMouseMove(e) {
-            const posx = e.pageX || e.clientX + document.body.scrollLeft + document.documentElement.scrollLeft;
-            const posy = e.pageY || e.clientY + document.body.scrollTop + document.documentElement.scrollTop;
-            setTarget({ x: posx, y: posy });
-        }
+//             // for each point find the 5 closest points
+//             for (let i = 0; i < points.length; i++) {
+//                 const closest = [];
+//                 const p1 = points[i];
+//                 for (let j = 0; j < points.length; j++) {
+//                     const p2 = points[j];
+//                     if (!(p1 === p2)) {
+//                         let placed = false;
+//                         for (let k = 0; k < 5; k++) {
+//                             if (!placed) {
+//                                 if (closest[k] === undefined) {
+//                                     closest[k] = p2;
+//                                     placed = true;
+//                                 }
+//                             }
+//                         }
 
-        function handleScroll() {
-            setAnimateHeader(document.body.scrollTop <= height);
-        }
+//                         for (let k = 0; k < 5; k++) {
+//                             if (!placed) {
+//                                 if (getDistance(p1, p2) < getDistance(p1, closest[k])) {
+//                                     closest[k] = p2;
+//                                     placed = true;
+//                                 }
+//                             }
+//                         }
+//                     }
+//                 }
+//                 p1.closest = closest;
+//             }
 
-        function handleResize() {
-            setWidth(window.innerWidth);
-            setHeight(window.innerHeight);
-        }
+//             // assign a circle to each point
+//             for (const i in points) {
+//                 const c = new Circle(points[i], 2 + Math.random() * 2, 'rgba(255,255,255,0.3)');
+//                 points[i].circle = c;
+//             }
+//         }
 
-        window.addEventListener('mousemove', handleMouseMove);
-        window.addEventListener('scroll', handleScroll);
-        window.addEventListener('resize', handleResize);
+//         // Event handling
+//         function addListeners() {
+//             if (!('ontouchstart' in window)) {
+//                 window.addEventListener('mousemove', mouseMove);
+//             }
+//             window.addEventListener('scroll', scrollCheck);
+//             window.addEventListener('resize', resize);
+//         }
 
-        return () => {
-            window.removeEventListener('mousemove', handleMouseMove);
-            window.removeEventListener('scroll', handleScroll);
-            window.removeEventListener('resize', handleResize);
-        };
-    }, [width, height]);
+//         function mouseMove(e) {
+//             let posx = 0, posy = 0;
+//             if (e.pageX || e.pageY) {
+//                 posx = e.pageX;
+//                 posy = e.pageY;
+//             } else if (e.clientX || e.clientY) {
+//                 posx = e.clientX + document.body.scrollLeft + document.documentElement.scrollLeft;
+//                 posy = e.clientY + document.body.scrollTop + document.documentElement.scrollTop;
+//             }
+//             target.x = posx;
+//             target.y = posy;
+//         }
 
-    useEffect(() => {
-        const canvas = canvasRef.current;
-        const ctx = canvas.getContext('2d');
+//         function scrollCheck() {
+//             animateHeader = document.body.scrollTop > height ? false : true;
+//         }
 
-        function animate() {
-            if (animateHeader) {
-                ctx.clearRect(0, 0, width, height);
-                points.forEach((p) => {
-                    if (Math.abs(getDistance(target, p)) < 4000) {
-                        p.active = 0.3;
-                        p.circle.active = 0.6;
-                    } else if (Math.abs(getDistance(target, p)) < 20000) {
-                        p.active = 0.1;
-                        p.circle.active = 0.3;
-                    } else if (Math.abs(getDistance(target, p)) < 40000) {
-                        p.active = 0.02;
-                        p.circle.active = 0.1;
-                    } else {
-                        p.active = 0;
-                        p.circle.active = 0;
-                    }
+//         function resize() {
+//             width = window.innerWidth;
+//             height = window.innerHeight;
+//             largeHeader.style.height = height + 'px';
+//             canvas.width = width;
+//             canvas.height = height;
+//         }
 
-                    drawLines(p);
-                    p.circle.draw();
-                });
-            }
-            requestAnimationFrame(animate);
-        }
+//         function initAnimation() {
+//             animate();
+//             for (const i in points) {
+//                 shiftPoint(points[i]);
+//             }
+//         }
 
-        animate();
+//         function animate() {
+//             if (animateHeader) {
+//                 ctx.clearRect(0, 0, width, height);
+//                 for (const i in points) {
+//                     // detect points in range
+//                     if (Math.abs(getDistance(target, points[i])) < 4000) {
+//                         points[i].active = 0.3;
+//                         points[i].circle.active = 0.6;
+//                     } else if (Math.abs(getDistance(target, points[i])) < 20000) {
+//                         points[i].active = 0.1;
+//                         points[i].circle.active = 0.3;
+//                     } else if (Math.abs(getDistance(target, points[i])) < 40000) {
+//                         points[i].active = 0.02;
+//                         points[i].circle.active = 0.1;
+//                     } else {
+//                         points[i].active = 0;
+//                         points[i].circle.active = 0;
+//                     }
 
-        return () => {
-            cancelAnimationFrame(animate);
-        };
-    }, [animateHeader, points, target, width, height]);
+//                     drawLines(points[i]);
+//                     points[i].circle.draw();
+//                 }
+//             }
+//             requestAnimationFrame(animate);
+//         }
 
-    function drawLines(p) {
-        const ctx = canvasRef.current.getContext('2d');
-        if (!p.active || !p.closest) return; // Check if closest points are defined
-        p.closest.forEach(closeP => {
-            ctx.beginPath();
-            ctx.moveTo(p.x, p.y);
-            ctx.lineTo(closeP.x, closeP.y);
-            ctx.strokeStyle = `rgba(156,217,249,${p.active})`;
-            ctx.stroke();
-        });
-    }
-    
-    
+//         function shiftPoint(p) {
+//             TweenLite.to(p, 1 + 1 * Math.random(), {
+//                 x: p.originX - 50 + Math.random() * 100,
+//                 y: p.originY - 50 + Math.random() * 100,
+//                 ease: Circ.easeInOut,
+//                 onComplete: function () {
+//                     shiftPoint(p);
+//                 }
+//             });
+//         }
 
-    function getDistance(p1, p2) {
-        return Math.pow(p1.x - p2.x, 2) + Math.pow(p1.y - p2.y, 2);
-    }
+//         // Canvas manipulation
+//         function drawLines(p) {
+//             if (!p.active) return;
+//             for (const i in p.closest) {
+//                 ctx.beginPath();
+//                 ctx.moveTo(p.x, p.y);
+//                 ctx.lineTo(p.closest[i].x, p.closest[i].y);
+//                 ctx.strokeStyle = 'rgba(75,21,126,' + p.active + ')';
+//                 ctx.stroke();
+//             }
+//         }
 
-    return (
-        <div className="large-header" style={{ height }}>
-            <canvas id="demo-canvas" ref={canvasRef}></canvas>
-        </div>
-    );
-}
+//         function Circle(pos, rad, color) {
+//             const _this = this;
 
-export default AnimatedHeader;
+//             // constructor
+//             (function () {
+//                 _this.pos = pos || null;
+//                 _this.radius = rad || null;
+//                 _this.color = color || null;
+//             })();
+
+//             this.draw = function () {
+//                 if (!_this.active) return;
+//                 ctx.beginPath();
+//                 ctx.arc(_this.pos.x, _this.pos.y, _this.radius, 0, 2 * Math.PI, false);
+//                 ctx.fillStyle = 'rgba(75,21,126,' + _this.active + ')';
+//                 ctx.fill();
+//             };
+//         }
+
+//         // Util
+//         function getDistance(p1, p2) {
+//             return Math.pow(p1.x - p2.x, 2) + Math.pow(p1.y - p2.y, 2);
+//         }
+
+//         initHeader();
+//         initAnimation();
+//         addListeners();
+
+//         return () => {
+//             window.removeEventListener('mousemove', mouseMove);
+//             window.removeEventListener('scroll', scrollCheck);
+//             window.removeEventListener('resize', resize);
+//         };
+//     }, []);
+
+//     return (
+//         <div id="large-header">
+//             <canvas id="demo-canvas" ref={canvasRef}></canvas>
+//         </div>
+//     );
+// }
+
+// export default AnimatedHeader;
+import React from 'react';
+import { Card } from 'antd';
+
+const MyCardComponent = () => {
+  const canvasRef = React.useRef();
+
+  // Add code to draw on the canvas if needed
+  React.useEffect(() => {
+    const canvas = canvasRef.current;
+    const ctx = canvas.getContext('2d');
+
+    // Example: Draw a rectangle on the canvas
+    ctx.fillStyle = 'blue';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+  }, []);
+
+  return (
+    <div style={{ position: 'relative' }}>
+      {/* Position the canvas behind the card */}
+      <canvas
+        id="demo-canvas"
+        ref={canvasRef}
+        style={{
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          zIndex: -1, // Ensure canvas stays behind the card
+          width: '100%',
+          height: '100%',
+        }}
+      ></canvas>
+      <Card title="My Card Title" style={{ width: 300 }}>
+        {/* Card content */}
+        <p>This is the content of the card.</p>
+      </Card>
+    </div>
+  );
+};
+
+export default MyCardComponent;

@@ -4,6 +4,7 @@ import React,{useEffect,useRef,useState}from 'react';
 import { Layout,List, Menu, Row,Col,Flex,Button, Typography,Card,Avatar, Space,Divider, Skeleton } from 'antd';
 // import {Link} from 'react-router-dom'
 import crips from './assets/crips.webp'
+import logo from './assets/logos/2.png'
 import Lottie from 'lottie-web';
 import x1 from './assets/animations/1.json'
 import x from './assets/animations/1.json'
@@ -25,15 +26,29 @@ import { TextPlugin } from 'gsap/TextPlugin'
 import { UserOutlined} from '@ant-design/icons';
 import p4 from './assets/prof/4.jpg'
 import InfiniteScroll from 'react-infinite-scroll-component';
-import  AnimatedHeader from './AnimatedHeader';
-// import { SplitText } from 'gsap/SplitText';
-// import SplitText from "gsap/SplitText";
+import { TweenLite, Circ } from 'gsap';
 
+// import SplitText from "gsap/SplitText";
 gsap.registerPlugin(ScrollTrigger);
 gsap.registerPlugin(TextPlugin);
 const { Title,Paragraph,Text} = Typography;
 const { Header, Footer, Sider, Content } = Layout;
 
+function Circle(pos, rad, color) {
+  this.pos = pos || null;
+  this.radius = rad || null;
+  this.color = color || null;
+  this.active = 0;
+
+  this.draw = function () {
+      if (!this.active) return;
+      const ctx = this.ctx;
+      ctx.beginPath();
+      ctx.arc(this.pos.x, this.pos.y, this.radius, 0, 2 * Math.PI, false);
+      ctx.fillStyle = `rgba(75,21,126,${this.active})`;
+      ctx.fill();
+  };
+}
 const handleClick = (id) => {
   const element = document.getElementById(id);
   if (element) {
@@ -117,6 +132,18 @@ const loadLottieAnimation = (containerRef, animationData) => {
     // },
   });
 };
+const loadLottieAnimation2 = (containerRef, animationData) => {
+  return Lottie.loadAnimation({
+    container: containerRef.current,
+    renderer: 'svg',
+    loop: false,
+    autoplay: true,
+    animationData: animationData,
+    // rendererSettings: {
+    //   preserveAspectRatio: 'xMidYMid slice',
+    // },
+  });
+};
 
 const x_QA = [
   { 
@@ -168,13 +195,28 @@ const x_QA = [
     answer: "Staying updated with the latest advancements may involve attending conferences and workshops, participating in online courses or webinars, reading research papers and industry publications, joining professional networks or forums, and experimenting with new tools and technologies through personal projects or collaborations." 
   }
 ];
-
+// import { MorphSVGPlugin } from 'gsap';
 
 function App() {
 
+  const canvasRef = useRef(null);
+  let width, height, largeHeader, canvas, ctx, points, target, animateHeader = true;
   const [data, setData] = useState(x_QA.slice(0, 4)); 
   const [hasMore, setHasMore] = useState(true); 
   const ref = useRef([]);
+  const titleRef = useRef(null);
+  const paragraphRef = useRef(null);
+
+  // useEffect(() => {
+  //   const titleSplit = new MorphSVGPlugin(titleRef.current, { type: 'words,chars' });
+  //   const paragraphSplit = new MorphSVGPlugin(paragraphRef.current, { type: 'words,chars' });
+
+  //   // Animation using GSAP
+  //   gsap.from(titleSplit.chars, { duration: 1, opacity: 0, y: 20, stagger: 0.05 });
+  //   gsap.from(paragraphSplit.chars, { duration: 1, opacity: 0, y: 20, stagger: 0.05 });
+  // }, []);
+
+
   const addtoRefs = (el) => {
     if (el && !ref.current.includes(el)) {
         ref.current.push(el);
@@ -205,7 +247,7 @@ function App() {
     const animation1 = loadLottieAnimation(ContainerRef1, x1);
     const animation2 = loadLottieAnimation(ContainerRef2, x2);
     const animation3 = loadLottieAnimation(ContainerRef3, x3);
-    const animation4 = loadLottieAnimation(ContainerRef4, x4);
+    const animation4 = loadLottieAnimation2(ContainerRef4, x4);
     const animation5 = loadLottieAnimation(ContainerRef5, x5);
     const animation6 = loadLottieAnimation(ContainerRef6, x6);
     const animation7 = loadLottieAnimation(ContainerRef7, x7);
@@ -237,6 +279,193 @@ function App() {
   //   }
   // };
   useEffect(() => {
+    function initHeader() {
+        width = window.innerWidth;
+        height = window.innerHeight;
+        target = { x: width / 2, y: height / 2 };
+
+        largeHeader = document.getElementById('large-header');
+        largeHeader.style.height = height + 'px';
+
+        canvas = canvasRef.current;
+        canvas.width = width;
+        canvas.height = height;
+        ctx = canvas.getContext('2d');
+
+        // create points
+        points = [];
+        for (let x = 0; x < width; x = x + width / 20) {
+            for (let y = 0; y < height; y = y + height / 20) {
+                const px = x + Math.random() * width / 20;
+                const py = y + Math.random() * height / 20;
+                const p = { x: px, originX: px, y: py, originY: py };
+                points.push(p);
+            }
+        }
+
+        // for each point find the 5 closest points
+        for (let i = 0; i < points.length; i++) {
+            const closest = [];
+            const p1 = points[i];
+            for (let j = 0; j < points.length; j++) {
+                const p2 = points[j];
+                if (!(p1 === p2)) {
+                    let placed = false;
+                    for (let k = 0; k < 5; k++) {
+                        if (!placed) {
+                            if (closest[k] === undefined) {
+                                closest[k] = p2;
+                                placed = true;
+                            }
+                        }
+                    }
+
+                    for (let k = 0; k < 5; k++) {
+                        if (!placed) {
+                            if (getDistance(p1, p2) < getDistance(p1, closest[k])) {
+                                closest[k] = p2;
+                                placed = true;
+                            }
+                        }
+                    }
+                }
+            }
+            p1.closest = closest;
+        }
+
+        // assign a circle to each point
+        for (const i in points) {
+            const c = new Circle(points[i], 2 + Math.random() * 2, 'rgba(255,255,255,0.3)');
+            points[i].circle = c;
+        }
+    }
+
+    // Event handling
+    function addListeners() {
+        if (!('ontouchstart' in window)) {
+            window.addEventListener('mousemove', mouseMove);
+        }
+        window.addEventListener('scroll', scrollCheck);
+        window.addEventListener('resize', resize);
+    }
+
+    function mouseMove(e) {
+        let posx = 0, posy = 0;
+        if (e.pageX || e.pageY) {
+            posx = e.pageX;
+            posy = e.pageY;
+        } else if (e.clientX || e.clientY) {
+            posx = e.clientX + document.body.scrollLeft + document.documentElement.scrollLeft;
+            posy = e.clientY + document.body.scrollTop + document.documentElement.scrollTop;
+        }
+        target.x = posx;
+        target.y = posy;
+    }
+
+    function scrollCheck() {
+        animateHeader = document.body.scrollTop > height ? false : true;
+    }
+
+    function resize() {
+        width = window.innerWidth;
+        height = window.innerHeight;
+        largeHeader.style.height = height + 'px';
+        canvas.width = width;
+        canvas.height = height;
+    }
+
+    function initAnimation() {
+        animate();
+        for (const i in points) {
+            shiftPoint(points[i]);
+        }
+    }
+
+    function animate() {
+        if (animateHeader) {
+            ctx.clearRect(0, 0, width, height);
+            for (const i in points) {
+                // detect points in range
+                if (Math.abs(getDistance(target, points[i])) < 4000) {
+                    points[i].active = 0.3;
+                    points[i].circle.active = 0.6;
+                } else if (Math.abs(getDistance(target, points[i])) < 20000) {
+                    points[i].active = 0.1;
+                    points[i].circle.active = 0.3;
+                } else if (Math.abs(getDistance(target, points[i])) < 40000) {
+                    points[i].active = 0.02;
+                    points[i].circle.active = 0.1;
+                } else {
+                    points[i].active = 0;
+                    points[i].circle.active = 0;
+                }
+
+                drawLines(points[i]);
+                points[i].circle.draw();
+            }
+        }
+        requestAnimationFrame(animate);
+    }
+
+    function shiftPoint(p) {
+        TweenLite.to(p, 1 + 1 * Math.random(), {
+            x: p.originX - 50 + Math.random() * 100,
+            y: p.originY - 50 + Math.random() * 100,
+            ease: Circ.easeInOut,
+            onComplete: function () {
+                shiftPoint(p);
+            }
+        });
+    }
+
+    // Canvas manipulation
+    function drawLines(p) {
+        if (!p.active) return;
+        for (const i in p.closest) {
+            ctx.beginPath();
+            ctx.moveTo(p.x, p.y);
+            ctx.lineTo(p.closest[i].x, p.closest[i].y);
+            ctx.strokeStyle = 'rgba(75,21,126,' + p.active + ')';
+            ctx.stroke();
+        }
+    }
+
+    function Circle(pos, rad, color) {
+        const _this = this;
+
+        // constructor
+        (function () {
+            _this.pos = pos || null;
+            _this.radius = rad || null;
+            _this.color = color || null;
+        })();
+
+        this.draw = function () {
+            if (!_this.active) return;
+            ctx.beginPath();
+            ctx.arc(_this.pos.x, _this.pos.y, _this.radius, 0, 2 * Math.PI, false);
+            ctx.fillStyle = 'rgba(75,21,126,' + _this.active + ')';
+            ctx.fill();
+        };
+    }
+
+    // Util
+    function getDistance(p1, p2) {
+        return Math.pow(p1.x - p2.x, 2) + Math.pow(p1.y - p2.y, 2);
+    }
+
+    initHeader();
+    initAnimation();
+    addListeners();
+
+    return () => {
+        window.removeEventListener('mousemove', mouseMove);
+        window.removeEventListener('scroll', scrollCheck);
+        window.removeEventListener('resize', resize);
+    };
+}, []);
+  useEffect(() => {
+
     let ctx = gsap.context(() => {
 
       // let split = SplitText.create("h1", {type:"word chars"});
@@ -285,46 +514,78 @@ function App() {
 
 
   return (
-    <div className="App">
-      {/* <AnimatedHeader />*/}
+    <div className="App" id="large-header">
+
+    
        <Flex gap="middle" wrap="wrap">
+       <canvas
+        id="demo-canvas"
+        ref={canvasRef}
+        style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          zIndex: -1,
+          width: '100vw',
+          height: '100vh',
+        }}
+      ></canvas>
         <Layout>
+        
+     
         <Header 
             style={{
               position: 'sticky',
               top: 0,
               zIndex: 1,
-              width: '100%',
+              // width: '100vw',
               display: 'flex',
               alignItems: 'center',
-              background: '#fff', // Setting a light background color for the Header
+              background: '#ffff', // Setting a light background color for the Header
               boxShadow: '0 2px 8px rgba(0, 0, 0, 0.05)', // Adding a light shadow
             }}
 >
-      <div style={{ display: 'flex', alignItems: 'center' }}>
-      <Title style={{ marginRight: '10px' }}>GreatInt</Title>
-      <div className="demo-logo" ref={ContainerRef2} style={{ width: '60px', height: '60px',color: '#5733FF'}}></div>
-      </div>
+      <canvas
+        id="demo-canvas"
+        ref={canvasRef}
+        style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          zIndex: -1,
+          width: '100vw',
+          height: '100vh',
+        }}
+      ></canvas>
+     
 
-        <Menu
-          // theme="light"
-          mode="horizontal"
-          defaultSelectedKeys={['1']}
-          items={items}
-          style={{
-            flex: 1,
-            minWidth: 0,
-            marginLeft: '25px',
-          }}
-        />
+        <div style={{ display: 'flex', alignItems: 'center' }}>
+          {/* Logo */}
+          <div className="demo-logo" style={{ marginTop: '4%' }}>
+            <img src={logo} width={100} alt="Logo"  />
+          </div>
+
+          {/* Menu */}
+          <Menu
+            mode="horizontal"
+            defaultSelectedKeys={['1']}
+            items={items}
+            style={{
+              flex: 1,
+              minWidth: 0,
+              marginLeft: '25px',
+            }}
+          />
+        </div>
       </Header>
       <List style={{ display: 'flex' }}>
             <List.Item>
+         
               <Content  id="1">
                 <Row >
                 <Col xs={24} sm={12} style={{ backgroundColor: '#f5f5f5', padding: '2rem', marginTop: '-4%', minHeight: '100vh' }}>
                   <div style={{textAlign: 'left', paddingLeft:'10%', marginTop: "8%", }}>
-                    <Title className="T1" style={{  fontFamily: 'Serif ', fontSize: '2.7rem'}}>
+                    <Title className="T1" style={{  fontFamily: 'Poppins ', fontSize: '2.7rem'}}>
                       <span style={{  letterSpacing: '2px' }}>
                         <span style={{ textDecoration: 'underline' }}>Unleash</span>,{' '}
                       the Power of Data-Driven Decisions</span>{' '}
@@ -350,39 +611,40 @@ function App() {
                 <Col xs={24} sm={12} >
                   <div ref={ContainerRef4} style={{ ...animStyle }}></div>
                 </Col>
-
                 </Row>
-             
               </Content>
+            
             </List.Item>
             <List.Item>
              <Content ref={addtoRefs}  xs={24} sm={12} style={{ margin: '0 16px', width: '50%',minHeight:'100vh'}} id="2">
             <div style={{marginTop: '5%' }}>
-                <div style={{ display: 'flex', flexDirection: 'row'  }}>
-                  <div style={{ flex: 1 }}>
-                    <Title style={{ fontFamily: 'Serif', fontSize: '2.5rem', textAlign: 'left',paddingLeft:'30%',color: '#5733FF',marginTop: "-2%" }}>What We Do!</Title>
-                  </div>
-                  <div style={{ flex: 1, textAlign: 'right',paddingRight:'10%',textAlign: 'left', fontSize: '1rem' }}>
-                    <span>
-                      In today's data-driven world, making informed decisions can be the difference between success and stagnation. With a comprehensive suite of services: Artificial Intelligence (AI), Data Analytics, Business Intelligence (BI), and Software Development.
-                    </span>
-                  </div>
+            <div style={{ display: 'flex', alignItems: 'center' }}>
+                <div style={{ flex: '1 1 50%', marginRight: '20px' }}>
+                  <Title style={{ fontFamily: 'Poppins', fontSize: '2.5rem', color: '#5733FF' }}>What We Do!</Title>
                 </div>
+                <div style={{ flex: '1 1 50%' }}>
+                  <Paragraph style={{ fontSize: '1rem', textAlign: 'left' }}>
+                    In today's data-driven world, making informed decisions can be the difference between success and stagnation. With a comprehensive suite of services: Artificial Intelligence (AI), Data Analytics, Business Intelligence (BI), and Software Development.
+                  </Paragraph>
+                </div>
+              </div>
+
                   <CustomCarousel cards={cards} />
             </div>
               </Content>
           </List.Item>
+    
             <List.Item>
               <Content ref={addtoRefs}  style={{minHeight:'100vh'}} id="3">
                    <div style={{marginTop: '5%' }}>
                     <div style={{ display: 'flex', flexDirection: 'row'  }}>
                   <div style={{ flex: 1 }}>
-                    <Title style={{ fontFamily: 'Serif', fontSize: '2.5rem', textAlign: 'left',paddingLeft:'30%',color: '#5733FF',marginTop: "-2%" }}>Development Process</Title>
+                    <Title style={{ fontFamily: 'Poppins', fontSize: '2.5rem', textAlign: 'left',paddingLeft:'30%',color: '#5733FF',marginTop: "-2%" }}>Development Process</Title>
                   </div>
                   <div style={{ flex: 1, textAlign: 'right',paddingRight:'10%',textAlign: 'left', fontSize: '1rem' }}>
-                    <span>
+                    <Paragraph>
                     We understand that embarking on a data-driven journey can seem daunting. That's why we employ the CRISP-DM methodology, a structured approach that guides us through each stage of the project lifecycle:
-                    </span>
+                    </Paragraph>
                   </div>
                 </div>
                     <Row gutter={[16, 16]} align="top">
@@ -404,7 +666,7 @@ function App() {
             <Card bordered={true}>
               <Row gutter={[16, 16]} align="top">
                 <Col xs={24} sm={12} style={{ flexDirection: 'column', alignItems: 'flex-start' }}>
-                  <Title style={{ marginTop: "20%", fontFamily: 'Serif ', fontSize: '2rem' }}>
+                  <Title style={{ marginTop: "20%", fontFamily: 'Poppins ', fontSize: '2rem' }}>
                     <span style={{ color: '#FFfff' }}>Leading Companies </span>{' '}
                     <span style={{ color: '#5733FF' }}>Develop with Us!</span>
                   </Title>
@@ -426,7 +688,7 @@ function App() {
             <List.Item>
                 <Content ref={addtoRefs}  id="5" style={{minHeight: '100vh' }}>
                   <div>
-                  <Title style={{fontFamily: 'Serif ', fontSize: '2rem',color: '#5733FF' }}>Our Team</Title>
+                  <Title style={{fontFamily: 'Poppins ', fontSize: '2rem',color: '#5733FF' }}>Our Team</Title>
                     <Row gutter={[16, 16]} align="top">
                         {Teams_x.map((team, index) => (
                           <Col key={index} xs={24} sm={12} style={{ flexDirection: 'column' }}>
@@ -447,7 +709,7 @@ function App() {
        
             <List.Item>
               <Content ref={addtoRefs} id="6" style={{minHeight: '100vh' }}>
-              <Title style={{fontFamily: 'Serif ', fontSize: '2rem' ,color: '#5733FF' }}>Common Questions</Title>
+              <Title style={{fontFamily: 'Poppins ', fontSize: '2rem' ,color: '#5733FF' }}>Common Questions</Title>
              
               {/* <Card bordered={true} style={{height:'85vh'}}> */}
               <Row gutter={[16, 16]} align="top">
@@ -489,7 +751,7 @@ function App() {
             </List.Item>
             <List.Item>
                 <Content ref={addtoRefs} id="7" style={{ minHeight: '100vh' }}>
-                  <Title style={{ fontFamily: 'Serif', fontSize: '2rem', color: '#5733FF' }}>Contact Us</Title>
+                  <Title style={{ fontFamily: 'Poppins', fontSize: '2rem', color: '#5733FF' }}>Contact Us</Title>
                   <Row gutter={[16, 16]} style={{ display: 'flex' }}>
                     <Col xs={24} sm={12}>
                       <Card style={{ height: '80%' }}>
@@ -514,6 +776,7 @@ function App() {
         </Layout>
 
       </Flex>
+   
     </div>
   );
 }
