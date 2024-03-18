@@ -75,7 +75,7 @@ const cardStyle = {
           "Customized AI Solutions: We work closely with you to understand your challenges and develop AI models that address them directly.",
           "Actionable Insights: Go beyond raw data with clear, interpretable insights that guide informed decision-making.",
           "Increased Efficiency: Automate repetitive tasks and free your team to focus on higher-value activities."
-        ],sname:'AI',name: 'Artificial Intelligence', content: "Imagine having a tireless, intelligent assistant working tirelessly behind the scenes.Our AI services leverage cutting-edge algorithms to analyze your data and uncover hidden patterns. We don't offer generic solutions; we tailor AI models to your specific needs, whether it's automating tasks, predicting customer behavior, or optimizing operations.", icon: <RobotOutlined style={{ fontSize: '40px', color: 'blue', marginRight: '10px' }} /> },
+        ],sname:'AI',name: 'Artificial Intelligence', content: "Imagine having a tireless, intelligent assistant working tirelessly behind the scenes.We don't offer generic solutions; we tailor AI models to your specific needs, whether it's automating tasks, predicting customer behavior, or optimizing operations.", icon: <RobotOutlined style={{ fontSize: '40px', color: 'blue', marginRight: '10px' }} /> },
         {content_list: [
           "Generative AI: Training models to generate new content, such as images, text, or even music, that resembles existing data.",
           "Predictive Analytics: Models analyze sensor data from industrial equipment to identify patterns indicative of impending failures.",

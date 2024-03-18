@@ -1,210 +1,95 @@
-import React,{useEffect,useRef}from 'react';
-import { Card, Typography, Row, Col } from 'antd';
-import { BarChartOutlined, LineChartOutlined, CodeOutlined } from '@ant-design/icons';
-import gsap from 'gsap';
-import { MotionPathPlugin } from 'gsap/MotionPathPlugin';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-gsap.registerPlugin(ScrollTrigger);
+import React, { useState, useEffect } from 'react';
+import { List, Layout, Card, Carousel, Typography, Row, Col,Space,Divider, Skeleton } from 'antd';
+// import {SettingOutlined,TeamOutlined,FundProjectionScreenOutlined,CheckCircleOutlined, SmileOutlined, BarChartOutlined, RobotOutlined, CodeOutlined, QuestionOutlined,FundViewOutlined  } from '@ant-design/icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import {faEye,faRobot,faFaceSmileWink, faBriefcase, faListCheck, faMicrochip, faMagnifyingGlass, faPersonWalking} from  '@fortawesome/free-solid-svg-icons' ;
 
-gsap.registerPlugin(MotionPathPlugin);
+import InfiniteScroll from 'react-infinite-scroll-component';
 
-const { Title, Paragraph } = Typography;
-const ProcessCard = ({ icon, title, description }) => {
-  const cardRef = useRef(null);
-  const descriptionRef = useRef(null);
+const { Title,Paragraph,Text } = Typography;
 
-  useEffect(() => {
-    const card = cardRef.current;
-    const description = descriptionRef.current;
-
-    const tl = gsap.timeline();
-
-    // Initial state
-    tl.set(description, { opacity: 0, y: 20 });
-
-  //   // Hover animation
-  //   const handleMouseEnter = () => {
-  //     tl.to(description, { opacity: 1, y: 0, duration: 0.3, ease: 'power1.inOut' });
-  //   };
-
-  //   // Hover out animation
-  //   const handleMouseLeave = () => {
-  //     tl.to(description, { opacity: 0, y: 20, duration: 0.3, ease: 'power1.inOut' });
-  //   };
-
-  //   card.addEventListener('mouseenter', handleMouseEnter);
-  //   card.addEventListener('mouseleave', handleMouseLeave);
-
-  //   return () => {
-  //     card.removeEventListener('mouseenter', handleMouseEnter);
-  //     card.removeEventListener('mouseleave', handleMouseLeave);
-  //   };
-  }, []);
-
-  const handleClick = () => {
-    const card = cardRef.current;
-    const tl = gsap.timeline();
-    gsap.to(card, {
-      motionPath: {
-        path: [
-          { x: 0, y: 0 },
-          { x: 100, y: 0 },
-          { x: 100, y: 100 },
-          { x: 0, y: 100 },
-          { x: 0, y: 0 },
-        ],
-        align: 'self',
-        autoRotate: true,
-        curviness: 2,
-      },
-      duration: 2,
-      onComplete: () => {
-        gsap.set(descriptionRef.current, { opacity: 1, y: 0, duration: 0.3, ease: 'power1.inOut' });
-        // tl.to(description, { opacity: 1, y: 0, duration: 0.3, ease: 'power1.inOut' });
-      },
-    });
+const cardStyle = {
+    border: 'none', 
+    height:'26rem',
+    boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
   };
-
-  useEffect(() => {
-    gsap.to(cardRef.current, {
-      rotation: 360, 
-      scrollTrigger: {
-        trigger: cardRef.current,
-        start: 'top center',
-        end: 'bottom center',
-        scrub: true, 
-        onUpdate: (self) => {
-          if (self.progress === 1) {
-            gsap.set(descriptionRef.current, { opacity: 1, y: 0, duration: 0.3, ease: 'power1.inOut' });
-          }
-        },
-      },
-    });
-  }, []);
-  return (
-    <Card
-      ref={cardRef}
-      style={{ borderRadius: '50%', padding: '17px', width: '160px', height: '160px', textAlign: 'center' }}
-      onClick={handleClick}
-      shadow
-    >
-      {icon}
-      <Paragraph className="card-paragraph" ref={descriptionRef} style={{ fontSize: '14px', opacity: 0, marginTop: '10px' }}>
-        {title}
-      </Paragraph>
-    </Card>
-  );
-};
-// const ProcessCard = ({ icon, title, description }) => {
-
-//   const cardRef = useRef(null);
-
-//   useEffect(() => {
-//     const card = cardRef.current;
-//     const paragraph = card.querySelector('.card-paragraph');
-//     const tl = gsap.timeline();
-
-//     // Initial state
-//     tl.set(paragraph, { opacity: 0, y: 20 });
-
-//     // Hover animation
-//     const handleMouseEnter = () => {
-//       tl.to(paragraph, { opacity: 1, y: 0, duration: 0.3, ease: 'power1.inOut' });
-//     };
-
-//     // Hover out animation
-//     const handleMouseLeave = () => {
-//       tl.to(paragraph, { opacity: 0, y: 20, duration: 0.3, ease: 'power1.inOut' });
-//     };
-
-//     card.addEventListener('mouseenter', handleMouseEnter);
-//     card.addEventListener('mouseleave', handleMouseLeave);
-
-//     return () => {
-//       card.removeEventListener('mouseenter', handleMouseEnter);
-//       card.removeEventListener('mouseleave', handleMouseLeave);
-//     };
-//   }, []);
-
-//   return (
-//     <Card
-//     ref={cardRef}
-//     style={{ borderRadius: '50%', padding: '25px', width: '150px', height: '150px', textAlign: 'center' }}
-//   >
-//     {icon}
-//     <Paragraph className="card-paragraph" style={{ fontSize: '10px', opacity: 0, marginTop: '10px' }}>
-//       {title}
-//       <br />
-//       {/* {description} */}
-//     </Paragraph>
-//   </Card>
-//   );
-// };
-
-const Arrow = () => (
   
-  <>
-    <svg height="100" width="100">
-      <path d="M10 50 Q50 10 90 50" fill="none" stroke="black" strokeWidth="5" />
-      {/* <polygon points="90,50 85,45 85,55" fill="black" /> */}
-    </svg>
-  </>
-
-);
-
-export const ProcessWay = () => {
-
-
-
-  const dataAnalysisSteps = [
-    {
-      icon: <BarChartOutlined style={{ fontSize: '24px', color: 'blue' }} />,
-      title: 'Problem Definiton',
-      description: 'Gather relevant data from various sources for analysis.',
-    },
-    {
-      icon: <LineChartOutlined style={{ fontSize: '24px', color: 'green' }} />,
-      title: 'Data Collection',
-      description: 'Clean and transform the data to prepare it for analysis and modeling.',
-    },
-
-    {
-      icon: <CodeOutlined style={{ fontSize: '24px', color: 'purple' }} />,
-      title: 'Design',
-      description: 'Build machine learning or statistical models based on the processed data.',
-    },
-  
-    {
-        icon: <CodeOutlined style={{ fontSize: '24px', color: 'purple' }} />,
-        title: 'Development',
-        description: 'Build machine learning or statistical models based on the processed data.',
-      },
-
-      {
-        icon: <CodeOutlined style={{ fontSize: '24px', color: 'purple' }} />,
-        title: 'Deployment',
-        description: 'Build machine learning or statistical models based on the processed data.',
-      },
-  ];
-
-  
-  return (
-    <div className="process-container">
-     <Row style={{ justifyContent: 'space-between', }}>
-        {dataAnalysisSteps.map((step,index) => (
-          <>
-          <ProcessCard {...step} />
-          {index < dataAnalysisSteps.length - 1 && <Arrow key={`arrow-${index}`} />}
-          </>
-       
-        ))}
-      </Row>
+const x = [
+  { name: "Business Understanding", dec: "We begin by collaborating with you to understand your specific needs and business goals.", icon: <FontAwesomeIcon icon={faBriefcase} size="3x" color='#5733FF'/> },
+  { name: "Data Understanding", dec: "We explore, clean, and prepare your data, ensuring its accuracy and readiness for analysis.", icon: <FontAwesomeIcon icon={faRobot} size="3x" color='#5733FF'/>},
+  { name: "Data Preparation", dec: "We transform the data into a format suitable for modeling and analysis.", icon: <FontAwesomeIcon icon={faListCheck} size="3x" color='#5733FF'/> },
+  { name: "Modeling", dec: "We choose and apply the most appropriate data mining techniques to uncover valuable insights.", icon: <FontAwesomeIcon icon={faMicrochip} size="4x" color='#5733FF'/> },
+  { name: "Evaluation", dec: "We rigorously assess the model's performance and effectiveness.", icon: <FontAwesomeIcon icon={faMagnifyingGlass} size="3x" color='#5733FF'/> },
+  { name: "Deployment", dec: "We integrate the insights and solutions developed into your existing systems for immediate impact.", icon: <FontAwesomeIcon icon={faPersonWalking} size="3x" color='#5733FF'/> },
+  { name: "Monitoring", dec: "We continuously monitor and maintain the model, ensuring its ongoing relevance and accuracy.", icon: <FontAwesomeIcon icon={faEye} size="3x" color='#5733FF' /> },
+];
+ const ProcessWay = () => {
+  const [data, setData] = useState(x.slice(0, 3)); 
+  const [hasMore, setHasMore] = useState(true); 
+  const loadMoreData = () => {
+    setTimeout(() => {
+      const newData = x.slice(data.length, data.length + 3); 
+      setData([...data, ...newData]); 
+      if (data.length + 3 >= x.length) {
+        setHasMore(false); 
+      }
+    }, 1000);
+  };
+      return (
+        <>
+        <div
+          id="scrollableDiv"
+          style={{
+            height: 400,
+            overflow: 'auto',
+            padding: '0 16px',
+            marginRight:'15%',
+            marginTop:'5%'
+          }}
+        >
+      <InfiniteScroll
+        dataLength={data.length}
+        next={loadMoreData}
+        hasMore={data.length < x.length}
+        loader={
+          <Skeleton
+            avatar
+            paragraph={{ rows: 1 }}
+            active
+          />
+        }
+        endMessage={<Divider plain><Text>It is all, nothing more </Text><FontAwesomeIcon icon={faFaceSmileWink}  size="4x" color='#5733FF'/></Divider>}
+        scrollableTarget="scrollableDiv"
+      >
+        <List
+          itemLayout="horizontal"
+          dataSource={data}
+          renderItem={(item, index) => (
+            <List.Item key={index}>
+           <Card style={{ width: "100%" }}>
+              <div style={{ display: 'flex', flexDirection: 'column' }}>
+                <Row align="middle">
+                  <Col >
+                    <div style={{ marginRight: 16 }}>{item.icon}</div>
+                  </Col>
+                  <Col style={{ marginLeft: 16 }}>
+                    <Title level={4}>{item.name}</Title>
+                  </Col>
+                </Row>
+                <Row>
+                  <Col span={24}>
+                    <Paragraph style={{ textAlign: 'left' }}>{item.dec}</Paragraph>
+                  </Col>
+                </Row>
+              </div>
+            </Card>
+            </List.Item>
+          )}
+        />
+      </InfiniteScroll>
     </div>
-  );
-};
+        </>
+      );
+    };
 
-export default ProcessWay;
-
-
-
-
+    export default ProcessWay;
