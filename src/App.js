@@ -1,7 +1,7 @@
 
 import './App.css';
 import React,{useEffect,useRef,useState}from 'react';
-import { Layout,List, Menu, Row,Col,Flex,Button, Typography,Card,Avatar, Space,Divider, Skeleton } from 'antd';
+import {Layout,List, Menu, Row,Col,Flex,Button, Typography,Card,Avatar,Divider, Skeleton } from 'antd';
 // import {Link} from 'react-router-dom'
 import crips from './assets/crips.webp'
 import logo from './assets/logos/2.png'
@@ -19,14 +19,15 @@ import x9 from './assets/animations/qa.json'
 import {CustomCarousel} from './CardCaro'
 import ProcessWay from './Process'
 import Contact from  './contact'
-import {Whatwedo} from './whatwedo'
+// import {Whatwedo} from './whatwedo'
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { TextPlugin } from 'gsap/TextPlugin'
 import { UserOutlined} from '@ant-design/icons';
 import p4 from './assets/prof/4.jpg'
 import InfiniteScroll from 'react-infinite-scroll-component';
-import { TweenLite, Circ } from 'gsap';
+// import { TweenLite, Circ } from 'gsap';
+import Animate from './AnimatedHeader'
 
 // import SplitText from "gsap/SplitText";
 gsap.registerPlugin(ScrollTrigger);
@@ -34,21 +35,6 @@ gsap.registerPlugin(TextPlugin);
 const { Title,Paragraph,Text} = Typography;
 const { Header, Footer, Sider, Content } = Layout;
 
-function Circle(pos, rad, color) {
-  this.pos = pos || null;
-  this.radius = rad || null;
-  this.color = color || null;
-  this.active = 0;
-
-  this.draw = function () {
-      if (!this.active) return;
-      const ctx = this.ctx;
-      ctx.beginPath();
-      ctx.arc(this.pos.x, this.pos.y, this.radius, 0, 2 * Math.PI, false);
-      ctx.fillStyle = `rgba(75,21,126,${this.active})`;
-      ctx.fill();
-  };
-}
 const handleClick = (id) => {
   const element = document.getElementById(id);
   if (element) {
@@ -76,7 +62,7 @@ const Teams_x = [
     name: "Bram", 
     icons: "2",
     desc: "Bram is our operational expert, overseeing the day-to-day functions of our company with precision and efficiency. As the Chief Operations Officer, he streamlines our processes and ensures that our operations run smoothly, enabling us to deliver exceptional results to our clients.",
-    title: "Chief Operations Officer",image:'' 
+    title: "Chief Technology Officer",image:'' 
   },
   { 
     name: "Erick", 
@@ -147,17 +133,22 @@ const loadLottieAnimation2 = (containerRef, animationData) => {
 
 const x_QA = [
   { 
-    quiz: "What is data analytics, and why is it important for businesses?", 
-    answer: "Data analytics involves analyzing raw data to extract insights and make informed decisions. It's important for businesses because it helps them understand trends, make predictions, and improve decision-making processes." 
+    quiz: "What is Artificial Intelligence ?", 
+    answer: "Refers to the simulation of human intelligence processes by machines, especially computer systems." 
+  },
+  { 
+    quiz: "What is Machine Learning ?", 
+    answer: " Is a subset of AI that provides systems the ability to automatically learn and improve from experience without being explicitly programmed." 
   },
   { 
     quiz: "How can AI and ML benefit our business operations?", 
     answer: "AI and ML can benefit business operations by automating repetitive tasks, improving decision-making through data analysis, enhancing customer experiences, and optimizing processes for greater efficiency." 
   },
   { 
-    quiz: "How does artificial intelligence differ from traditional programming?", 
-    answer: "Artificial intelligence (AI) enables machines to learn from data and perform tasks that typically require human intelligence, whereas traditional programming involves writing instructions for a computer to follow without the ability to learn or adapt on its own." 
+    quiz: "What ethical considerations are important in data analytics and AI?", 
+    answer: "Important ethical considerations in data analytics and AI include privacy protection, fairness and bias mitigation, transparency in decision-making processes, accountability for outcomes, and ensuring that AI technologies benefit society as a whole." 
   },
+
   { 
     quiz: "What are some real-world applications of AI and ML in business?", 
     answer: "Real-world applications of AI and ML in business include personalized recommendations, fraud detection, predictive maintenance, natural language processing, and image recognition, among others." 
@@ -171,13 +162,14 @@ const x_QA = [
     answer: "Strategies for leveraging AI and ML to gain a competitive advantage may include investing in data quality and infrastructure, fostering a culture of data-driven decision-making, staying informed about industry trends, and collaborating with experts in AI and ML." 
   },
   { 
+    quiz: "How does artificial intelligence differ from traditional programming?", 
+    answer: "Artificial intelligence (AI) enables machines to learn from data and perform tasks that typically require human intelligence, whereas traditional programming involves writing instructions for a computer to follow without the ability to learn or adapt on its own." 
+  },
+  { 
     quiz: "What steps do you take to ensure that AI and ML models are aligned with our business goals and objectives?", 
     answer: "Steps to ensure alignment of AI and ML models with business goals may include defining clear objectives, selecting appropriate metrics for evaluation, involving stakeholders throughout the development process, and continuously monitoring performance against business KPIs." 
   },
-  { 
-    quiz: "What ethical considerations are important in data analytics and AI?", 
-    answer: "Important ethical considerations in data analytics and AI include privacy protection, fairness and bias mitigation, transparency in decision-making processes, accountability for outcomes, and ensuring that AI technologies benefit society as a whole." 
-  },
+ 
   { 
     quiz: "Can you explain the difference between supervised and unsupervised machine learning?", 
     answer: "Supervised machine learning requires labeled data for training, where the algorithm learns from input-output pairs. Unsupervised machine learning works with unlabeled data and aims to find patterns or groupings within the data without explicit guidance." 
@@ -191,6 +183,10 @@ const x_QA = [
     answer: "Measures to ensure data security and privacy may include implementing access controls, encrypting sensitive data, anonymizing or pseudonymizing personally identifiable information (PII), conducting regular security audits, and complying with relevant regulations such as GDPR or CCPA." 
   },
   { 
+    quiz: "What is data analytics, and why is it important for businesses?", 
+    answer: "Data analytics involves analyzing raw data to extract insights and make informed decisions. It's important for businesses because it helps them understand trends, make predictions, and improve decision-making processes." 
+  },
+  { 
     quiz: "How do you stay updated with the latest advancements in data analytics and AI?", 
     answer: "Staying updated with the latest advancements may involve attending conferences and workshops, participating in online courses or webinars, reading research papers and industry publications, joining professional networks or forums, and experimenting with new tools and technologies through personal projects or collaborations." 
   }
@@ -199,22 +195,12 @@ const x_QA = [
 
 function App() {
 
-  const canvasRef = useRef(null);
-  let width, height, largeHeader, canvas, ctx, points, target, animateHeader = true;
   const [data, setData] = useState(x_QA.slice(0, 4)); 
   const [hasMore, setHasMore] = useState(true); 
   const ref = useRef([]);
-  const titleRef = useRef(null);
-  const paragraphRef = useRef(null);
 
-  // useEffect(() => {
-  //   const titleSplit = new MorphSVGPlugin(titleRef.current, { type: 'words,chars' });
-  //   const paragraphSplit = new MorphSVGPlugin(paragraphRef.current, { type: 'words,chars' });
 
-  //   // Animation using GSAP
-  //   gsap.from(titleSplit.chars, { duration: 1, opacity: 0, y: 20, stagger: 0.05 });
-  //   gsap.from(paragraphSplit.chars, { duration: 1, opacity: 0, y: 20, stagger: 0.05 });
-  // }, []);
+
 
 
   const addtoRefs = (el) => {
@@ -268,233 +254,34 @@ function App() {
   }, []);
 
 
-  // const scrollToSection = (sectionId) => {
-  //   const targetElement = document.getElementById(sectionId);
-  
-  //   if (targetElement) {
-  //     gsap.to(window, {
-  //       scrollTo: { y: targetElement, offsetY: 70 },
-  //       duration: 1,
-  //     });
-  //   }
-  // };
-  useEffect(() => {
-    function initHeader() {
-        width = window.innerWidth;
-        height = window.innerHeight;
-        target = { x: width / 2, y: height / 2 };
-
-        largeHeader = document.getElementById('large-header');
-        largeHeader.style.height = height + 'px';
-
-        canvas = canvasRef.current;
-        canvas.width = width;
-        canvas.height = height;
-        ctx = canvas.getContext('2d');
-
-        // create points
-        points = [];
-        for (let x = 0; x < width; x = x + width / 20) {
-            for (let y = 0; y < height; y = y + height / 20) {
-                const px = x + Math.random() * width / 20;
-                const py = y + Math.random() * height / 20;
-                const p = { x: px, originX: px, y: py, originY: py };
-                points.push(p);
-            }
-        }
-
-        // for each point find the 5 closest points
-        for (let i = 0; i < points.length; i++) {
-            const closest = [];
-            const p1 = points[i];
-            for (let j = 0; j < points.length; j++) {
-                const p2 = points[j];
-                if (!(p1 === p2)) {
-                    let placed = false;
-                    for (let k = 0; k < 5; k++) {
-                        if (!placed) {
-                            if (closest[k] === undefined) {
-                                closest[k] = p2;
-                                placed = true;
-                            }
-                        }
-                    }
-
-                    for (let k = 0; k < 5; k++) {
-                        if (!placed) {
-                            if (getDistance(p1, p2) < getDistance(p1, closest[k])) {
-                                closest[k] = p2;
-                                placed = true;
-                            }
-                        }
-                    }
-                }
-            }
-            p1.closest = closest;
-        }
-
-        // assign a circle to each point
-        for (const i in points) {
-            const c = new Circle(points[i], 2 + Math.random() * 2, 'rgba(255,255,255,0.3)');
-            points[i].circle = c;
-        }
-    }
-
-    // Event handling
-    function addListeners() {
-        if (!('ontouchstart' in window)) {
-            window.addEventListener('mousemove', mouseMove);
-        }
-        window.addEventListener('scroll', scrollCheck);
-        window.addEventListener('resize', resize);
-    }
-
-    function mouseMove(e) {
-        let posx = 0, posy = 0;
-        if (e.pageX || e.pageY) {
-            posx = e.pageX;
-            posy = e.pageY;
-        } else if (e.clientX || e.clientY) {
-            posx = e.clientX + document.body.scrollLeft + document.documentElement.scrollLeft;
-            posy = e.clientY + document.body.scrollTop + document.documentElement.scrollTop;
-        }
-        target.x = posx;
-        target.y = posy;
-    }
-
-    function scrollCheck() {
-        animateHeader = document.body.scrollTop > height ? false : true;
-    }
-
-    function resize() {
-        width = window.innerWidth;
-        height = window.innerHeight;
-        largeHeader.style.height = height + 'px';
-        canvas.width = width;
-        canvas.height = height;
-    }
-
-    function initAnimation() {
-        animate();
-        for (const i in points) {
-            shiftPoint(points[i]);
-        }
-    }
-
-    function animate() {
-        if (animateHeader) {
-            ctx.clearRect(0, 0, width, height);
-            for (const i in points) {
-                // detect points in range
-                if (Math.abs(getDistance(target, points[i])) < 4000) {
-                    points[i].active = 0.3;
-                    points[i].circle.active = 0.6;
-                } else if (Math.abs(getDistance(target, points[i])) < 20000) {
-                    points[i].active = 0.1;
-                    points[i].circle.active = 0.3;
-                } else if (Math.abs(getDistance(target, points[i])) < 40000) {
-                    points[i].active = 0.02;
-                    points[i].circle.active = 0.1;
-                } else {
-                    points[i].active = 0;
-                    points[i].circle.active = 0;
-                }
-
-                drawLines(points[i]);
-                points[i].circle.draw();
-            }
-        }
-        requestAnimationFrame(animate);
-    }
-
-    function shiftPoint(p) {
-        TweenLite.to(p, 1 + 1 * Math.random(), {
-            x: p.originX - 50 + Math.random() * 100,
-            y: p.originY - 50 + Math.random() * 100,
-            ease: Circ.easeInOut,
-            onComplete: function () {
-                shiftPoint(p);
-            }
-        });
-    }
-
-    // Canvas manipulation
-    function drawLines(p) {
-        if (!p.active) return;
-        for (const i in p.closest) {
-            ctx.beginPath();
-            ctx.moveTo(p.x, p.y);
-            ctx.lineTo(p.closest[i].x, p.closest[i].y);
-            ctx.strokeStyle = 'rgba(75,21,126,' + p.active + ')';
-            ctx.stroke();
-        }
-    }
-
-    function Circle(pos, rad, color) {
-        const _this = this;
-
-        // constructor
-        (function () {
-            _this.pos = pos || null;
-            _this.radius = rad || null;
-            _this.color = color || null;
-        })();
-
-        this.draw = function () {
-            if (!_this.active) return;
-            ctx.beginPath();
-            ctx.arc(_this.pos.x, _this.pos.y, _this.radius, 0, 2 * Math.PI, false);
-            ctx.fillStyle = 'rgba(75,21,126,' + _this.active + ')';
-            ctx.fill();
-        };
-    }
-
-    // Util
-    function getDistance(p1, p2) {
-        return Math.pow(p1.x - p2.x, 2) + Math.pow(p1.y - p2.y, 2);
-    }
-
-    initHeader();
-    initAnimation();
-    addListeners();
-
-    return () => {
-        window.removeEventListener('mousemove', mouseMove);
-        window.removeEventListener('scroll', scrollCheck);
-        window.removeEventListener('resize', resize);
-    };
-}, []);
   useEffect(() => {
 
-    let ctx = gsap.context(() => {
+    let ctx = gsap.context(() => {})
 
-      // let split = SplitText.create("h1", {type:"word chars"});
-      
-    // gsap.from(split.chars, {
-    //   duration: 0.8,
-    //   opacity: 0,
-    //   y: 10,
-    //   ease: "circ.out",
-    //   stagger: 0.02,
-    //   scrollTrigger: {
-    //     trigger: ".titleBurrowing",
-    //     start: "top 75%",
-    //     end: "bottom center",
-    //     scrub: 1
-    //   }
-    // });
-    // return () => split.revert();
-  })
- 
     gsap.defaults({ ease: "none" });
     const tl = gsap.timeline({ repeat: 1, repeatDelay: 2, yoyo:false });
             tl.to(".T2", { 
               // x: -100 
-              duration: 5,
+              duration: 3,
               text:()=>(`At GreatInt, we bridge the gap between raw data and actionable insights, empowering businesses with a comprehensive suite of services.`)
             })
             .to(".Tbox", { x: -100  });
-            // .to(buttonRef.current, { duration: 2, text: "Request a Demo", delay: 2 })
+
+      const t2 = gsap.timeline({
+        scrollTrigger:{
+          trigger:".box",
+          start:"center center",
+          end:"bottom top",
+          makers:true,
+          scrub:true
+
+        }
+      });      
+      t2.from(".text1",{x:window*1})
+        .from(".text1",{x:window*-1})
+
+
+
        
       ref.current.forEach((el) => {
           gsap.fromTo(el, { autoAlpha: 0 }, {
@@ -510,28 +297,19 @@ function App() {
       });
       return () => ctx.revert();
   }, []);
+
+
+
   const cards = ['Card content 1', 'Card content 2', 'Card content 3', 'Card content 4'];
 
 
   return (
     <div className="App" id="large-header">
 
-    
        <Flex gap="middle" wrap="wrap">
-       <canvas
-        id="demo-canvas"
-        ref={canvasRef}
-        style={{
-          position: 'fixed',
-          top: 0,
-          left: 0,
-          zIndex: -1,
-          width: '100vw',
-          height: '100vh',
-        }}
-      ></canvas>
+      
         <Layout>
-        
+    
      
         <Header 
             style={{
@@ -542,22 +320,11 @@ function App() {
               display: 'flex',
               alignItems: 'center',
               background: '#ffff', // Setting a light background color for the Header
-              boxShadow: '0 2px 8px rgba(0, 0, 0, 0.05)', // Adding a light shadow
+              // boxShadow: '0 2px 8px rgba(0, 0, 0, 0.05)', // Adding a light shadow
             }}
 >
-      <canvas
-        id="demo-canvas"
-        ref={canvasRef}
-        style={{
-          position: 'fixed',
-          top: 0,
-          left: 0,
-          zIndex: -1,
-          width: '100vw',
-          height: '100vh',
-        }}
-      ></canvas>
-     
+  
+        {/* <Animate/> */}
 
         <div style={{ display: 'flex', alignItems: 'center' }}>
           {/* Logo */}
@@ -578,12 +345,14 @@ function App() {
           />
         </div>
       </Header>
+     
+  
+    
       <List style={{ display: 'flex' }}>
             <List.Item>
-         
-              <Content  id="1">
+              <Content  id="1" style={{minHeight:'100vh', padding: '2%',minWidth:'100vw'}}>
                 <Row >
-                <Col xs={24} sm={12} style={{ backgroundColor: '#f5f5f5', padding: '2rem', marginTop: '-4%', minHeight: '100vh' }}>
+                <Col xs={24} sm={12} style={{ backgroundColor: '#f5f5f5', marginTop: '-4%'}}>
                   <div style={{textAlign: 'left', paddingLeft:'10%', marginTop: "8%", }}>
                     <Title className="T1" style={{  fontFamily: 'Poppins ', fontSize: '2.7rem'}}>
                       <span style={{  letterSpacing: '2px' }}>
@@ -615,15 +384,19 @@ function App() {
               </Content>
             
             </List.Item>
+
             <List.Item>
-             <Content ref={addtoRefs}  xs={24} sm={12} style={{ margin: '0 16px', width: '50%',minHeight:'100vh'}} id="2">
+             <Content ref={addtoRefs} xs={24} sm={12} style={{ minHeight:'100vh', padding: '2%'}} id="2">
+             {/* margin: '0 16px', width: '50%', */}
             <div style={{marginTop: '5%' }}>
+
             <div style={{ display: 'flex', alignItems: 'center' }}>
+          
                 <div style={{ flex: '1 1 50%', marginRight: '20px' }}>
                   <Title style={{ fontFamily: 'Poppins', fontSize: '2.5rem', color: '#5733FF' }}>What We Do!</Title>
                 </div>
                 <div style={{ flex: '1 1 50%' }}>
-                  <Paragraph style={{ fontSize: '1rem', textAlign: 'left' }}>
+                  <Paragraph style={{ fontSize: '1rem', textAlign: 'left',paddingLeft:'1%' }}>
                     In today's data-driven world, making informed decisions can be the difference between success and stagnation. With a comprehensive suite of services: Artificial Intelligence (AI), Data Analytics, Business Intelligence (BI), and Software Development.
                   </Paragraph>
                 </div>
@@ -633,15 +406,16 @@ function App() {
             </div>
               </Content>
           </List.Item>
-    
+       
             <List.Item>
-              <Content ref={addtoRefs}  style={{minHeight:'100vh'}} id="3">
+         
+              <Content ref={addtoRefs}  style={{minHeight:'100vh', padding: '2%'}} id="3">
                    <div style={{marginTop: '5%' }}>
                     <div style={{ display: 'flex', flexDirection: 'row'  }}>
                   <div style={{ flex: 1 }}>
                     <Title style={{ fontFamily: 'Poppins', fontSize: '2.5rem', textAlign: 'left',paddingLeft:'30%',color: '#5733FF',marginTop: "-2%" }}>Development Process</Title>
                   </div>
-                  <div style={{ flex: 1, textAlign: 'right',paddingRight:'10%',textAlign: 'left', fontSize: '1rem' }}>
+                  <div style={{ flex: 1, textAlign: 'right',paddingRight:'10%', fontSize: '1rem' }}>
                     <Paragraph>
                     We understand that embarking on a data-driven journey can seem daunting. That's why we employ the CRISP-DM methodology, a structured approach that guides us through each stage of the project lifecycle:
                     </Paragraph>
@@ -662,11 +436,11 @@ function App() {
               </Content>
             </List.Item>
             <List.Item>
-            <Content ref={addtoRefs} id="4">
-            <Card bordered={true}>
+            <Content ref={addtoRefs}   style={{minHeight:'100vh', padding: '2%'}} id="4">
+            {/* <Card bordered={true}> */}
               <Row gutter={[16, 16]} align="top">
                 <Col xs={24} sm={12} style={{ flexDirection: 'column', alignItems: 'flex-start' }}>
-                  <Title style={{ marginTop: "20%", fontFamily: 'Poppins ', fontSize: '2rem' }}>
+                  <Title className='text1' style={{fontFamily: 'Poppins ', fontSize: '2rem' }}>
                     <span style={{ color: '#FFfff' }}>Leading Companies </span>{' '}
                     <span style={{ color: '#5733FF' }}>Develop with Us!</span>
                   </Title>
@@ -675,6 +449,20 @@ function App() {
                     <span style={{ color: 'black' }}>we are dedicated in delivering your project to your standards.</span>
                     <span style={{ color: 'black' }}> Our value isn't limited to building teams but is equally distributed across the project lifecycle.</span>
                     <span style={{ color: '#5733FF' }}> We are basically a custom tech development company.</span>
+                    <Card border={false}>
+                    <InfiniteScroll dataLength={data.length}next={loadMoreData}hasMore={data.length < x_QA.length} loader={<Skeleton paragraph={{ rows: 1 }} active/>} endMessage={<Divider plain><Text>Contact us for more Questions</Text></Divider>} scrollableTarget="scrollableDiv">
+                   
+                    <List
+                      itemLayout="horizontal"
+                      dataSource={data}
+                      renderItem={(item, index) => (
+                        <List.Item key={index}>
+                           <Title level={4} style={{ color: '#5733FF' }}>{item.quiz}</Title>
+                        </List.Item>
+                        )}
+                      />
+                    </InfiniteScroll>
+                    </Card>
                   </Paragraph>
             
                 </Col>
@@ -682,11 +470,13 @@ function App() {
                   <div ref={ContainerRef5} style={{ ...contentStyle }}></div>
                 </Col>
               </Row>
-              </Card>
+              {/* </Card> */}
             </Content>
             </List.Item>
+            
             <List.Item>
-                <Content ref={addtoRefs}  id="5" style={{minHeight: '100vh' }}>
+            
+                <Content ref={addtoRefs}  id="5" style={{minHeight: '100vh',padding: '2%'}}>
                   <div>
                   <Title style={{fontFamily: 'Poppins ', fontSize: '2rem',color: '#5733FF' }}>Our Team</Title>
                     <Row gutter={[16, 16]} align="top">
@@ -708,7 +498,7 @@ function App() {
             </List.Item>
        
             <List.Item>
-              <Content ref={addtoRefs} id="6" style={{minHeight: '100vh' }}>
+              <Content ref={addtoRefs} id="6" style={{minHeight: '100vh',padding: '2%' }}>
               <Title style={{fontFamily: 'Poppins ', fontSize: '2rem' ,color: '#5733FF' }}>Common Questions</Title>
              
               {/* <Card bordered={true} style={{height:'85vh'}}> */}
@@ -750,13 +540,13 @@ function App() {
              </Content>
             </List.Item>
             <List.Item>
-                <Content ref={addtoRefs} id="7" style={{ minHeight: '100vh' }}>
+                <Content ref={addtoRefs} id="7" style={{ minHeight: '100vh',padding: '2%' }}>
                   <Title style={{ fontFamily: 'Poppins', fontSize: '2rem', color: '#5733FF' }}>Contact Us</Title>
                   <Row gutter={[16, 16]} style={{ display: 'flex' }}>
                     <Col xs={24} sm={12}>
-                      <Card style={{ height: '80%' }}>
+                      {/* <Card style={{ height: '80%' }}> */}
                         <div ref={ContainerRef8} style={{ ...animStyle }}></div>
-                      </Card>
+                      {/* </Card> */}
                     </Col>
                     <Col xs={24} sm={12}>
                    <Contact/>
