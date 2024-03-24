@@ -1,7 +1,7 @@
 
 import './App.css';
 import React,{useEffect,useRef,useState}from 'react';
-import {Layout,List, Menu, Row,Col,Flex,Button, Typography,Card,Avatar,Divider, Skeleton } from 'antd';
+import {Layout,List, Menu, Row,Col,Flex,Button, Typography,Card,Avatar,Divider, Skeleton,Popover } from 'antd';
 // import {Link} from 'react-router-dom'
 import crips from './assets/crips.webp'
 import logo from './assets/logos/2.png'
@@ -53,25 +53,26 @@ const navs = [
 ];
 const Teams_x = [
   { 
-    name: "Rodgers", 
+    name: "Rodgers.O.R", 
     icons: "1",
     desc: "Rodgers is our visionary leader, with a wealth of experience in driving business strategies and fostering innovation. As the Chief Executive Officer, he provides direction and guidance to our team, ensuring that we remain agile and adaptive in a rapidly changing industry.",
     title: "Chief Executive Officer" ,image:''
   },
   { 
-    name: "Bram", 
+    name: "Bram.M", 
     icons: "2",
     desc: "Bram is our operational expert, overseeing the day-to-day functions of our company with precision and efficiency. As the Chief Operations Officer, he streamlines our processes and ensures that our operations run smoothly, enabling us to deliver exceptional results to our clients.",
-    title: "Chief Technology Officer",image:'' 
-  },
+    title: "Chief Operations Officer",
+    image: '' 
+},
   { 
-    name: "Erick", 
+    name: "Erick.", 
     icons: "3",
-    desc: "Erick is our analytical powerhouse, with a keen eye for data and insights. As a Senior Analyst, he leverages his expertise to extract valuable insights from complex datasets, empowering our team to make informed decisions and drive business growth.",
-    title: "Senior Analyst" ,image:''
+    desc: "Erick is our strategic visionary, leading our marketing efforts with creativity and innovation. As the Chief Marketing Officer, he orchestrates comprehensive marketing campaigns that resonate with our target audience, driving brand awareness and customer engagement to new heights.",
+    title: "Chief Marketing Officer" ,image:''
   },
   { 
-    name: "Cyril", 
+    name: "Cyril.M", 
     icons: "4",
     desc: "Cyril is our masterful developer, with a passion for turning ideas into reality through code. As a Senior Developer, he thrives on challenges and is dedicated to creating innovative solutions that push the boundaries of technology. With Cyril on our team, we're always one step ahead.",
     title: "Senior Developer" ,image:p4
@@ -191,6 +192,49 @@ const x_QA = [
     answer: "Staying updated with the latest advancements may involve attending conferences and workshops, participating in online courses or webinars, reading research papers and industry publications, joining professional networks or forums, and experimenting with new tools and technologies through personal projects or collaborations." 
   }
 ];
+const companyExpectations = [
+  {
+    id: 1,
+    title: "Expertise",
+    description: "Our team consists of experienced professionals with diverse skill sets, ensuring that we have the expertise needed to tackle any technical challenge."
+  },
+  {
+    id: 2,
+    title: "Tailored Solutions",
+    description: "We understand that every project is unique, which is why we take a tailored approach to development. We work closely with our clients to understand their specific requirements and craft solutions that meet their needs."
+  },
+  // {
+  //   id: 3,
+  //   title: "Transparency",
+  //   description: "We believe in transparent communication and project management. Clients can expect regular updates on the progress of their project and clear insight into our processes."
+  // },
+  {
+    id: 4,
+    title: "Quality Assurance",
+    description: "Quality is at the forefront of everything we do. We have rigorous quality assurance processes in place to ensure that our deliverables meet the highest standards."
+  },
+  // {
+  //   id: 5,
+  //   title: "Timely Delivery",
+  //   description: "We understand the importance of meeting deadlines. Clients can expect us to deliver projects on time and within budget."
+  // },
+  {
+    id: 6,
+    title: "Collaborative Partnership",
+    description: "We view our clients as partners and collaborate closely with them throughout the project lifecycle. We value their input and feedback and strive to create a collaborative working environment."
+  },
+  {
+    id: 7,
+    title: "Support and Maintenance",
+    description: "Our relationship with clients doesn't end once the project is delivered. We provide ongoing support and maintenance to ensure that our solutions continue to meet their needs in the long term."
+  },
+  // {
+  //   id: 8,
+  //   title: "Innovation",
+  //   description: "We are committed to staying ahead of the curve when it comes to technology. Clients can expect us to leverage the latest tools and techniques to deliver innovative solutions that drive business value."
+  // }
+];
+
 // import { MorphSVGPlugin } from 'gsap';
 
 function App() {
@@ -198,6 +242,7 @@ function App() {
   const [data, setData] = useState(x_QA.slice(0, 4)); 
   const [hasMore, setHasMore] = useState(true); 
   const ref = useRef([]);
+  const boxRef = useRef(null);
 
 
 
@@ -217,6 +262,15 @@ function App() {
       }
     }, 1000);
   };
+  const loadMoreDatax = () => {
+    setTimeout(() => {
+      const newData = companyExpectations.slice(data.length, data.length + 3); 
+      setData([...data, ...newData]); 
+      if (data.length + 4 >= companyExpectations.length) {
+        setHasMore(false); 
+      }
+    }, 500);
+  };
   const ContainerRef = useRef(null);
   const ContainerRef1 = useRef(null);
   const ContainerRef2 = useRef(null);
@@ -233,7 +287,7 @@ function App() {
     const animation1 = loadLottieAnimation(ContainerRef1, x1);
     const animation2 = loadLottieAnimation(ContainerRef2, x2);
     const animation3 = loadLottieAnimation(ContainerRef3, x3);
-    const animation4 = loadLottieAnimation2(ContainerRef4, x4);
+    const animation4 = loadLottieAnimation(ContainerRef4, x4);
     const animation5 = loadLottieAnimation(ContainerRef5, x5);
     const animation6 = loadLottieAnimation(ContainerRef6, x6);
     const animation7 = loadLottieAnimation(ContainerRef7, x7);
@@ -259,7 +313,7 @@ function App() {
     let ctx = gsap.context(() => {})
 
     gsap.defaults({ ease: "none" });
-    const tl = gsap.timeline({ repeat: 1, repeatDelay: 2, yoyo:false });
+    const tl = gsap.timeline({ repeat: 1, repeatDelay: 2, yoyo:false,markers: false });
             tl.to(".T2", { 
               // x: -100 
               duration: 3,
@@ -267,18 +321,19 @@ function App() {
             })
             .to(".Tbox", { x: -100  });
 
-      const t2 = gsap.timeline({
-        scrollTrigger:{
-          trigger:".box",
-          start:"center center",
-          end:"bottom top",
-          makers:true,
-          scrub:true
-
-        }
-      });      
-      t2.from(".text1",{x:window*1})
-        .from(".text1",{x:window*-1})
+            // const t2 = gsap.timeline({
+            //   scrollTrigger: {
+            //     trigger: boxRef.current,
+            //     start: 'center right',
+            //     end: 'bottom top',
+            //     once: true, 
+            //     // markers: true,
+            //     // scrub: true
+            //   }
+            // });
+        
+            // t2.from(".text1", { x: "-50%" })
+              // .from(".text2", { x: window.innerWidth * -1 });
 
 
 
@@ -324,7 +379,7 @@ function App() {
             }}
 >
   
-        {/* <Animate/> */}
+        <Animate/>
 
         <div style={{ display: 'flex', alignItems: 'center' }}>
           {/* Logo */}
@@ -347,9 +402,11 @@ function App() {
       </Header>
      
   
-    
+
       <List style={{ display: 'flex' }}>
+    
             <List.Item>
+            
               <Content  id="1" style={{minHeight:'100vh', padding: '2%',minWidth:'100vw'}}>
                 <Row >
                 <Col xs={24} sm={12} style={{ backgroundColor: '#f5f5f5', marginTop: '-4%'}}>
@@ -386,22 +443,27 @@ function App() {
             </List.Item>
 
             <List.Item>
-             <Content ref={addtoRefs} xs={24} sm={12} style={{ minHeight:'100vh', padding: '2%'}} id="2">
-             {/* margin: '0 16px', width: '50%', */}
-            <div style={{marginTop: '5%' }}>
+            <Content className='box2' ref={node => { 
+                boxRef.current = node; 
+                addtoRefs(node); 
+            }} xs={24} sm={12} style={{ minHeight:'100vh', padding: '2%'}} id="2">
+
+             {/* <Content  className='box2' ref={addtoRefs}  xs={24} sm={12} style={{ minHeight:'100vh', padding: '2%'}} id="2"> */}
+           
 
             <div style={{ display: 'flex', alignItems: 'center' }}>
           
                 <div style={{ flex: '1 1 50%', marginRight: '20px' }}>
-                  <Title style={{ fontFamily: 'Poppins', fontSize: '2.5rem', color: '#5733FF' }}>What We Do!</Title>
+                  <Title className='text1' style={{ fontFamily: 'Poppins', fontSize: '2.5rem', color: '#5733FF' }}>What We Do!</Title>
                 </div>
                 <div style={{ flex: '1 1 50%' }}>
-                  <Paragraph style={{ fontSize: '1rem', textAlign: 'left',paddingLeft:'1%' }}>
+                  <Paragraph  className='text2' style={{ fontSize: '1rem', textAlign: 'left',paddingLeft:'1%' }}>
                     In today's data-driven world, making informed decisions can be the difference between success and stagnation. With a comprehensive suite of services: Artificial Intelligence (AI), Data Analytics, Business Intelligence (BI), and Software Development.
                   </Paragraph>
                 </div>
               </div>
 
+              <div style={{marginTop: '5%' }}>
                   <CustomCarousel cards={cards} />
             </div>
               </Content>
@@ -410,16 +472,17 @@ function App() {
             <List.Item>
          
               <Content ref={addtoRefs}  style={{minHeight:'100vh', padding: '2%'}} id="3">
-                   <div style={{marginTop: '5%' }}>
-                    <div style={{ display: 'flex', flexDirection: 'row'  }}>
-                  <div style={{ flex: 1 }}>
-                    <Title style={{ fontFamily: 'Poppins', fontSize: '2.5rem', textAlign: 'left',paddingLeft:'30%',color: '#5733FF',marginTop: "-2%" }}>Development Process</Title>
-                  </div>
-                  <div style={{ flex: 1, textAlign: 'right',paddingRight:'10%', fontSize: '1rem' }}>
-                    <Paragraph>
-                    We understand that embarking on a data-driven journey can seem daunting. That's why we employ the CRISP-DM methodology, a structured approach that guides us through each stage of the project lifecycle:
-                    </Paragraph>
-                  </div>
+                   {/* <div style={{marginTop: '5%' }}> */}
+
+                    <div style={{ display: 'flex', alignItems: 'center' }}>
+                        <div  style={{ flex: '1 1 50%', marginRight: '20px' }}>
+                          <Title style={{ fontFamily: 'Poppins', fontSize: '2.5rem', textAlign: 'center',color: '#5733FF' }}>Development Process</Title>
+                        </div>
+                        <div style={{ flex: '1 1 50%' }}>
+                          <Paragraph  style={{ fontSize: '1rem', textAlign: 'left',paddingLeft:'1%' }}>
+                          We understand that embarking on a data-driven journey can seem daunting. That's why we employ the CRISP-DM methodology, a structured approach that guides us through each stage of the project lifecycle:
+                          </Paragraph>
+                        </div>
                 </div>
                     <Row gutter={[16, 16]} align="top">
                         <Col xs={24} sm={12} style={{ flexDirection: 'column' }}>
@@ -432,7 +495,7 @@ function App() {
                       </Col>
                       
                     </Row>
-                    </div>
+                    {/* </div> */}
               </Content>
             </List.Item>
             <List.Item>
@@ -440,28 +503,66 @@ function App() {
             {/* <Card bordered={true}> */}
               <Row gutter={[16, 16]} align="top">
                 <Col xs={24} sm={12} style={{ flexDirection: 'column', alignItems: 'flex-start' }}>
-                  <Title className='text1' style={{fontFamily: 'Poppins ', fontSize: '2rem' }}>
+                  <Title  style={{fontFamily: 'Poppins ', fontSize: '2.5rem' }}>
                     <span style={{ color: '#FFfff' }}>Leading Companies </span>{' '}
                     <span style={{ color: '#5733FF' }}>Develop with Us!</span>
                   </Title>
-                  <Paragraph style={{ marginTop: "8%", fontSize: '1.2rem', color: "black" }}>
+                  <Paragraph style={{fontSize: '1.2rem', color: "black" }}>
                     <span style={{ color: '#5733FF' }}>With our very able team,</span>
                     <span style={{ color: 'black' }}>we are dedicated in delivering your project to your standards.</span>
                     <span style={{ color: 'black' }}> Our value isn't limited to building teams but is equally distributed across the project lifecycle.</span>
                     <span style={{ color: '#5733FF' }}> We are basically a custom tech development company.</span>
-                    <Card border={false}>
-                    <InfiniteScroll dataLength={data.length}next={loadMoreData}hasMore={data.length < x_QA.length} loader={<Skeleton paragraph={{ rows: 1 }} active/>} endMessage={<Divider plain><Text>Contact us for more Questions</Text></Divider>} scrollableTarget="scrollableDiv">
-                   
-                    <List
-                      itemLayout="horizontal"
-                      dataSource={data}
-                      renderItem={(item, index) => (
-                        <List.Item key={index}>
-                           <Title level={4} style={{ color: '#5733FF' }}>{item.quiz}</Title>
-                        </List.Item>
-                        )}
-                      />
-                    </InfiniteScroll>
+                      <Card border={false} >
+                      {/* <Title level={4}>What to Expect</Title> */}
+                      <InfiniteScroll
+  dataLength={data.length}
+  next={loadMoreDatax}
+  hasMore={data.length < companyExpectations.length}
+  loader={<Skeleton paragraph={{ rows: 1 }} active />}
+  scrollableTarget="scrollableDiv"
+>
+<List
+  itemLayout="horizontal"
+  dataSource={companyExpectations}
+  renderItem={(item, index) => (
+    <Popover content={
+      <Card border={false} style={{ width: '50vh', height: '30vh' }}>
+        <Typography.Paragraph>{item.description}</Typography.Paragraph>
+      </Card>
+    } trigger="hover">
+      <List.Item
+        key={index}
+        style={{ maxHeight: '10vh', overflow: 'hidden' }}
+        className="hoverable-list-item"
+      >
+        <Typography.Text style={{ color: '#5733FF' }}>{item.title}</Typography.Text>
+      </List.Item>
+    </Popover>
+  )}
+/>
+  {/* <List
+    itemLayout="horizontal"
+    dataSource={companyExpectations}
+    renderItem={(item, index) => (
+
+      <Popover  content={
+      <Card title={item.title} style={{width:'20%',height:'20%'}}>
+      <Typography.Paragraph>{item.description}</Typography.Paragraph>
+    </Card>} trigger="hover"
+    >
+        
+        <List.Item
+          key={index}
+          style={{ maxHeight: '10vh', overflow: 'hidden' }}
+          className="hoverable-list-item"
+        >
+          <Typography.Text style={{ color: '#5733FF' }}>{item.title}</Typography.Text>
+        </List.Item>
+      </Popover>
+    )}
+  /> */}
+</InfiniteScroll>
+
                     </Card>
                   </Paragraph>
             
@@ -539,8 +640,11 @@ function App() {
               {/* </Card> */}
              </Content>
             </List.Item>
+            <Animate/>
             <List.Item>
+            <Animate/>
                 <Content ref={addtoRefs} id="7" style={{ minHeight: '100vh',padding: '2%' }}>
+                <Animate/>
                   <Title style={{ fontFamily: 'Poppins', fontSize: '2rem', color: '#5733FF' }}>Contact Us</Title>
                   <Row gutter={[16, 16]} style={{ display: 'flex' }}>
                     <Col xs={24} sm={12}>
@@ -556,11 +660,11 @@ function App() {
               </List.Item>
 
           </List>
-          
+       
           <Footer style={{ ...footerStyle, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-  <div className="demo-logo" ref={ContainerRef2} style={{ width: '60px', height: '60px', marginRight: '10px' }}></div>
-  <span>©{new Date().getFullYear()} Created by Cyril</span>
-</Footer>
+              <div className="demo-logo" ref={ContainerRef2} style={{ width: '60px', height: '60px', marginRight: '10px' }}></div>
+              <span>©{new Date().getFullYear()} Develop and Maintained by GreatInt</span>
+            </Footer>
 
           {/* <Footer style={footerStyle}>  <div className="demo-logo" ref={ContainerRef2} style={{ width: '60px', height: '60px' }}></div>©{new Date().getFullYear()} Created by Cyril </Footer> */}
         </Layout>

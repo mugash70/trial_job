@@ -37,16 +37,17 @@ const x = [
   };
       return (
         <>
-        <div
+        {/* <div
           id="scrollableDiv"
           style={{
             height: 400,
             overflow: 'auto',
-            padding: '0 16px',
-            marginRight:'15%',
+            // padding: '0 16px',
+            // marginRight:'15%',
             marginTop:'5%'
-          }}
-        >
+          }} */}
+        {/* > */}
+         <div id="scrollableDiv"style={{height:'70vh',overflow: 'auto',padding: '0 16px' }}>
       <InfiniteScroll
         dataLength={data.length}
         next={loadMoreData}

@@ -69,4 +69,16 @@
   max-width: 120px;
   background: var(--color-timeline-default);
 }
+/*  */
+.hoverable-list-item {
+  transition: all 0.3s;
+}
 
+.hoverable-list-item:hover .description {
+  display: block; /* Show description on hover */
+}
+
+.description {
+  display: none; /* Hide description by default */
+  margin-top: 5px; /* Add margin for spacing */
+}
