@@ -53,7 +53,7 @@ const navs = [
 ];
 const Teams_x = [
   { 
-    name: "Rodgers.O.R", 
+    name: "Rodgers.O", 
     icons: "1",
     desc: "Rodgers is our visionary leader, with a wealth of experience in driving business strategies and fostering innovation. As the Chief Executive Officer, he provides direction and guidance to our team, ensuring that we remain agile and adaptive in a rapidly changing industry.",
     title: "Chief Executive Officer" ,image:''
@@ -66,7 +66,7 @@ const Teams_x = [
     image: '' 
 },
   { 
-    name: "Erick.", 
+    name: "Erick.M", 
     icons: "3",
     desc: "Erick is our strategic visionary, leading our marketing efforts with creativity and innovation. As the Chief Marketing Officer, he orchestrates comprehensive marketing campaigns that resonate with our target audience, driving brand awareness and customer engagement to new heights.",
     title: "Chief Marketing Officer" ,image:''
@@ -201,7 +201,7 @@ const companyExpectations = [
   {
     id: 2,
     title: "Tailored Solutions",
-    description: "We understand that every project is unique, which is why we take a tailored approach to development. We work closely with our clients to understand their specific requirements and craft solutions that meet their needs."
+    description: "We understand that every project is unique, which is why we take a tailored approach to development"
   },
   // {
   //   id: 3,
@@ -209,9 +209,9 @@ const companyExpectations = [
   //   description: "We believe in transparent communication and project management. Clients can expect regular updates on the progress of their project and clear insight into our processes."
   // },
   {
-    id: 4,
+    id: 3,
     title: "Quality Assurance",
-    description: "Quality is at the forefront of everything we do. We have rigorous quality assurance processes in place to ensure that our deliverables meet the highest standards."
+    description: "We have rigorous quality assurance processes in place to ensure that our deliverables meet the highest standards."
   },
   // {
   //   id: 5,
@@ -219,14 +219,14 @@ const companyExpectations = [
   //   description: "We understand the importance of meeting deadlines. Clients can expect us to deliver projects on time and within budget."
   // },
   {
-    id: 6,
+    id: 4,
     title: "Collaborative Partnership",
-    description: "We view our clients as partners and collaborate closely with them throughout the project lifecycle. We value their input and feedback and strive to create a collaborative working environment."
+    description: "We value their input and feedback and strive to create a collaborative working environment."
   },
   {
-    id: 7,
+    id: 5,
     title: "Support and Maintenance",
-    description: "Our relationship with clients doesn't end once the project is delivered. We provide ongoing support and maintenance to ensure that our solutions continue to meet their needs in the long term."
+    description: "We provide ongoing support and maintenance to ensure that our solutions continue to meet their needs in the long term."
   },
   // {
   //   id: 8,
@@ -356,7 +356,7 @@ function App() {
 
 
   const cards = ['Card content 1', 'Card content 2', 'Card content 3', 'Card content 4'];
-
+  let count = 0; 
 
   return (
     <div className="App" id="large-header">
@@ -379,7 +379,7 @@ function App() {
             }}
 >
   
-        <Animate/>
+        {/* <Animate/> */}
 
         <div style={{ display: 'flex', alignItems: 'center' }}>
           {/* Logo */}
@@ -429,9 +429,10 @@ function App() {
                   </div>
 
                   <div  style={{ display: 'flex', justifyContent: 'center' }}>
-                    <Button  className="Tbox" style={{marginTop: "5%", height: '4rem', fontSize: '1.2rem', color: '#FFFFFF', padding: '15px 30px',  backgroundColor: '#5733FF', borderRadius: '2rem'}} className="hover">
+                  <a href="mailto:greatint@gmail.com">
+                    <Button  className="Tbox" style={{ zIndex: 1,marginTop: "5%", height: '4rem', fontSize: '1.2rem', color: '#FFFFFF', padding: '15px 30px',  backgroundColor: '#5733FF', borderRadius: '2rem'}} className="hover">
                       Ask for a Demo
-                    </Button>
+                    </Button></a>
                   </div>
                 </Col>
                 <Col xs={24} sm={12} >
@@ -462,8 +463,9 @@ function App() {
                   </Paragraph>
                 </div>
               </div>
+              {/* style={{ zIndex: 1}} */}
 
-              <div style={{marginTop: '5%' }}>
+              <div style={{marginTop: '5%',zIndex: 1 }}>
                   <CustomCarousel cards={cards} />
             </div>
               </Content>
@@ -504,8 +506,8 @@ function App() {
               <Row gutter={[16, 16]} align="top">
                 <Col xs={24} sm={12} style={{ flexDirection: 'column', alignItems: 'flex-start' }}>
                   <Title  style={{fontFamily: 'Poppins ', fontSize: '2.5rem' }}>
-                    <span style={{ color: '#FFfff' }}>Leading Companies </span>{' '}
-                    <span style={{ color: '#5733FF' }}>Develop with Us!</span>
+                    <span style={{ color: '#FFfff' }}>What to expect</span>{' '}
+                    <span style={{ color: '#5733FF' }}>from Us!</span>
                   </Title>
                   <Paragraph style={{fontSize: '1.2rem', color: "black" }}>
                     <span style={{ color: '#5733FF' }}>With our very able team,</span>
@@ -525,19 +527,28 @@ function App() {
   itemLayout="horizontal"
   dataSource={companyExpectations}
   renderItem={(item, index) => (
-    <Popover content={
-      <Card border={false} style={{ width: '50vh', height: '30vh' }}>
-        <Typography.Paragraph>{item.description}</Typography.Paragraph>
-      </Card>
-    } trigger="hover">
+    // <Popover content={
+    //   <Card border={false} style={{ width: '50vh', height: '30vh' }}>
+    //     <Typography.Paragraph>{item.description}</Typography.Paragraph>
+    //   </Card>
+    // } trigger="hover">
       <List.Item
         key={index}
-        style={{ maxHeight: '10vh', overflow: 'hidden' }}
+        // style={{ maxHeight: '10vh', overflow: 'hidden' }}
         className="hoverable-list-item"
       >
-        <Typography.Text style={{ color: '#5733FF' }}>{item.title}</Typography.Text>
+     <Row gutter={[16, 16]}>
+       
+            <Col span={24}>
+            <div style={{ color: '#5733FF', marginBottom: '0.5rem', textAlign: 'left' }}>{item.id}. {item.title}</div>
+          </Col>
+  
+          <Col span={24}>
+            <p style={{ textAlign: 'justify' }}>{item.description}</p>
+          </Col>
+        </Row>
       </List.Item>
-    </Popover>
+    // </Popover>
   )}
 />
   {/* <List
@@ -640,11 +651,12 @@ function App() {
               {/* </Card> */}
              </Content>
             </List.Item>
-            <Animate/>
+        
+        
+
             <List.Item>
-            <Animate/>
+
                 <Content ref={addtoRefs} id="7" style={{ minHeight: '100vh',padding: '2%' }}>
-                <Animate/>
                   <Title style={{ fontFamily: 'Poppins', fontSize: '2rem', color: '#5733FF' }}>Contact Us</Title>
                   <Row gutter={[16, 16]} style={{ display: 'flex' }}>
                     <Col xs={24} sm={12}>
