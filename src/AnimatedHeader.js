@@ -226,8 +226,8 @@ function AnimatedHeader() {
               top: 0,
               left: 0,
               zIndex: -1,
-              width: '100vw',
-              height: '100vh',
+              maxWidth: '100vw',
+              maxHeight: '100vh',
             }}
           ></canvas>
     );

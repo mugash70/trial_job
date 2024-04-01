@@ -95,6 +95,11 @@ const contentStyle = {
 const footerStyle = {
   color: '#fff',
   backgroundColor: '#5733FF',
+  position: 'fixed',
+  bottom: 0,
+  height:60,
+  maxWidth:'100vw',
+  width:'100%'
 };
 const layoutStyle = {
   borderRadius: 8,
@@ -105,7 +110,11 @@ const layoutStyle = {
 
 const animStyle = {
   width: '100%',
-  height: '85vh',
+  height: '65%',
+}
+const animStyle2 = {
+  width: '100%',
+  height: '85%',
 }
 const loadLottieAnimation = (containerRef, animationData) => {
   return Lottie.loadAnimation({
@@ -223,11 +232,11 @@ const companyExpectations = [
     title: "Collaborative Partnership",
     description: "We value their input and feedback and strive to create a collaborative working environment."
   },
-  {
-    id: 5,
-    title: "Support and Maintenance",
-    description: "We provide ongoing support and maintenance to ensure that our solutions continue to meet their needs in the long term."
-  },
+  // {
+  //   id: 5,
+  //   title: "Support and Maintenance",
+  //   description: "We provide ongoing support and maintenance to ensure that our solutions continue to meet their needs in the long term."
+  // },
   // {
   //   id: 8,
   //   title: "Innovation",
@@ -359,35 +368,34 @@ function App() {
   let count = 0; 
 
   return (
-    <div className="App" id="large-header">
+    <div className="App" 
+   
+
+    >
 
        <Flex gap="middle" wrap="wrap">
-      
         <Layout>
-    
-     
         <Header 
             style={{
-              position: 'sticky',
+              position: 'fixed',
               top: 0,
-              zIndex: 1,
-              // width: '100vw',
+              zIndex: 5,
+              width: '100%',
               display: 'flex',
               alignItems: 'center',
-              background: '#ffff', // Setting a light background color for the Header
-              // boxShadow: '0 2px 8px rgba(0, 0, 0, 0.05)', // Adding a light shadow
+              background: '#ffff', 
+              boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
             }}
 >
   
-        {/* <Animate/> */}
+        <Animate/>
 
         <div style={{ display: 'flex', alignItems: 'center' }}>
-          {/* Logo */}
           <div className="demo-logo" style={{ marginTop: '4%' }}>
-            <img src={logo} width={100} alt="Logo"  />
+            <img src={logo} width={80} alt="Logo"  />
           </div>
 
-          {/* Menu */}
+        
           <Menu
             mode="horizontal"
             defaultSelectedKeys={['1']}
@@ -398,18 +406,25 @@ function App() {
               marginLeft: '25px',
             }}
           />
-        </div>
+          </div>
       </Header>
-     
-  
-
-      <List style={{ display: 'flex' }}>
+      <List style={{ display: 'flex' }}  id="large-header">
     
-            <List.Item>
+            <List.Item
+             style={{
+              // height:'100vh',
+              backgroundColor: '#f5f5f5',
+               padding: '2%',
+               maxWidth:'100vw'}}
+            >
             
-              <Content  id="1" style={{minHeight:'100vh', padding: '2%',minWidth:'100vw'}}>
+              <Content  id="1" >
+             
                 <Row >
-                <Col xs={24} sm={12} style={{ backgroundColor: '#f5f5f5', marginTop: '-4%'}}>
+                <Col 
+                xs={24} sm={12}
+                 style={{ marginTop: '4%'}}
+                 >
                   <div style={{textAlign: 'left', paddingLeft:'10%', marginTop: "8%", }}>
                     <Title className="T1" style={{  fontFamily: 'Poppins ', fontSize: '2.7rem'}}>
                       <span style={{  letterSpacing: '2px' }}>
@@ -430,28 +445,23 @@ function App() {
 
                   <div  style={{ display: 'flex', justifyContent: 'center' }}>
                   <a href="mailto:greatint@gmail.com">
-                    <Button  className="Tbox" style={{ zIndex: 1,marginTop: "5%", height: '4rem', fontSize: '1.2rem', color: '#FFFFFF', padding: '15px 30px',  backgroundColor: '#5733FF', borderRadius: '2rem'}} className="hover">
+                    <Button  className="Tbox hover" style={{ zIndex: 1,marginTop: "5%", height: '4rem', fontSize: '1.2rem', color: '#FFFFFF', padding: '15px 30px',  backgroundColor: '#5733FF', borderRadius: '2rem'}}>
                       Ask for a Demo
                     </Button></a>
                   </div>
                 </Col>
                 <Col xs={24} sm={12} >
-                  <div ref={ContainerRef4} style={{ ...animStyle }}></div>
+                  <div ref={ContainerRef4} style={{ ...animStyle2 }}></div>
                 </Col>
                 </Row>
               </Content>
             
             </List.Item>
 
-            <List.Item>
-            <Content className='box2' ref={node => { 
-                boxRef.current = node; 
-                addtoRefs(node); 
-            }} xs={24} sm={12} style={{ minHeight:'100vh', padding: '2%'}} id="2">
-
-             {/* <Content  className='box2' ref={addtoRefs}  xs={24} sm={12} style={{ minHeight:'100vh', padding: '2%'}} id="2"> */}
-           
-
+            <List.Item ref={addtoRefs}  id="2">
+            <Content className='box2'  xs={24} sm={12} 
+            style={{maxWidth:'100vw', padding: '2%'}}
+            >
             <div style={{ display: 'flex', alignItems: 'center' }}>
           
                 <div style={{ flex: '1 1 50%', marginRight: '20px' }}>
@@ -471,9 +481,11 @@ function App() {
               </Content>
           </List.Item>
        
-            <List.Item>
+            <List.Item  ref={addtoRefs}  id="3">
          
-              <Content ref={addtoRefs}  style={{minHeight:'100vh', padding: '2%'}} id="3">
+              <Content 
+              style={{ maxWidth:'100vw', padding: '2%'}}
+              >
                    {/* <div style={{marginTop: '5%' }}> */}
 
                     <div style={{ display: 'flex', alignItems: 'center' }}>
@@ -500,9 +512,10 @@ function App() {
                     {/* </div> */}
               </Content>
             </List.Item>
-            <List.Item>
-            <Content ref={addtoRefs}   style={{minHeight:'100vh', padding: '2%'}} id="4">
-            {/* <Card bordered={true}> */}
+            <List.Item ref={addtoRefs}  id="4">
+            <Content   
+            style={{maxWidth:'100vw', padding: '2%'}}
+            >
               <Row gutter={[16, 16]} align="top">
                 <Col xs={24} sm={12} style={{ flexDirection: 'column', alignItems: 'flex-start' }}>
                   <Title  style={{fontFamily: 'Poppins ', fontSize: '2.5rem' }}>
@@ -514,65 +527,40 @@ function App() {
                     <span style={{ color: 'black' }}>we are dedicated in delivering your project to your standards.</span>
                     <span style={{ color: 'black' }}> Our value isn't limited to building teams but is equally distributed across the project lifecycle.</span>
                     <span style={{ color: '#5733FF' }}> We are basically a custom tech development company.</span>
-                      <Card border={false} >
-                      {/* <Title level={4}>What to Expect</Title> */}
+                      <Card 
+                       bordered={false}
+                      >
                       <InfiniteScroll
-  dataLength={data.length}
-  next={loadMoreDatax}
-  hasMore={data.length < companyExpectations.length}
-  loader={<Skeleton paragraph={{ rows: 1 }} active />}
-  scrollableTarget="scrollableDiv"
->
-<List
-  itemLayout="horizontal"
-  dataSource={companyExpectations}
-  renderItem={(item, index) => (
-    // <Popover content={
-    //   <Card border={false} style={{ width: '50vh', height: '30vh' }}>
-    //     <Typography.Paragraph>{item.description}</Typography.Paragraph>
-    //   </Card>
-    // } trigger="hover">
-      <List.Item
-        key={index}
-        // style={{ maxHeight: '10vh', overflow: 'hidden' }}
-        className="hoverable-list-item"
-      >
-     <Row gutter={[16, 16]}>
-       
-            <Col span={24}>
-            <div style={{ color: '#5733FF', marginBottom: '0.5rem', textAlign: 'left' }}>{item.id}. {item.title}</div>
-          </Col>
-  
-          <Col span={24}>
-            <p style={{ textAlign: 'justify' }}>{item.description}</p>
-          </Col>
-        </Row>
-      </List.Item>
-    // </Popover>
-  )}
-/>
-  {/* <List
-    itemLayout="horizontal"
-    dataSource={companyExpectations}
-    renderItem={(item, index) => (
-
-      <Popover  content={
-      <Card title={item.title} style={{width:'20%',height:'20%'}}>
-      <Typography.Paragraph>{item.description}</Typography.Paragraph>
-    </Card>} trigger="hover"
-    >
-        
-        <List.Item
-          key={index}
-          style={{ maxHeight: '10vh', overflow: 'hidden' }}
-          className="hoverable-list-item"
-        >
-          <Typography.Text style={{ color: '#5733FF' }}>{item.title}</Typography.Text>
-        </List.Item>
-      </Popover>
-    )}
-  /> */}
-</InfiniteScroll>
+                          dataLength={data.length}
+                          next={loadMoreDatax}
+                          hasMore={data.length < companyExpectations.length}
+                          loader={<Skeleton paragraph={{ rows: 1 }} active />}
+                          scrollableTarget="scrollableDiv"
+                        >
+                        <List
+                          itemLayout="horizontal"
+                          dataSource={companyExpectations}
+                          renderItem={(item, index) => (
+                      
+                              <List.Item
+                                key={index}
+                                className="hoverable-list-item"
+                              >
+                            <Row gutter={[16, 16]}>
+                              
+                                    <Col span={24}>
+                                    <div style={{ color: '#5733FF', marginBottom: '0.5rem', textAlign: 'left' }}>{item.id}. {item.title}</div>
+                                  </Col>
+                          
+                                  <Col span={24}>
+                                    <p style={{ textAlign: 'justify' }}>{item.description}</p>
+                                  </Col>
+                                </Row>
+                              </List.Item>
+                          )}
+                        />
+ 
+                    </InfiniteScroll>
 
                     </Card>
                   </Paragraph>
@@ -586,9 +574,15 @@ function App() {
             </Content>
             </List.Item>
             
-            <List.Item>
+            <List.Item  ref={addtoRefs}  id="5" >
             
-                <Content ref={addtoRefs}  id="5" style={{minHeight: '100vh',padding: '2%'}}>
+                <Content
+                style={{ 
+                  // maxHeight:'100vh'
+                  maxWidth:'100vw'
+                  ,padding: '2%'
+                }}
+                >
                   <div>
                   <Title style={{fontFamily: 'Poppins ', fontSize: '2rem',color: '#5733FF' }}>Our Team</Title>
                     <Row gutter={[16, 16]} align="top">
@@ -609,11 +603,15 @@ function App() {
             </Content>
             </List.Item>
        
-            <List.Item>
-              <Content ref={addtoRefs} id="6" style={{minHeight: '100vh',padding: '2%' }}>
+            <List.Item  ref={addtoRefs} id="6">
+          
+          <Content
+              style={{
+                //  maxHeight:'100vh',
+               maxWidth:'100vw'
+               ,padding: '2%' }}
+               >
               <Title style={{fontFamily: 'Poppins ', fontSize: '2rem' ,color: '#5733FF' }}>Common Questions</Title>
-             
-              {/* <Card bordered={true} style={{height:'85vh'}}> */}
               <Row gutter={[16, 16]} align="top">
               <Col xs={24} sm={12} style={{ flexDirection: 'column', alignItems: 'flex-start' }}>
                             
@@ -654,32 +652,60 @@ function App() {
         
         
 
-            <List.Item>
+            {/* <List.Item>
 
-                <Content ref={addtoRefs} id="7" style={{ minHeight: '100vh',padding: '2%' }}>
+                <Content ref={addtoRefs} id="7" 
+                style={{ 
+                  maxHeight:'100vh',
+                  height:'100%',
+                  width: '100%',
+                  maxWidth:'100vw',
+                  padding: '2%' }}
+                >
                   <Title style={{ fontFamily: 'Poppins', fontSize: '2rem', color: '#5733FF' }}>Contact Us</Title>
-                  <Row gutter={[16, 16]} style={{ display: 'flex' }}>
+                  <Row 
+                  gutter={[15, 15]} 
+                  style={{ display: 'flex' }}>
                     <Col xs={24} sm={12}>
-                      {/* <Card style={{ height: '80%' }}> */}
-                        <div ref={ContainerRef8} style={{ ...animStyle }}></div>
-                      {/* </Card> */}
+                        <div ref={ContainerRef8} 
+                        style={{ ...animStyle }}></div>
                     </Col>
                     <Col xs={24} sm={12}>
-                   <Contact/>
+                   <Contact />
                     </Col>
                   </Row>
                 </Content>
-              </List.Item>
+              </List.Item> */}
+              <List.Item ref={addtoRefs} id="7">
+          
+  <Content  style={{ 
+     maxHeight:'100vh',
+     maxWidth:'100vw'
+     ,padding: '2%' }}>
+    <Title style={{ fontFamily: 'Poppins', fontSize: '2rem', color: '#5733FF' }}>Contact Us</Title>
+    <Row gutter={[15, 15]} style={{ display: 'flex' }}>
+      <Col xs={24} sm={24} md={12}>
+        <div ref={ContainerRef8} style={{ ...animStyle }}></div>
+      </Col>
+      <Col xs={24} sm={24} md={12}>
+        <Contact />
+      </Col>
+    </Row>
+  </Content>
+</List.Item>
+
+
 
           </List>
        
-          <Footer style={{ ...footerStyle, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+          <Footer style={{ 
+            ...footerStyle,
+             display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
               <div className="demo-logo" ref={ContainerRef2} style={{ width: '60px', height: '60px', marginRight: '10px' }}></div>
               <span>©{new Date().getFullYear()} Develop and Maintained by GreatInt</span>
             </Footer>
 
-          {/* <Footer style={footerStyle}>  <div className="demo-logo" ref={ContainerRef2} style={{ width: '60px', height: '60px' }}></div>©{new Date().getFullYear()} Created by Cyril </Footer> */}
-        </Layout>
+    </Layout>
 
       </Flex>
    

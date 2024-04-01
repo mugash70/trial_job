@@ -34,15 +34,13 @@ const ProcessWay = () => {
 
     return (
         <>
-        {/* <Card style={{ height: '80%' }}> */}
-            <Row justify="center" align="middle" ref={addtoRefs}>
+            <Row justify="center" align="middle">
                 <Title style={{ marginRight: '8px' }} level={3}><GoogleOutlined /></Title>
                 <a href="mailto:greatint@gmail.com"><Title level={4}>Greatint@gmail.com</Title></a>
             </Row>
             <Divider />
-            <Row justify="center" align="middle" ref={addtoRefs}>
-                {/* <Title style={{ marginRight: '8px' }} level={3}><PhoneOutlined /></Title> */}
-                <span>
+            <Row justify="center" align="middle" >
+               <span>
                 <Title style={{ marginRight: '8px' }} level={2}><PhoneOutlined /></Title>
                 <a href="tel:+254796889020"><Title level={4} >+254707862016</Title></a>
                 {/* {','} */}
@@ -59,7 +57,6 @@ const ProcessWay = () => {
                 <Title style={{ marginRight: '8px' }} level={3}><GithubOutlined /></Title>
                 <a href="https://github.com/Greatint" target="_blank" rel="noopener noreferrer"><Title level={4} >Greatint</Title></a>
             </Row> */}
-        {/* </Card> */}
         </>
     );
 };
