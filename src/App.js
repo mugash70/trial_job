@@ -95,11 +95,12 @@ const contentStyle = {
 const footerStyle = {
   color: '#fff',
   backgroundColor: '#5733FF',
-  position: 'fixed',
+  // position: 'fixed',
   bottom: 0,
   height:60,
   maxWidth:'100vw',
-  width:'100%'
+  width:'100%',
+  zIndex: 2
 };
 const layoutStyle = {
   borderRadius: 8,
@@ -115,6 +116,7 @@ const animStyle = {
 const animStyle2 = {
   width: '100%',
   height: '85%',
+  marginTop:'5%',
 }
 const loadLottieAnimation = (containerRef, animationData) => {
   return Lottie.loadAnimation({
@@ -322,30 +324,12 @@ function App() {
     let ctx = gsap.context(() => {})
 
     gsap.defaults({ ease: "none" });
-    const tl = gsap.timeline({ repeat: 1, repeatDelay: 2, yoyo:false,markers: false });
+    const tl = gsap.timeline({ repeat: 1, repeatDelay: 1, yoyo:false,markers: false });
             tl.to(".T2", { 
-              // x: -100 
               duration: 3,
-              text:()=>(`At GreatInt, we bridge the gap between raw data and actionable insights, empowering businesses with a comprehensive suite of services.`)
-            })
-            .to(".Tbox", { x: -100  });
-
-            // const t2 = gsap.timeline({
-            //   scrollTrigger: {
-            //     trigger: boxRef.current,
-            //     start: 'center right',
-            //     end: 'bottom top',
-            //     once: true, 
-            //     // markers: true,
-            //     // scrub: true
-            //   }
-            // });
-        
-            // t2.from(".text1", { x: "-50%" })
-              // .from(".text2", { x: window.innerWidth * -1 });
-
-
-
+              text:()=>(`At Greatint, we bridge the gap between raw data and actionable insights, empowering businesses with a comprehensive suite of services.`)
+            });
+            // .to(".Tbox", { x: -100  });
        
       ref.current.forEach((el) => {
           gsap.fromTo(el, { autoAlpha: 0 }, {
@@ -379,7 +363,7 @@ function App() {
             style={{
               position: 'fixed',
               top: 0,
-              zIndex: 5,
+              zIndex: 3,
               width: '100%',
               display: 'flex',
               alignItems: 'center',
@@ -388,11 +372,11 @@ function App() {
             }}
 >
   
-        <Animate/>
+        {/* <Animate/> */}
 
         <div style={{ display: 'flex', alignItems: 'center' }}>
           <div className="demo-logo" style={{ marginTop: '4%' }}>
-            <img src={logo} width={80} alt="Logo"  />
+            <img src={logo} width={150} alt="Logo"  />
           </div>
 
         
@@ -413,12 +397,14 @@ function App() {
             <List.Item
              style={{
               // height:'100vh',
+           
               backgroundColor: '#f5f5f5',
                padding: '2%',
+            
                maxWidth:'100vw'}}
             >
             
-              <Content  id="1" >
+              <Content  ref={addtoRefs}  id="1"  style={{paddingTop:'3%'}}>
              
                 <Row >
                 <Col 
@@ -445,7 +431,7 @@ function App() {
 
                   <div  style={{ display: 'flex', justifyContent: 'center' }}>
                   <a href="mailto:greatint@gmail.com">
-                    <Button  className="Tbox hover" style={{ zIndex: 1,marginTop: "5%", height: '4rem', fontSize: '1.2rem', color: '#FFFFFF', padding: '15px 30px',  backgroundColor: '#5733FF', borderRadius: '2rem'}}>
+                    <Button  className="hover" style={{ zIndex: 1,marginTop: "5%", height: '4rem', fontSize: '1.2rem', color: '#FFFFFF', padding: '15px 30px',  backgroundColor: '#5733FF', borderRadius: '2rem'}}>
                       Ask for a Demo
                     </Button></a>
                   </div>
@@ -702,7 +688,7 @@ function App() {
             ...footerStyle,
              display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
               <div className="demo-logo" ref={ContainerRef2} style={{ width: '60px', height: '60px', marginRight: '10px' }}></div>
-              <span>©{new Date().getFullYear()} Develop and Maintained by GreatInt</span>
+              <span>©{new Date().getFullYear()} Develop and Maintained by Greatint</span>
             </Footer>
 
     </Layout>
