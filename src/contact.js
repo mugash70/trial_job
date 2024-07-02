@@ -36,7 +36,7 @@ const ProcessWay = () => {
         <>
             <Row justify="center" align="middle">
                 <Title style={{ marginRight: '8px' }} level={3}><GoogleOutlined /></Title>
-                <a href="mailto:greatint@gmail.com"><Title level={4}>Greatint@gmail.com</Title></a>
+                <a href="mailto:info@greatint.co.ke"><Title level={4}>info@greatint.co.ke</Title></a>
             </Row>
             <Divider />
             <Row justify="center" align="middle" >

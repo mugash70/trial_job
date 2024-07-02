@@ -324,9 +324,9 @@ function App() {
     let ctx = gsap.context(() => {})
 
     gsap.defaults({ ease: "none" });
-    const tl = gsap.timeline({ repeat: 1, repeatDelay: 1, yoyo:false,markers: false });
+    const tl = gsap.timeline({ repeat: 0, repeatDelay: 5, yoyo:false,markers: false });
             tl.to(".T2", { 
-              duration: 3,
+              duration: 1,
               text:()=>(`At Greatint, we bridge the gap between raw data and actionable insights, empowering businesses with a comprehensive suite of services.`)
             });
             // .to(".Tbox", { x: -100  });
@@ -424,13 +424,13 @@ function App() {
                       <span>solutions</span>.
                     </Title>
 
-                    <Title className="T2"  style={{ marginTop: "7%", fontSize: '1.7rem', textAlign: 'left', fontFamily: 'Helvetica'}}>
+                    <Title className="T2"  style={{ marginTop: "7%", fontSize: '1.4rem', textAlign: 'left', fontFamily: 'Helvetica'}}>
                       {/* At GreatInt, we bridge the gap between raw data and actionable insights, empowering businesses with a comprehensive suite of services. */}
                     </Title>
                   </div>
 
                   <div  style={{ display: 'flex', justifyContent: 'center' }}>
-                  <a href="mailto:greatint@gmail.com">
+                  <a href="mailto:info@greatint.co.ke">
                     <Button  className="hover" style={{ zIndex: 1,marginTop: "5%", height: '4rem', fontSize: '1.2rem', color: '#FFFFFF', padding: '15px 30px',  backgroundColor: '#5733FF', borderRadius: '2rem'}}>
                       Ask for a Demo
                     </Button></a>
