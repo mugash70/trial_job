@@ -59,7 +59,7 @@ const x = [
             active
           />
         }
-        endMessage={<Divider plain><Text>It is all, nothing more </Text><FontAwesomeIcon icon={faFaceSmileWink}  size="4x" color='#5733FF'/></Divider>}
+        endMessage={<Divider plain><Text>That is all, nothing more </Text><FontAwesomeIcon icon={faFaceSmileWink}  size="4x" color='#5733FF'/></Divider>}
         scrollableTarget="scrollableDiv"
       >
         <List
