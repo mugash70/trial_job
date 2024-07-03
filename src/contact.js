@@ -1,6 +1,6 @@
 import React, { useRef, useEffect } from 'react';
 import { Card, Typography, Row, Divider } from 'antd';
-import { GoogleOutlined, LinkedinOutlined, GithubOutlined, PhoneOutlined } from '@ant-design/icons';
+import { MailOutlined, LinkedinOutlined, GithubOutlined, PhoneOutlined } from '@ant-design/icons';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
@@ -35,7 +35,7 @@ const ProcessWay = () => {
     return (
         <>
             <Row justify="center" align="middle">
-                <Title style={{ marginRight: '8px' }} level={3}><GoogleOutlined /></Title>
+                <Title style={{ marginRight: '8px' }} level={3}><MailOutlined /></Title>
                 <a href="mailto:info@greatint.co.ke"><Title level={4}>info@greatint.co.ke</Title></a>
             </Row>
             <Divider />

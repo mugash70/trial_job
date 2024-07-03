@@ -255,10 +255,6 @@ function App() {
   const ref = useRef([]);
   const boxRef = useRef(null);
 
-
-
-
-
   const addtoRefs = (el) => {
     if (el && !ref.current.includes(el)) {
         ref.current.push(el);
@@ -392,26 +388,24 @@ function App() {
           />
           </div>
       </Header>
-      <List style={{ display: 'flex' }}  id="large-header">
+      <List style={{ display: 'flex' }}  id="large-header"  ref={boxRef}>
     
             <List.Item
              style={{
               // height:'100vh',
-           
               backgroundColor: '#f5f5f5',
-               padding: '2%',
-            
-               maxWidth:'100vw'}}
+              padding: '2%',
+              maxWidth:'100vw'}}
             >
             
-              <Content  ref={addtoRefs}  id="1"  style={{paddingTop:'3%'}}>
+              <Content  ref={addtoRefs}  id="1"  style={{paddingTop:'2%'}}>
              
                 <Row >
                 <Col 
                 xs={24} sm={12}
                  style={{ marginTop: '4%'}}
                  >
-                  <div style={{textAlign: 'left', paddingLeft:'10%', marginTop: "8%", }}>
+                  <div style={{textAlign: 'left', paddingLeft:'10%'}}>
                     <Title className="T1" style={{  fontFamily: 'Poppins ', fontSize: '2.7rem'}}>
                       <span style={{  letterSpacing: '2px' }}>
                         <span style={{ textDecoration: 'underline' }}>Unleash</span>,{' '}
@@ -424,7 +418,7 @@ function App() {
                       <span>solutions</span>.
                     </Title>
 
-                    <Title className="T2"  style={{ marginTop: "7%", fontSize: '1.4rem', textAlign: 'left', fontFamily: 'Helvetica'}}>
+                    <Title className="T2"  style={{ marginTop: "7%", fontSize: '1.4rem', textAlign: 'left', fontFamily: 'Poppins'}}>
                       {/* At GreatInt, we bridge the gap between raw data and actionable insights, empowering businesses with a comprehensive suite of services. */}
                     </Title>
                   </div>
@@ -445,13 +439,10 @@ function App() {
             </List.Item>
 
             <List.Item ref={addtoRefs}  id="2">
-            <Content className='box2'  xs={24} sm={12} 
-            style={{maxWidth:'100vw', padding: '2%'}}
-            >
+            <Content className='box2'  xs={24} sm={12} style={{maxWidth:'100vw',padding: '2%',paddingTop: '4%'}}>
             <div style={{ display: 'flex', alignItems: 'center' }}>
-          
                 <div style={{ flex: '1 1 50%', marginRight: '20px' }}>
-                  <Title className='text1' style={{ fontFamily: 'Poppins', fontSize: '2.5rem', color: '#5733FF' }}>What We Do!</Title>
+                  <Title className='text1' style={{ fontFamily: 'Poppins', fontSize: '2.5rem'}}>What We  <span style={{color: '#5733FF' }}>Do!</span></Title>
                 </div>
                 <div style={{ flex: '1 1 50%' }}>
                   <Paragraph  className='text2' style={{ fontSize: '1rem', textAlign: 'left',paddingLeft:'1%' }}>
@@ -459,7 +450,6 @@ function App() {
                   </Paragraph>
                 </div>
               </div>
-              {/* style={{ zIndex: 1}} */}
 
               <div style={{marginTop: '5%',zIndex: 1 }}>
                   <CustomCarousel cards={cards} />
@@ -470,13 +460,13 @@ function App() {
             <List.Item  ref={addtoRefs}  id="3">
          
               <Content 
-              style={{ maxWidth:'100vw', padding: '2%'}}
+              style={{ maxWidth:'100vw', padding: '2%',paddingTop: '4%'}}
               >
                    {/* <div style={{marginTop: '5%' }}> */}
 
                     <div style={{ display: 'flex', alignItems: 'center' }}>
                         <div  style={{ flex: '1 1 50%', marginRight: '20px' }}>
-                          <Title style={{ fontFamily: 'Poppins', fontSize: '2.5rem', textAlign: 'center',color: '#5733FF' }}>Development Process</Title>
+                          <Title style={{ fontFamily: 'Poppins', fontSize: '2.5rem', textAlign: 'center' }}><span style={{color: '#5733FF' }}>Development</span>  <span >Process</span></Title>
                         </div>
                         <div style={{ flex: '1 1 50%' }}>
                           <Paragraph  style={{ fontSize: '1rem', textAlign: 'left',paddingLeft:'1%' }}>
@@ -505,7 +495,7 @@ function App() {
               <Row gutter={[16, 16]} align="top">
                 <Col xs={24} sm={12} style={{ flexDirection: 'column', alignItems: 'flex-start' }}>
                   <Title  style={{fontFamily: 'Poppins ', fontSize: '2.5rem' }}>
-                    <span style={{ color: '#FFfff' }}>What to expect</span>{' '}
+                    <span>What to expect</span>{' '}
                     <span style={{ color: '#5733FF' }}>from Us!</span>
                   </Title>
                   <Paragraph style={{fontSize: '1.2rem', color: "black" }}>
@@ -566,11 +556,11 @@ function App() {
                 style={{ 
                   // maxHeight:'100vh'
                   maxWidth:'100vw'
-                  ,padding: '2%'
+                  ,padding: '2%',paddingTop: '4%'
                 }}
                 >
                   <div>
-                  <Title style={{fontFamily: 'Poppins ', fontSize: '2rem',color: '#5733FF' }}>Our Team</Title>
+                  <Title style={{fontFamily: 'Poppins ', fontSize: '2.5rem'}}><span >Our</span>  <span style={{color: '#5733FF' }}>Team</span></Title>
                     <Row gutter={[16, 16]} align="top">
                         {Teams_x.map((team, index) => (
                           <Col key={index} xs={24} sm={12} style={{ flexDirection: 'column' }}>
@@ -595,9 +585,9 @@ function App() {
               style={{
                 //  maxHeight:'100vh',
                maxWidth:'100vw'
-               ,padding: '2%' }}
+               ,padding: '2%',paddingTop: '4%'}}
                >
-              <Title style={{fontFamily: 'Poppins ', fontSize: '2rem' ,color: '#5733FF' }}>Common Questions</Title>
+              <Title style={{fontFamily: 'Poppins ', fontSize: '2.5rem' }}><span style={{color: '#5733FF' }}>Common</span>   <span> Questions</span></Title>
               <Row gutter={[16, 16]} align="top">
               <Col xs={24} sm={12} style={{ flexDirection: 'column', alignItems: 'flex-start' }}>
                             
@@ -635,40 +625,13 @@ function App() {
               {/* </Card> */}
              </Content>
             </List.Item>
-        
-        
-
-            {/* <List.Item>
-
-                <Content ref={addtoRefs} id="7" 
-                style={{ 
-                  maxHeight:'100vh',
-                  height:'100%',
-                  width: '100%',
-                  maxWidth:'100vw',
-                  padding: '2%' }}
-                >
-                  <Title style={{ fontFamily: 'Poppins', fontSize: '2rem', color: '#5733FF' }}>Contact Us</Title>
-                  <Row 
-                  gutter={[15, 15]} 
-                  style={{ display: 'flex' }}>
-                    <Col xs={24} sm={12}>
-                        <div ref={ContainerRef8} 
-                        style={{ ...animStyle }}></div>
-                    </Col>
-                    <Col xs={24} sm={12}>
-                   <Contact />
-                    </Col>
-                  </Row>
-                </Content>
-              </List.Item> */}
-              <List.Item ref={addtoRefs} id="7">
+          <List.Item ref={addtoRefs} id="7">
           
   <Content  style={{ 
      maxHeight:'100vh',
      maxWidth:'100vw'
-     ,padding: '2%' }}>
-    <Title style={{ fontFamily: 'Poppins', fontSize: '2rem', color: '#5733FF' }}>Contact Us</Title>
+     ,padding: '2%',paddingTop: '4%' }}>
+    <Title style={{ fontFamily: 'Poppins', fontSize: '2.5rem'}}>Contact <span style={{color: '#5733FF' }}>Us</span></Title>
     <Row gutter={[15, 15]} style={{ display: 'flex' }}>
       <Col xs={24} sm={24} md={12}>
         <div ref={ContainerRef8} style={{ ...animStyle }}></div>
