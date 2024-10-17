@@ -42,9 +42,9 @@ const ProcessWay = () => {
             <Row justify="center" align="middle" >
                <span>
                 <Title style={{ marginRight: '8px' }} level={2}><PhoneOutlined /></Title>
-                <a href="tel:+254796889020"><Title level={4} >+254707862016</Title></a>
+                <a href="tel:+254707862016"><Title level={4} >+254707862016</Title></a>
                 {/* {','} */}
-                <a href="tel:+254796889020"><Title level={4} >+254708091070</Title></a>
+                <a href="tel:+254796889020"><Title level={4} >+254796889020</Title></a>
                 </span>
             </Row>
             <Divider />
