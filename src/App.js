@@ -58,24 +58,24 @@ const Teams_x = [
     desc: "Rodgers is our visionary leader, with a wealth of experience in driving business strategies and fostering innovation. As the Chief Executive Officer, he provides direction and guidance to our team, ensuring that we remain agile and adaptive in a rapidly changing industry.",
     title: "Chief Executive Officer" ,image:''
   },
-  { 
-    name: "Bram.M", 
-    icons: "2",
-    desc: "Bram is our operational expert, overseeing the day-to-day functions of our company with precision and efficiency. As the Chief Operations Officer, he streamlines our processes and ensures that our operations run smoothly, enabling us to deliver exceptional results to our clients.",
-    title: "Chief Operations Officer",
-    image: '' 
-},
-  { 
-    name: "Erick.M", 
-    icons: "3",
-    desc: "Erick is our strategic visionary, leading our marketing efforts with creativity and innovation. As the Chief Marketing Officer, he orchestrates comprehensive marketing campaigns that resonate with our target audience, driving brand awareness and customer engagement to new heights.",
-    title: "Chief Marketing Officer" ,image:''
-  },
+//   { 
+//     name: "Bram.M", 
+//     icons: "2",
+//     desc: "Bram is our operational expert, overseeing the day-to-day functions of our company with precision and efficiency. As the Chief Operations Officer, he streamlines our processes and ensures that our operations run smoothly, enabling us to deliver exceptional results to our clients.",
+//     title: "Chief Operations Officer",
+//     image: '' 
+// },
+//   { 
+//     name: "Erick.M", 
+//     icons: "3",
+//     desc: "Erick is our strategic visionary, leading our marketing efforts with creativity and innovation. As the Chief Marketing Officer, he orchestrates comprehensive marketing campaigns that resonate with our target audience, driving brand awareness and customer engagement to new heights.",
+//     title: "Chief Marketing Officer" ,image:''
+//   },
   { 
     name: "Cyril.M", 
     icons: "4",
     desc: "Cyril is our masterful developer, with a passion for turning ideas into reality through code. As a Senior Developer, he thrives on challenges and is dedicated to creating innovative solutions that push the boundaries of technology. With Cyril on our team, we're always one step ahead.",
-    title: "Senior Developer" ,image:p4
+    title: "Director" ,image:p4
   },
 ];
 
